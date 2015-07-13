@@ -1,0 +1,26 @@
+<%= simple_form_for @batch do |f| %>
+
+  <%= f.input :name %>
+  <%= f.association :project %>
+  <%= f.input :version %>
+
+  <div class="<%= "hidden" unless @batch.requires_build? %>">
+    <%= f.input :build %>
+  </div>
+
+  <%= f.fields_for :target_information, OpenStruct.new(@batch.target_information) do |builder| %>
+
+    <% @batch.execution_type.target.fields.each do |target_field| %>
+
+      <%= render "fields/#{target_field.field_type}", field_name: target_field.name, f: builder %>
+    <% end if @batch.execution_type.present? %>
+  <% end %>
+
+  <%= render "shared/execution_variables", f: f, model: @batch %>
+
+  <div class="form-actions">
+    <%= f.submit nil, class: 'btn btn-primary', disable_with: "Creating..." %>
+    <%= link_to t('.cancel', default: t("helpers.links.cancel")),
+                batches_path, class: 'btn' %>
+  </div>
+<% end %>

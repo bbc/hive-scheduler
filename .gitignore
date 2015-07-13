@@ -1,0 +1,22 @@
+.~*
+log/*.log
+*.swp
+*.sqlite3
+.idea/
+/tmp
+config/sqs.yml
+coverage
+public/build_files
+public/assets
+app/assets/images/.DS_Store
+app/assets/stylesheets/.DS_Store
+app/assets/javascripts/.DS_Store
+vendor/bundle
+.DS_Store
+public/artifacts/
+public/builds
+app/assets/stylesheets/.sass-cache
+
+# Private and protected key files for Chamber
+.chamber.pem
+.chamber.pem.enc

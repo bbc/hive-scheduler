@@ -1,0 +1,28 @@
+<% require "hive/settings" %>
+#defaults: &defaults
+#  encoding: <%= Chamber.env.database.encoding %>
+
+defaults: &defaults
+  encoding: <%= Chamber.env.database.encoding %>
+  host: <%= Chamber.env.database.host %>
+  username: <%= Chamber.env.database.username %>
+  password: <%= Chamber.env.database.password %>
+  database: <%= Chamber.env.database.database %>
+  port: <%= Chamber.env.database.port %>
+  pool: <%= Chamber.env.database.pool %>
+  adapter: mysql2
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+staging:
+  <<: *defaults
+
+production-test:
+  <<: *defaults
+
+production-live:
+  <<: *defaults

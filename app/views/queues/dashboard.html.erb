@@ -1,0 +1,16 @@
+<h2>Queues</h2>
+<br />
+
+<table class="table table-striped">
+  <% @queues.each do |name, jobs| %>
+    <tr>
+    <th><%= name -%></th>
+    <td>
+    <% jobs.each do |j| %>
+      <%= job_span(j) -%>
+    <% end %>
+    </td>
+    </tr>
+  <% end %>
+</table>
+  

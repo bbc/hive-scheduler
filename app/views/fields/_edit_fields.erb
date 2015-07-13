@@ -1,0 +1,16 @@
+<div class="nested-fields form-inputs">
+  <%= f.input :field_type,
+              collection: { string: "String", integer: "Integer", array: "Array (String)" }.collect {
+                  |value, label| OpenStruct.new(label: label, value: value.to_s)
+              },
+              label_method: :label, value_method: :value
+  %>
+  <%= f.input :name, placeholder: "Field Name " %>
+
+  <div class="control-group">
+    <div class="controls">
+      <span class="glyphicon glyphicon-remove"></span>
+      <%= link_to_remove_association "Remove #{field_type}", f %>
+    </div>
+  </div>
+</div>

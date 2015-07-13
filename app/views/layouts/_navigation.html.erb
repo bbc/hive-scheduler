@@ -1,0 +1,42 @@
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"> <%= image_tag "hive-20.png", alt: "Hive" %></a><a class="navbar-brand" href="/">HIVE</a>
+
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="<%= "active" if controller_name == "batches" %>"><%= link_to 'Batches', batches_path %></li>
+        <li class="<%= "active" if controller_name == "queues" %>"><%= link_to 'Queues', queues_path %></li>
+        <li class="<%= "active" if controller_name == "projects" %>"><%= link_to 'Projects', projects_path %></li>
+        <li class="<%= "active" if controller_name == "execution_types" %>"><%= link_to 'Execution Types', admin_execution_types_path %></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+
+          <li><a><%= current_user.email %></a></li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Titan <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">DeviceDB</a></li>
+            <li><a href="#">Hive</a></li>
+            <li><a href="#">Gems</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Learn more</a></li>
+            <li><a href="#">Raise an issue</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
+</nav>

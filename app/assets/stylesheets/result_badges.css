@@ -1,0 +1,48 @@
+.result {
+  width: 70px;
+  display: inline-block;
+  text-align: center;
+  font-size: 10.998px;
+  font-weight: bold;
+  line-height: 14px;
+  font-family: monospace;
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #999999;
+  padding: 1px 4px 2px;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+}
+
+.result-failed {
+  background-color: #b94a48;
+}
+
+.result-notrun {
+  background-color: #f89406;
+}
+
+.result-passed {
+  background-color: #468847;
+}
+
+.result-errored {
+  background-color: #333333;
+}
+
+.result-preparing,
+.result-analyzing,
+.result-running {
+  background-color: #f89406;
+}
+
+.result-queued {
+  background-color: #3a87ad;
+}
+
+.result-cancelled {
+  background-color: #bbbbbb;
+}

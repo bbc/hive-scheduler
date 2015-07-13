@@ -1,0 +1,34 @@
+<%= simple_form_for @project do |f| %>
+  <%= f.input :name %>
+  <%= f.input :repository %>
+  <%= f.input :execution_directory %>
+  <%= f.association :execution_type %>
+
+  <% if @builders.present? %>
+    <%= field_set_tag "Population Mechanism" do %>
+      <%= f.input :builder_name, collection: @builders, value_method: :builder_name, label_method: :friendly_name, label: "Population Mechanism" %>
+
+      <% if @selected_builder.present? %>
+        <%= f.fields_for :builder_options, OpenStruct.new(@project.builder_options) do |builder_options_builder| %>
+
+          <% @selected_builder.dependencies.each do |dependency| %>
+
+            <%= render "fields/#{dependency.field_type}", field_name: dependency.name, f: builder_options_builder %>
+          <% end unless @selected_builder.dependencies.blank? %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= render "shared/execution_variables", f: f, model: @project %>
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")), projects_path, :class => 'btn' %>
+  </div>
+
+<% end %>
+
+<% if @project.execution_type.present? %>
+  <pre id="template_preview"><%= @project.execution_type.template.html_safe %></pre>
+<% end %>

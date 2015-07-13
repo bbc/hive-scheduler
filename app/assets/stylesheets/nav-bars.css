@@ -1,0 +1,13 @@
+.nav-pills > li.dark > a,
+.nav-pills > li.dark > a:hover,
+.nav-pills > li.dark > a:focus {
+  color: #fff;
+  background-color: #777777;
+}
+
+.nav-pills > li.light > a,
+.nav-pills > li.light > a:hover,
+.nav-pills > li.light > a:focus {
+  color: #000;
+  background-color: #eeeeee;
+}

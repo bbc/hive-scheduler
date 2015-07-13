@@ -1,0 +1,21 @@
+<div id="<%= field_type %>" class="control-group <%= "error" if model.errors[field_type].present? %>">
+  <h4><%= field_type.to_s.titlecase %></h4>
+  <span class="help-inline"><%= f.full_error field_type %></span>
+  <%= f.simple_fields_for(field_type) do |field| %>
+
+    <%= render "fields/edit_fields", f:field, field_type: field_type.to_s.humanize %>
+
+  <% end %>
+
+  <div class="links control-group">
+    <div class="controls">
+      <span class="glyphicon glyphicon-plus"></span>
+      <%= link_to_add_association "New #{field_type.to_s.humanize.singularize.titlecase}",
+                                  f, field_type,
+                                  partial: "fields/edit_fields",
+                                  render_options: {locals: { field_type: field_type.to_s.humanize } }
+
+      %>
+    </div>
+  </div>
+</div>

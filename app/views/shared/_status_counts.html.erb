@@ -1,0 +1,7 @@
+<td class="text-center">
+  <span id="<%=type-%>_<%=id-%>_queued_count" class="badge badge-result badge-info badge-count-<%= queued.to_i %>" ><%= result_count(queued) %></span>
+  <span id="<%=type-%>_<%=id-%>_running_count" class="badge badge-result badge-warning badge-count-<%= running.to_i %>"><%= result_count(running) %></span>
+  <span id="<%=type-%>_<%=id-%>_passed_count" class="badge badge-result badge-success badge-count-<%= passed.to_i %>"><%= result_count(passed) %></span>
+  <span id="<%=type-%>_<%=id-%>_failed_count" class="badge badge-result badge-important badge-count-<%= failed.to_i %>"><%= result_count(failed) %></span>
+  <span id="<%=type-%>_<%=id-%>_errored_count" class="badge badge-result badge-inverse badge-count-<%= errored.to_i %>"><%= result_count(errored) %></span>
+</td>

@@ -1,0 +1,11 @@
+<%= f.fields_for :execution_variables, OpenStruct.new(model.execution_variables) do |execution_variables_builder| %>
+
+  <% if model.try(:execution_variables_required).present? %>
+    <%= field_set_tag "Environment Variables" do %>
+      <% model.execution_variables_required.each do |execution_variable| %>
+
+        <%= render "fields/#{execution_variable.field_type}", field_name: execution_variable.name, f: execution_variables_builder, attribute: model.execution_variables %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

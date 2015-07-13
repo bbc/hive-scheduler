@@ -1,0 +1,54 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= title %></h3>
+  </div>
+  <div class="panel-body">
+    <p>An execution type defines how your tests run.</p>
+    <p>Simply select the platform your tests run on, provide an execution script and specify any custom variables required.</p>
+    <div class="bs-callout bs-callout-primary">
+      <h4>Special Variables</h4>
+      There are a number of special variables provided by scheduler. That can be used in your execution template.
+
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Required</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% Builders::Base::SPECIAL_EXECUTION_VARIABLES.each_pair do |variable_name, attributes| %>
+          <tr>
+            <td><%= variable_name %></td>
+            <td><%= attributes[:field_type].to_s %></td>
+            <td><%= attributes[:required].to_s %></td>
+            <td><%= attributes[:description].to_s %></td>
+            <td><%= attributes[:default_value].to_s %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+    </div>
+    <%= simple_form_for [:admin, @execution_type], html: {class: "execution_type_form"} do |f| %>
+      <%= f.error_notification %>
+      <%= f.association :target_id do %>
+        <%= f.label :target_id, label: 'Target platform' %>
+        <%= f.select :target_id, Target.all.map {|t| [t.name, t.id, {"data-img-src" => image_path("fa-#{t.icon}-64.png")}] } %>
+      <% end %>
+      <%= f.input :name %>
+      <%= f.input :template %>
+
+      <%= render "fields/fields_edit_form", f: f, field_type: :execution_variables, model: @execution_type %>
+
+      <div class="form-actions">
+        <%= f.submit nil, class: 'btn btn-primary' %>
+        <%= link_to t('.cancel', default: t("helpers.links.cancel")),
+                    admin_execution_types_path, class: 'btn' %>
+      </div>
+    <% end %>
+  </div>
+</div>

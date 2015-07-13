@@ -1,0 +1,25 @@
+<div class="control-group">
+  <%= f.label field_name, class: 'control-label' %>
+  <div class="controls" id="<%= parent_id = "#{field_name}_array_fields" %>">
+
+    <% (defined?(attribute) && attribute.present? ? attribute : {}).fetch(field_name.to_s, [""]).each_with_index do |array_item, index| %>
+
+      <%= render(partial: "fields/array_element", locals: {f:f, field_name: field_name, index: index, array_item: array_item }) %>
+
+    <% end %>
+
+  </div>
+
+  <script type="text/x-handlebars-template" id="<%= field_name%>_element_template">
+    <%= render(partial: "fields/array_element", locals: {f:f, field_name: field_name, index: "{{index}}", array_item: nil }) %>
+  </script>
+
+  <div class="controls">
+    <a class="add_array_item"
+       data-template-id="<%= field_name%>_element_template"
+       data-template-parent="<%= parent_id %>"
+       data-field-name="<%= field_name %>"
+       href="#">Add <%= field_name.to_s.singularize %>
+    </a>
+  </div>
+</div>

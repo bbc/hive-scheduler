@@ -1,0 +1,17 @@
+<%- model_class = Project -%>
+<div class="page-header">
+  <h1>Create a new project</h1>
+
+  <p>
+    Projects describe how your tests should be run and provide the relevant information required for queuing up
+    batches of test jobs.
+    <br/>
+    A project contains information such as the repository where your tests exist and how your batches of test jobs
+    should be executed.
+    <br/>
+    A project is associated with a particular execution type and population mechanism, this combination enables the
+    hive to batch your tests into jobs and execute your tests on the required devices.
+  </p>
+</div>
+
+<%= render :partial => 'form' %>

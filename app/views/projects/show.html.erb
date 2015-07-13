@@ -1,0 +1,58 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= @project.name %></h3>
+  </div>
+  <div class="panel-body">
+
+    <div class="media">
+      <a class="media-left">
+        <%= image_tag("fa-#{@project.target.icon}-64.png") %>
+      </a>
+      <div class="media-body">
+
+        <dl class="dl-horizontal">
+          <dt><strong><%= Project.human_attribute_name(:execution_type) %>:</strong></dt>
+          <dd><%= @project.execution_type.name %></dd>
+
+          <dt><strong>Test Code repository:</strong></dt>
+          <dd><%= @project.repository %></dd>
+
+          <dt><strong>Execution directory:</strong></dt>
+          <dd><%= @project.execution_directory %></dd>
+
+          <dt><strong>Population Mechanism:</strong></dt>
+          <dd><%= @project.builder.friendly_name %></dd>
+
+          <% @project.builder_options.each_pair do |name, value| %>
+            <dt><strong><%= name.humanize %></strong></dt>
+            <dd><%= value %></dd>
+          <% end %>
+
+          <% (@project.execution_variables || {}).each_pair do |name, value| %>
+            <dt><strong><%= name.humanize %></strong></dt>
+            <dd><%= value %></dd>
+          <% end %>
+
+          <dt><strong>Created:</strong></dt>
+          <dd><%= @project.created_at.to_s(:long) %></dd>
+          <dt><strong>Last modified:</strong></dt>
+          <dd><%= @project.updated_at.to_s(:long) %></dd>
+        </dl>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              projects_path, :class => 'btn' %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_project_path(@project), :class => 'btn' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              project_path(@project),
+              :method => 'delete',
+              :data   => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class  => 'btn btn-danger' %>
+</div>
