@@ -21,8 +21,5 @@ test:
 staging:
   <<: *defaults
 
-production-test:
-  <<: *defaults
-
-production-live:
+production:
   <<: *defaults

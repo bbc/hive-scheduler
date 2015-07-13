@@ -7,7 +7,15 @@ GIT
       virtus
 
 GIT
-  remote: git@github.com:bbc/hive-messages.git
+  remote: git@github.com:bbc/test_rail-api.git
+  revision: 877821614d7727ee708c0afd21c82ad9f85b6530
+  specs:
+    test_rail-api (0.3.1)
+      json
+      virtus
+
+GIT
+  remote: https://github.com/bbc/hive-messages.git
   revision: b25b877536ccdab758aa8e436172a6ed8092c34a
   tag: 1.0.0
   specs:
@@ -17,14 +25,6 @@ GIT
       mimemagic
       multipart-post
       roar
-      virtus
-
-GIT
-  remote: git@github.com:bbc/test_rail-api.git
-  revision: 877821614d7727ee708c0afd21c82ad9f85b6530
-  specs:
-    test_rail-api (0.3.1)
-      json
       virtus
 
 GEM

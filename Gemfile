@@ -20,9 +20,10 @@ gem 'chamber'
 
 gem 'chartjs-ror'
 
+# TODO Change the next two lines to use https when they are made public
 gem 'test_rail-api', git: 'git@github.com:bbc/test_rail-api.git', require: 'test_rail'
 gem 'devicedb_comms', git: 'git@github.com:bbc/devicedb_comms.git'
-gem 'hive-messages', git: 'git@github.com:bbc/hive-messages.git', :tag => '1.0.0' , require: "hive/messages"
+gem 'hive-messages', git: 'https://github.com/bbc/hive-messages.git', :tag => '1.0.0' , require: "hive/messages"
 
 gem 'jbuilder'
 
@@ -44,7 +45,7 @@ gem 'image-picker-rails'
 
 gem 'did_you_mean', group: [:development, :test]
 
-group :development, "production-test" do
+group :development, :test do
   gem "better_errors"
   gem "binding_of_caller"
 end
