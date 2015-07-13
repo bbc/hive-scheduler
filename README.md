@@ -33,5 +33,6 @@ export HIVE_QUEUES=true
 
 ```bash
 ./bin/rake db:migrate
+./bin/rake db:seed
 ./bin/rake assets:precompile
 ```

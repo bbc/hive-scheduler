@@ -30,27 +30,28 @@ ExecutionType.where(target_id: nil).update_all(target_id: 1)
   queue.update!(attributes)
 end
 
-et = ExecutionType.create!(
-  name: 'Dummy execution type',
-  template: '# Do nothing',
-  target_id: 5
-)
-
-project = Project.create!(
-  name: 'Dummy project',
-  repository: 'git@localhost:/tmp/dummy_repository',
-  builder_name: Builders::ManualBuilder.builder_name,
-  execution_type: et
-)
-
-batch = Batch.create!(
-  name: 'Dummy batch',
-  project: project,
-  version: '1.0',
-  build_file_name: '/tmp/dummy_build',
-  execution_variables: { 'tests_per_job' => 10, 'tests_per_queue' => 10, 'tests' => [ 'one', 'two' ] },
-)
-
-jgb = Builders::ManualBuilder::JobGroupBuilder.new(batch: batch)
-jgb.queue = 'dummy_queue'
-jgb.perform
+# For dummy data uncomment these lines before running bin/rake db:seed
+#et = ExecutionType.create!(
+#  name: 'Dummy execution type',
+#  template: '# Do nothing',
+#  target_id: 5
+#)
+#
+#project = Project.create!(
+#  name: 'Dummy project',
+#  repository: 'git@localhost:/tmp/dummy_repository',
+#  builder_name: Builders::ManualBuilder.builder_name,
+#  execution_type: et
+#)
+#
+#batch = Batch.create!(
+#  name: 'Dummy batch',
+#  project: project,
+#  version: '1.0',
+#  build_file_name: '/tmp/dummy_build',
+#  execution_variables: { 'tests_per_job' => 10, 'tests_per_queue' => 10, 'tests' => [ 'one', 'two' ] },
+#)
+#
+#jgb = Builders::ManualBuilder::JobGroupBuilder.new(batch: batch)
+#jgb.queue = 'dummy_queue'
+#jgb.perform
