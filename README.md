@@ -1,16 +1,16 @@
-=Hive Scheduler
+# Hive Scheduler
 
 The scheduler component behind the hive, and the main web view.
 
-== Installing
+## Installing
 
-=== Pre-requisites
+### Pre-requisites
 
 * `git` - Some of the gems are only currently available via Github
 * MySQL client libraries - `sudo apt-get install libmysqlclient-dev` on Ubuntu
 * A javascript runtime - For example, NodeJS - `sudo apt-get install nodejs` on Ubuntu
 
-=== Configuration
+### Configuration
 
 Add the following lines to `~/.bashrc` (or equivalent):
 
@@ -29,7 +29,7 @@ export ATTACHMENT_STORAGE_PATH_BASE=public
 export HIVE_QUEUES=true
 ```
 
-=== Set up database
+### Set up database
 
 ```bash
 ./bin/rake db:migrate
