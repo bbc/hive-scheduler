@@ -156,10 +156,10 @@
         <h4 id="images">images</h4>
         <% image_index=1 %>
         <% @job.images.each do |image_name, image_url| %>
-          <%= image_tag image_name, class: 'img-polaroid img-test-asset', 'data-toggle' => 'modal', 'data-target' => "#image-popup-#{image_index}" %>
+          <%= image_tag image_url, class: 'img-polaroid img-test-asset', 'data-toggle' => 'modal', 'data-target' => "#image-popup-#{image_index}" %>
           <div class='modal fade' id='image-popup-<%= image_index %>' tabindex='-1' role='dialog' aria-labelledby='image-popup-<%= image_index %>-Label'>
             <div class='modal-dialog' role='document'>
-              <%= image_tag image_name, class: 'img-responsive' %>
+              <%= image_tag image_url, class: 'img-responsive' %>
             </div>
             <div class='modal-footer'>
               <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
