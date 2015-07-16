@@ -19,6 +19,7 @@ bundle install
 calabash-android resign $APK_PATH
 bundle exec calabash-android run $APK_PATH -p android -f Hive::Submit -o \"$HIVE_RESULTS/hive.out\" -f pretty -o \"$HIVE_RESULTS/pretty.out\"
 TEMPLATE
+    )
 
     Project20140311132801.where(execution_type_id: 0).update_all(execution_type_id: execution_type.id)
   end
