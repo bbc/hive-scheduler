@@ -284,8 +284,8 @@ DEPENDENCIES
   aws-sdk (~> 1.6)
   better_errors
   binding_of_caller
-  bootstrap-sass
-  bootstrap-switch-rails
+  bootstrap-sass (~> 3.2)
+  bootstrap-switch-rails (~> 3.0)
   cachethod (~> 0.2.0)
   chamber
   chartjs-ror

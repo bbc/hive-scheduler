@@ -8,8 +8,8 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'autoprefixer-rails'
 
-gem 'bootstrap-sass'
-gem "bootstrap-switch-rails"
+gem 'bootstrap-sass', '~> 3.2'
+gem "bootstrap-switch-rails", '~> 3.0'
 
 gem 'will_paginate', '~> 3.0'
 
