@@ -36,3 +36,39 @@ export HIVE_QUEUES=true
 ./bin/rake db:seed
 ./bin/rake assets:precompile
 ```
+
+### Start the server
+
+```bash
+rails s
+```
+
+## Examples
+
+### Hello world
+
+Go into the 'Execution Types' section and create a new execution type. Select
+'Shell Script' as the target platform.
+Set the name to 'Hello <name>' and in the template box enter:
+
+```bash
+# This will use the execution variable 'word'
+echo Hello $HIVE_WORD
+```
+
+Add a new execution variable called `word` and set the field type to 'String'. Save the execution type.
+
+Go into the 'Projects' section and create a new project. Set the name to
+'Hello world' and select the execution type to 'Hello <name>'. Select the
+'Manual' population mechanism and enter 'world' in the Word field and 'bash'
+in the Queues field. Leave all other fields as the defaults. Save the project.
+
+Go into the 'Batches' section and create a new batch. Set the name to 'First
+test batch'. Select 'Hello world' as the project and set the version to '1.0'.
+Leave all other fields as the defaults. Save the batch.
+
+In the 'Batches' section you will now see the batch you have just created and
+by clicking on the name you can see a single job belonging to this batch for
+the queue 'bash'. If you have a hive set up to run shell tests on a queue
+named 'bash' then this test will be executed and by clicking on the job number
+you can view the output.
