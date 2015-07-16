@@ -49,7 +49,7 @@ rails s
 
 Go into the 'Execution Types' section and create a new execution type. Select
 'Shell Script' as the target platform.
-Set the name to 'Hello <name>' and in the template box enter:
+Set the name to 'Hello \<name\>' and in the template box enter:
 
 ```bash
 # This will use the execution variable 'word'
@@ -59,7 +59,7 @@ echo Hello $HIVE_WORD
 Add a new execution variable called `word` and set the field type to 'String'. Save the execution type.
 
 Go into the 'Projects' section and create a new project. Set the name to
-'Hello world' and select the execution type to 'Hello <name>'. Select the
+'Hello world' and select the execution type to 'Hello \<name\>'. Select the
 'Manual' population mechanism and enter 'world' in the Word field and 'bash'
 in the Queues field. Leave all other fields as the defaults. Save the project.
 
