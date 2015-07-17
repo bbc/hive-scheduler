@@ -103,3 +103,10 @@ Upload the apk, which can be found at
 Leave all other fields unchanged (the list of queues may be amended as required)
 and save the batch. As with the 'Hello world' example, the jobs will run if
 hives are set up with devices for the given queues and output can be viewed.
+
+## License
+
+Hive Scheduler is available to everyone under the terms of the MIT open source licence.
+Take a look at the LICENSE file in the code.
+
+Copyright (c) 2015 BBC
