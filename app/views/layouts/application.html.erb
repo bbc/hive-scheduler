@@ -49,7 +49,9 @@
             <ul class="nav nav-pills nav-stacked">
               <li class="dark"><a href="#">Hive Status</a></li>
               <ul class="nav nav-pills nav-stacked">
+                <% if @version.to_s != ''  %>
                 <li class="light"><a href="https://github.com/bbc-test/hive-scheduler/releases/tag/<%=@version-%>">Version: <code class="pull-right"><%= @version -%></code></a></li>
+                <% end %>
                 <li class="light"><a>Running Jobs:<span class="badge badge-result badge-warning pull-right"><%= "#{@counts['running']}" %></span></a></li>
                 <li class="light"><a>Queued Jobs:<span class="badge badge-result badge-info pull-right"><%= "#{@counts['queued']}" %></span></a></li>
               </ul>
