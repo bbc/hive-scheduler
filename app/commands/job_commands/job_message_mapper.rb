@@ -24,9 +24,8 @@ module JobCommands
       }
     end
 
-
     def command
-      ErbTemplateRenderer.new(execution_type.template, execution_variables).render
+      execution_type.template
     end
 
     def job_id
