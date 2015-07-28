@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   def generate_stats
     @counts  = Job.state_counts
     @version = Hive::Scheduler.const_get(:VERSION)
-    @projects = Project.all.sort { |a, b| a.latest_batch.updated_at <=> b.latest_batch.updated_at }[0, 10]
+    @projects = Project.all.select {|p| p.latest_batch != nil }.sort { |a, b| b.latest_batch.updated_at <=> a.latest_batch.updated_at }[0, 10]
   end
 
   def current_user
