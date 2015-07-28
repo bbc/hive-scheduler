@@ -3,7 +3,6 @@
 <%= hidden_field_tag :batch_index %>
 <%= hidden_field_tag :page, @page %>
 
-
 <div>
   <%= simple_form_for @filter_query, as: :search, url: batches_path, method: :get, html: { id: "batches_filter", class: 'form-search' } do |f| %>
 
@@ -12,8 +11,6 @@
   <% end %>
 </div>
             
-
-  
 </p>
 
 <table class="table">
