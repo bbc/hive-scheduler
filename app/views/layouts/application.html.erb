@@ -47,7 +47,7 @@
         <% cache('stats_panel', :expires_in => 2.minutes ) do %>
           <div class="col-md-2 hidden-sm hidden-xs">
             <ul class="nav nav-pills nav-stacked">
-              <li class="dark"><a href="#">Hive Status</a></li>
+              <li class="dark"><a>Hive Status</a></li>
               <ul class="nav nav-pills nav-stacked">
                 <% if @version.to_s != ''  %>
                 <li class="light"><a href="https://github.com/bbc-test/hive-scheduler/releases/tag/<%=@version-%>">Version: <code class="pull-right"><%= @version -%></code></a></li>
@@ -56,6 +56,14 @@
                 <li class="light"><a>Queued Jobs:<span class="badge badge-result badge-info pull-right"><%= "#{@counts['queued']}" %></span></a></li>
               </ul>
               </li>
+              <br />
+              <li class="dark"><a>Recent Jobs</a></li>
+              <ul class="nav nav-pills nav-stacked">
+                <% @projects.each do |p| %>
+                <li class="light"><a><%= p.name %>:<span class="badge badge-result badge-<%= { passed: 'success', failed: 'important', errored: 'inverse' }[p.latest_batch.state] %> pull-right"><%= p.latest_batch.state.to_s.first.upcase %></span></span></a>
+                </li>
+                <% end %>
+              </ul>
             </ul>
           </div>
         <% end %>
