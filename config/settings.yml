@@ -47,6 +47,15 @@ development:
     storage: filesystem
     s3_bucket:
     path_base: public
+  sidebar:
+    - { label: 'BBC Open Source', link: 'http://www.bbc.com/opensource' }
+    - { label: 'BBC', link: 'http://www.bbc.com' }
+    - 'divider'
+    - { label: 'iPlayer', link: 'http://www.bbc.co.uk/iplayer' }
+    - 'divider'
+    - { label: 'Queues', link: '/queues' }
+    - { label: 'Project #1', link: '/projects/1' }
+    - { label: 'Page 7 of batches', link: '/?page=7' }
 
 test:
   <<: *defaults
