@@ -15,13 +15,10 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    if @current_user.nil?
-      user_attributes = if request.headers['bbc.email_address']
-                          { name: request.headers['bbc.name'], email: request.headers['bbc.email_address'] }
-                        elsif ["test", "development"].include?(Rails.env)
-                          { name: "#{Rails.env} user", email: "#{Rails.env}@hive.tld" }
-                        end
-      @current_user   = User.find_or_create_by(user_attributes)
+    if @current_user.nil? and request.headers['bbc.email_address']
+      @current_user = User.find_or_create_by(
+                              name: request.headers['bbc.name'],
+                              email: request.headers['bbc.email_address'])
     end
     @current_user
   end
