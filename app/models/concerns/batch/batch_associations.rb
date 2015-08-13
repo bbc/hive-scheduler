@@ -8,6 +8,7 @@ class Batch < ActiveRecord::Base
       has_one    :execution_type, through: :project
       has_many   :job_groups, dependent: :destroy
       has_many   :jobs, through: :job_groups
+      has_many   :assets, through: :project, foreign_key: 'version'
     end
   end
 end

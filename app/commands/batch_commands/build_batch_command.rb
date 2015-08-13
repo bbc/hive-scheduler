@@ -34,11 +34,21 @@ module BatchCommands
       {
           project_id:          project_id,
           name:                new_name,
-          build:               build,
+          build:               save_build,
           version:             version,
           target_information:  target_information,
           execution_variables: processed_execution_variables
       }
+    end
+
+    def save_build
+      build.each do |b|
+        asset = Asset.find_or_register(project_id: project_id, name: new_name, file: b.original_filename, version: version)
+        asset.asset = b
+        asset.save
+      end
+
+      build
     end
 
     def new_name

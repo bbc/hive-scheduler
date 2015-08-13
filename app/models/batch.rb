@@ -1,7 +1,6 @@
 class Batch < ActiveRecord::Base
   include BatchValidations
   include BatchChart
-  include BatchAttachments
   include BatchAssociations
   include BatchScopes
 
@@ -10,6 +9,8 @@ class Batch < ActiveRecord::Base
 
   delegate :requires_build?, to: :project, allow_nil: true
   delegate :execution_variables_required, to: :project, allow_nil: true
+
+  attr_accessor :build
 
   self.per_page = 20
 
@@ -61,7 +62,10 @@ class Batch < ActiveRecord::Base
   def jobs_errored
     jobs.active.where("jobs.state='errored' or jobs.state='cancelled' or ( jobs.state='complete' and jobs.result='errored')" ).count
   end
-  
+
+  def asset
+    assets.where(version: self.version)
+  end
 
   [:queued, :running, :passed, :failed, :errored].each do |m|
     define_method("total_#{m}") do

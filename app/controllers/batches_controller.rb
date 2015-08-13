@@ -1,5 +1,5 @@
 class BatchesController < ApplicationController
-  before_filter :get_batch, only: [:show, :filter_jobs, :download_build, :chart_data]
+  before_filter :get_batch, only: [:show, :filter_jobs, :download_build, :download_builds, :chart_data]
 
   def index
     @filter_query = BatchQueries::Filters.new(params[:search])
@@ -40,7 +40,8 @@ class BatchesController < ApplicationController
   end
 
   def download_build
-    redirect_to @batch.build.expiring_url(10*60)
+    assets = @batch.asset.where(file: params["file_name"]).first
+    redirect_to assets.asset.expiring_url(10*60)
   end
 
   def chart_data

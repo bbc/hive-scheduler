@@ -8,7 +8,12 @@
 
 <h4>Project: <em><%= link_to @batch.project.name, project_path(@batch.project) %></em></h4>
 <p><strong>Version:</strong> <code class="version-label"><%= @batch.version %></code></p>
-<p><strong>Build:</strong> <em><%= link_to @batch.build_file_name, batch_download_build_path(@batch) %></em></p>
+<p>
+  <strong>Builds:</strong>
+  <% @batch.asset.each do |build| %>
+   <em><%= link_to build.file, batch_download_build_path(@batch, file_name: build.file) %></em>
+  <% end %>
+</p>
 <p><strong>Scheduled:</strong> <%= @batch.created_at.to_s(:short) %></p>
 <% if @batch.jobs.completed.count > 0 %>
 <p><strong>Testmite:</strong> <%= link_to("Results view", testmite_url(@batch.jobs.completed.first)) %></p>

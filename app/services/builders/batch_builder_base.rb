@@ -33,7 +33,7 @@ module Builders
       {
           project_id:          project_id,
           name:                name,
-          build:               build,
+        #  build:               asset,
           version:             version,
           target_information:  target_information,
           execution_variables: execution_variables

@@ -5,7 +5,7 @@
   <%= f.input :version %>
 
   <div class="<%= "hidden" unless @batch.requires_build? %>">
-    <%= f.input :build %>
+    <%= f.input :build, input_html: { multiple: true }, as: :file %>
   </div>
 
   <%= f.fields_for :target_information, OpenStruct.new(@batch.target_information) do |builder| %>
