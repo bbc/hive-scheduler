@@ -6,7 +6,7 @@ Hive::Scheduler::Application.routes.draw do
 
   resources :batches, only: %w{ index show new create } do
     get :download_build
-    get '/download_build/:file_name', action: :download_builds
+    get '/download_build/:file_name', action: :download_build
     get :chart_data
     get 'filter/:state', on: :collection, action: :filter, as: :filter
     get ':state', action: :filter_jobs, as: :filter

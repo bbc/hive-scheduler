@@ -1,5 +1,5 @@
 class BatchesController < ApplicationController
-  before_filter :get_batch, only: [:show, :filter_jobs, :download_build, :download_builds, :chart_data]
+  before_filter :get_batch, only: [:show, :filter_jobs, :download_build, :chart_data]
 
   def index
     @filter_query = BatchQueries::Filters.new(params[:search])
