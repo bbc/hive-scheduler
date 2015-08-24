@@ -2,12 +2,13 @@
 <div class="wizard" data-initialize="wizard" id="batchWizard">
   <div class="steps-container">
     <ul class="steps">
-      <li data-step="1" data-name="campaign" class="active"><span class="badge">1</span>Batch Information<span class="chevron"></span></li>
+      <li data-step="1" data-name="batchInfo" class="active"><span class="badge">1</span>Batch Information<span class="chevron"></span></li>
     </ul>
   </div>
   <div class="actions">
     <button type="button" class="btn btn-default btn-prev"><span class="glyphicon glyphicon-arrow-left"></span>Prev</button>
     <button type="button" class="btn btn-default btn-next" data-last="Finish">Next<span class="glyphicon glyphicon-arrow-right"></span></button>
+    <input type="submit" class="btn btn-default btn-next hidden">
   </div>
   <div class="step-content">
     <div class="step-pane active sample-pane alert" data-step="1">
@@ -16,21 +17,61 @@
       <p><%= f.association :project %></p>
       <p><%= f.input :version %></p>
     </div>
+
+    <% if @batch.execution_variables %>
+    <div class="step-pane sample pane-alert" id="queue">
+      <h4>Queue Options</h4>
+
+      <%= f.fields_for :execution_variables, OpenStruct.new(@batch.execution_variables) do |execution_variables_builder| %>
+          <%= render "fields/curated_queue", field_name: :curated_queue, f: execution_variables_builder, attribute: @batch.execution_variables %>
+
+
+          <%= execution_variables_builder.label :queue_names, class: 'control-label' %>
+          <div id="<%= :queues %>_names">
+            <%= execution_variables_builder.text_field(nil, { name: "#{execution_variables_builder.object_name}[#{:queues}][]", id: "#{:queues}_text_element_1", class:"#{:queues}_item", type: :text }) %>
+          </div>
+          <a href="#" id="add<%= :queues %>Item">Add <%= :queues %></a>
+
+          <script type="text/javascript">
+              $(document).on('click', '#add<%= :queues %>Item', function(e) {
+                  count = $('#<%= :queues %> > #<%= :queues %>_names > input').length
+                  $('#<%= :queues %> > #<%= :queues %>_names').append("<div id='<%= :queues %>_" + count + "'><input type='text' class='<%= :queues %>_item' id='<%= :queues %>_text_element_" + count + "' name='batch[execution_variables][queues][]' value=''><a id='remove<%= :queues %>Item' data-target='<%= :queues %>_" + count + "' href='#'>Remove <%= :queues %></a></div>")
+                  e.stopImmediatePropagation();
+              });
+
+              $(document).on('click', '#remove<%= :queues %>Item', function(e) {
+                  target = $(this).data('target');
+                  $('#' + target).remove();
+                  e.stopImmediatePropagation();
+              });
+          </script>
+      <% end %>
+    </div>
+    <% end %>
+
+    <div class="step-pane sample-pane-alert" id="job">
+      <h4>Job Information</h4>
+
+    </div>
+
+    <div class="step-pane sample-pane-alert" id="build">
+      <h4>Builds</h4>
+      <p>Please attach a build</p>
+      <p><%= f.input :build %></p>
+    </div>
+
   </div>
+
 
 </div>
 
   <% if @batch.requires_build? %>
     <script type="text/javascript">
-        $('#batchWizard').wizard('addSteps', 2, [
+        $('#batchWizard').wizard('addSteps', -1, [
             {
                 badge: '',
                 label: 'Build information',
-                pane: '<div>\
-                        <h4>Builds</h4>\
-                        <p>Please attach a build</p>\
-                        <%= f.input :build %>\
-                       </div>'
+                pane: $('#build').html()
             }
 
         ])
@@ -42,19 +83,14 @@
       form.wizard('addSteps', -1, [
           {
               label: 'Queue information',
-              pane: '<div>' +
-                      '<h4>Queues</h4>' +
-                    '</div>'
+              pane: '<div id="queues">' + $('#queue').html() + '</div>'
           }
       ]);
 
       form.wizard('addSteps', -1, [
           {
               label: 'Jobs',
-              pane: '<div>' +
-                      '<h4>Jobs</h4>' +
-                      '<p></p>' +
-                     '</div>'
+              pane: '<div id="test">' + $('#job').html() + '</div>'
           }
       ])
     </script>
@@ -65,8 +101,7 @@
 
             var wizard = $('#batchWizard').wizard();
             wizard.on('finished.fu.wizard', function(e, data){
-                console.log('Submitting form');
-                $('#new_batch').submit();
+                $('input[type=submit]').click();
             });
         });
     </script>
