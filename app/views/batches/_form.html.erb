@@ -1,65 +1,110 @@
 <%= simple_form_for @batch do |f| %>
-<div class="wizard" data-initialize="wizard" id="batchWizard">
-  <div class="steps-container">
-    <ul class="steps">
-      <li data-step="1" data-name="batchInfo" class="active"><span class="badge">1</span>Batch Information<span class="chevron"></span></li>
-    </ul>
-  </div>
-  <div class="actions">
-    <button type="button" class="btn btn-default btn-prev"><span class="glyphicon glyphicon-arrow-left"></span>Prev</button>
-    <button type="button" class="btn btn-default btn-next" data-last="Finish">Next<span class="glyphicon glyphicon-arrow-right"></span></button>
-    <input type="submit" class="btn btn-default btn-next hidden">
-  </div>
-  <div class="step-content">
-    <div class="step-pane active sample-pane alert" data-step="1">
-      <h4>Batch Details</h4>
-      <p><%= f.input :name %></p>
-      <p><%= f.association :project %></p>
-      <p><%= f.input :version %></p>
+  <div class="wizard" data-initialize="wizard" id="batchWizard">
+    <div class="steps-container">
+      <ul class="steps">
+        <li data-step="1" data-name="batchInfo" class="active"><span class="badge">1</span>Batch Information<span class="chevron"></span></li>
+      </ul>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn btn-default btn-prev"><span class="glyphicon glyphicon-arrow-left"></span>Prev</button>
+      <button type="button" class="btn btn-default btn-next" data-last="Finish">Next<span class="glyphicon glyphicon-arrow-right"></span></button>
+      <input type="submit" class="btn btn-default btn-next hidden">
+    </div>
+    <div class="step-content">
+      <div class="step-pane active sample-pane alert" data-step="1">
+        <h4>Batch Details</h4>
+        <p><%= f.input :name %></p>
+        <p><%= f.association :project %></p>
+        <p><%= f.input :version %></p>
+      </div>
     </div>
   </div>
-</div>
+
+  <script type="text/javascript">
+    $.fn.add_queue = function() {
+      this.wizard('addSteps', -1, [
+        {
+          label: 'Queue information',
+          pane: $('#queue').html()
+        }
+      ]);
+      return this;
+    };
+
+    $.fn.add_jobs = function() {
+      this.wizard('addSteps', -1, [
+        {
+          label: 'Jobs',
+          pane: '<div id="jobs">' + $('#job').html() + '</div>'
+        }
+      ]);
+      return this;
+    };
+
+    $.fn.add_build = function() {
+      this.wizard('addSteps', -1, [
+        {
+          badge: '',
+          label: 'Build information',
+          pane: $('#build').html()
+        }
+      ]);
+      return this;
+    };
+
+    $(document).ready(function(){
+        var wizard = $('#batchWizard').wizard();
+        wizard.on('finished.fu.wizard', function(e, data){
+            $('input[type=submit]').click();
+        });
+
+        wizard.on('actionclicked.fu.wizard', function(evt, data){
+          if (data['step'] == 1 && data['direction'] == 'next') {
+            if ($('#batch_project_id option:selected').index()) {
+              form = $('#batchWizard');
+
+              function get_tabs() {
+                var option_all = $("#batchWizard div ul li").map(function(){
+                  return $.trim($(this).text().substring(1));
+                }).get();
+                return option_all
+              }
+
+              build_pos = get_tabs().indexOf('Build information');
+              if (build_pos > 0) {
+                form.wizard('removeSteps', build_pos+1, 1);
+                form.add_build();
+              }
+
+              queue_pos = get_tabs().indexOf('Queue information');
+              if (queue_pos > 0) {
+                form.wizard('removeSteps', queue_pos+1, 1);
+                form.add_queue();
+              }
+
+              jobs_pos = get_tabs().indexOf('Jobs');
+              if (jobs_pos > 0) {
+                form.wizard('removeSteps', jobs_pos+1, 1);
+                form.add_jobs()
+              }
+            }
+          }
+        });
+    });
+  </script>
 
   <% if @batch.requires_build? %>
     <script type="text/javascript">
-        $('#batchWizard').wizard('addSteps', -1, [
-            {
-                badge: '',
-                label: 'Build information',
-                pane: $('#build').html()
-            }
-
-        ])
+      $('#batchWizard').add_build()
     </script>
   <% end %>
   <% if @batch.execution_variables %>
     <script type="text/javascript">
       form = $('#batchWizard');
-      form.wizard('addSteps', -1, [
-          {
-              label: 'Queue information',
-              pane: $('#queue').html()
-          }
-      ]);
-
-      form.wizard('addSteps', -1, [
-          {
-              label: 'Jobs',
-              pane: '<div id="jobs">' + $('#job').html() + '</div>'
-          }
-      ])
+      form.add_queue();
+      form.add_jobs();
     </script>
   <% end %>
-
-    <script type="text/javascript">
-        $(document).ready(function(){
-
-            var wizard = $('#batchWizard').wizard();
-            wizard.on('finished.fu.wizard', function(e, data){
-                $('input[type=submit]').click();
-            });
-        });
-    </script>
 <% end %>
 
 <div class="hidden" >
