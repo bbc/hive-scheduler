@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150225091618) do
+ActiveRecord::Schema.define(version: 20150918102417) do
 
   create_table "artifacts", force: true do |t|
     t.integer  "job_id"
@@ -148,9 +148,33 @@ ActiveRecord::Schema.define(version: 20150225091618) do
     t.boolean  "requires_build", default: false
   end
 
+  create_table "test_cases", force: true do |t|
+    t.string   "name"
+    t.string   "urn"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "test_cases", ["project_id"], name: "index_test_cases_on_project_id", using: :btree
+
+  create_table "test_results", force: true do |t|
+    t.string   "status"
+    t.text     "message"
+    t.integer  "test_case_id"
+    t.integer  "job_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "test_results", ["job_id"], name: "index_test_results_on_job_id", using: :btree
+  add_index "test_results", ["test_case_id"], name: "index_test_results_on_test_case_id", using: :btree
+
   create_table "users", force: true do |t|
     t.string "name"
     t.string "email"
+    t.string "provider"
+    t.string "uid"
   end
 
 end

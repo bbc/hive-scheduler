@@ -21,7 +21,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
 
-          <li><a><%= current_user.email %></a></li>
+          <li><%= link_to( current_user.uid, user_link(current_user)) -%></li>
 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
