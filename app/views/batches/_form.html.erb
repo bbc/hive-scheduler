@@ -1,26 +1,135 @@
 <%= simple_form_for @batch do |f| %>
-
-  <%= f.input :name %>
-  <%= f.association :project %>
-  <%= f.input :version %>
-
-  <div class="<%= "hidden" unless @batch.requires_build? %>">
-    <%= f.input :build %>
+  <div class="wizard" data-initialize="wizard" id="batchWizard">
+    <div class="steps-container">
+      <ul class="steps">
+        <li data-step="1" data-name="batchInfo" class="active"><span class="badge">1</span>Batch Information<span class="chevron"></span></li>
+      </ul>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn btn-default btn-prev"><span class="glyphicon glyphicon-arrow-left"></span>Prev</button>
+      <button type="button" class="btn btn-default btn-next" data-last="Finish">Next<span class="glyphicon glyphicon-arrow-right"></span></button>
+      <input type="submit" class="btn btn-default btn-next hidden">
+    </div>
+    <div class="step-content">
+      <div class="step-pane active sample-pane alert" data-step="1">
+        <h4>Batch Details</h4>
+        <p><%= f.input :name %></p>
+        <p><%= f.association :project %></p>
+        <p><%= f.input :version %></p>
+      </div>
+    </div>
   </div>
 
-  <%= f.fields_for :target_information, OpenStruct.new(@batch.target_information) do |builder| %>
+  <script type="text/javascript">
+    $.fn.add_queue = function() {
+      this.wizard('addSteps', -1, [
+        {
+          label: 'Queue information',
+          pane: $('#queue').html()
+        }
+      ]);
+      return this;
+    };
 
-    <% @batch.execution_type.target.fields.each do |target_field| %>
+    $.fn.add_jobs = function() {
+      this.wizard('addSteps', -1, [
+        {
+          label: 'Jobs',
+          pane: '<div id="jobs">' + $('#job').html() + '</div>'
+        }
+      ]);
+      return this;
+    };
 
-      <%= render "fields/#{target_field.field_type}", field_name: target_field.name, f: builder %>
-    <% end if @batch.execution_type.present? %>
+    $.fn.add_build = function() {
+      this.wizard('addSteps', -1, [
+        {
+          badge: '',
+          label: 'Build information',
+          pane: $('#build').html()
+        }
+      ]);
+      return this;
+    };
+
+    $(document).ready(function(){
+        var wizard = $('#batchWizard').wizard();
+        wizard.on('finished.fu.wizard', function(e, data){
+            $('input[type=submit]').click();
+        });
+
+        wizard.on('actionclicked.fu.wizard', function(evt, data){
+          if (data['step'] == 1 && data['direction'] == 'next') {
+            if ($('#batch_project_id option:selected').index()) {
+              form = $('#batchWizard');
+
+              function get_tabs() {
+                var option_all = $("#batchWizard div ul li").map(function(){
+                  return $.trim($(this).text().substring(1));
+                }).get();
+                return option_all
+              }
+
+              build_pos = get_tabs().indexOf('Build information');
+              if (build_pos > 0) {
+                form.wizard('removeSteps', build_pos+1, 1);
+                form.add_build();
+              }
+
+              queue_pos = get_tabs().indexOf('Queue information');
+              if (queue_pos > 0) {
+                form.wizard('removeSteps', queue_pos+1, 1);
+                form.add_queue();
+              }
+
+              jobs_pos = get_tabs().indexOf('Jobs');
+              if (jobs_pos > 0) {
+                form.wizard('removeSteps', jobs_pos+1, 1);
+                form.add_jobs()
+              }
+            }
+          }
+        });
+    });
+  </script>
+
+  <% if @batch.requires_build? %>
+    <script type="text/javascript">
+      $('#batchWizard').add_build()
+    </script>
   <% end %>
-
-  <%= render "shared/execution_variables", f: f, model: @batch %>
-
-  <div class="form-actions">
-    <%= f.submit nil, class: 'btn btn-primary', disable_with: "Creating..." %>
-    <%= link_to t('.cancel', default: t("helpers.links.cancel")),
-                batches_path, class: 'btn' %>
-  </div>
+  <% if @batch.execution_variables %>
+    <script type="text/javascript">
+      form = $('#batchWizard');
+      form.add_queue();
+      form.add_jobs();
+    </script>
+  <% end %>
 <% end %>
+
+<div class="hidden" >
+  <%= simple_form_for @batch do |f| %>
+    <%= f.fields_for :execution_variables, OpenStruct.new(@batch.execution_variables) do |execution_variables_builder| %>
+      <% if @batch.execution_variables %>
+        <div class="step-pane sample pane-alert" id="queue">
+          <h4>Queue Options</h4>
+            <%= render "fields/curated_queue", field_name: :curated_queue, f: execution_variables_builder, attribute: @batch.execution_variables %>
+            <%= render "fields/array", field_name: :queues, f: execution_variables_builder, attribute: @batch.execution_variables %>
+        </div>
+      <% end %>
+
+      <div class="step-pane sample-pane-alert" id="job">
+        <h4>Job Information</h4>
+          <%= render "fields/string", field_name: :tests_per_job, f: execution_variables_builder %>
+          <%= render "fields/string", field_name: :jobs_per_queue, f:execution_variables_builder %>
+          <%= render "fields/array", field_name: :tests, f: execution_variables_builder %>
+      </div>
+
+      <div class="step-pane sample-pane-alert" id="build">
+        <h4>Builds</h4>
+        <p>Please attach a build</p>
+        <p><%= f.input :build %></p>
+      </div>
+    <% end %>
+  <% end %>
+</div>

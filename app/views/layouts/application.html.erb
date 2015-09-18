@@ -35,8 +35,14 @@
     <%= favicon_link_tag 'hive-20.ico', :rel => 'shortcut icon' %>
 
     <%= javascript_include_tag "application" %>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//www.fuelcdn.com/fuelux/3.11.0/css/fuelux.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//www.fuelcdn.com/fuelux/3.11.0/js/fuelux.min.js"></script>
+
   </head>
-  <body>
+  <body class="fuelux">
 
   <%= render partial: "layouts/navigation" %>
   
