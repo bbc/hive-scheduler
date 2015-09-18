@@ -20,6 +20,8 @@ gem 'chamber'
 
 gem 'chartjs-ror'
 
+gem 'omniauth'
+
 # TODO Change the next two lines to use https when they are made public
 gem 'test_rail-api', git: 'git@github.com:bbc/test_rail-api.git', require: 'test_rail'
 gem 'devicedb_comms', git: 'git@github.com:bbc/devicedb_comms.git'

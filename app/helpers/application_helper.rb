@@ -31,4 +31,17 @@ module ApplicationHelper
   def testmite_url(job)
     "#{TESTMITE['url']}/worlds/search?hive_job_id=#{job.id}"
   end
+  
+  def user_link(user)
+    if user.uid == 'anonymous'
+      if Rails.application.config.default_omniauth_provider == :none
+        'https://github.com/bbc/hive-scheduler'
+      else
+        '/auth/' + Rails.application.config.default_omniauth_provider.to_s
+      end
+    else
+      nil
+    end
+  end
+  
 end
