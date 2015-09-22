@@ -128,7 +128,7 @@
       <div class="step-pane sample-pane-alert" id="build">
         <h4>Builds</h4>
         <p>Please attach a build</p>
-        <p><%= f.input :build %></p>
+        <p><%= f.input :build, input_html: { multiple: true }, as: :file %></p>
       </div>
     <% end %>
   <% end %>
