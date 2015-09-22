@@ -65,8 +65,8 @@ describe JobCommands::JobMessageMapper do
 
     describe "job message attributes" do
 
-      it "correctly renders and provides the populated execution template as the command attribute" do
-        expect(JSON.parse(job_message.command)).to eq all_execution_variables.stringify_keys
+      it "does not parse erb in the execution script" do
+        expect(job_message.command).to eq '<%= marshal_dump.to_json %>'
       end
 
       it "provides all the required execution_variables" do

@@ -35,8 +35,14 @@
     <%= favicon_link_tag 'hive-20.ico', :rel => 'shortcut icon' %>
 
     <%= javascript_include_tag "application" %>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//www.fuelcdn.com/fuelux/3.11.0/css/fuelux.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//www.fuelcdn.com/fuelux/3.11.0/js/fuelux.min.js"></script>
+
   </head>
-  <body>
+  <body class="fuelux">
 
   <%= render partial: "layouts/navigation" %>
   
@@ -47,23 +53,23 @@
         <% cache('stats_panel', :expires_in => 2.minutes ) do %>
           <div class="col-md-2 hidden-sm hidden-xs">
             <ul class="nav nav-pills nav-stacked">
-              <li class="dark"><a href="#">Hive Status</a></li>
+              <li class="dark"><a>Hive Status</a></li>
               <ul class="nav nav-pills nav-stacked">
+                <% if @version.to_s != ''  %>
                 <li class="light"><a href="https://github.com/bbc-test/hive-scheduler/releases/tag/<%=@version-%>">Version: <code class="pull-right"><%= @version -%></code></a></li>
-                <li class="light"><a>Scheduler<span class="label label-success pull-right">OK</span></a></li>
-                <li class="light"><a>DeviceDB<span class="label label-success pull-right">OK</span></a></li>
-                <li class="light"><a>Testmite<span class="label label-success pull-right">OK</span></a></li>
-              </ul>
-              <br />
-              <li class="dark"><a href="#">Current Jobs</a></li>
-              <ul class="nav nav-pills nav-stacked">
-                <li class="light"><a>Queued:<span class="badge badge-result badge-info pull-right"><%= "#{@counts['queued']}" %></span></a></li>
-                <li class="light"><a>Running:<span class="badge badge-result badge-warning pull-right"><%= "#{@counts['running']}" %></span></a></li>
-                <li class="light"><a>Passed:<span class="badge badge-result badge-success pull-right"><%= "#{@counts['passed']}" %></span></a></li>
-                <li class="light"><a>Failed:<span class="badge badge-result badge-important pull-right"><%= "#{@counts['failed']}" %></span></a></li>
-                <li class="light"><a>Errored:<span class="badge badge-result badge-inverse pull-right"><%= "#{@counts['errored']}" %></span></a></li>
+                <% end %>
+                <li class="light"><a>Running Jobs:<span class="badge badge-result badge-warning pull-right"><%= "#{@counts['running']}" %></span></a></li>
+                <li class="light"><a>Queued Jobs:<span class="badge badge-result badge-info pull-right"><%= "#{@counts['queued']}" %></span></a></li>
               </ul>
               </li>
+              <br />
+              <li class="dark"><a>Recent Jobs</a></li>
+              <ul class="nav nav-pills nav-stacked">
+                <% @projects.each do |p| %>
+                <li class="light"><a title="<%= p.name %>"><%= truncate(p.name, length: 20) %>:<span class="badge badge-result badge-<%= { passed: 'success', failed: 'important', errored: 'inverse', running: 'warning', queued: 'info' }[p.latest_batch.state] %> pull-right"><%= p.latest_batch.state.to_s.first.upcase %></span></span></a>
+                </li>
+                <% end %>
+              </ul>
             </ul>
           </div>
         <% end %>
@@ -74,8 +80,6 @@
       </div>
     </div>
   </div>
-
-
 
   <footer>
     <div class="col-md-12">

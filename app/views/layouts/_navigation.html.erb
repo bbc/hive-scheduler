@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-inverse" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/"> <%= image_tag "hive-20.png", alt: "Hive" %></a><a class="navbar-brand" href="/">HIVE</a>
+      <a class="nav-hive-logo" href="/"> <%= image_tag "hive-20.png", alt: "Hive" %></a>
 
     </div>
 
@@ -21,17 +21,23 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
 
-          <li><a><%= current_user.email %></a></li>
+          <li><%= link_to( current_user.uid, user_link(current_user)) -%></li>
 
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Titan <b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="#">DeviceDB</a></li>
-            <li><a href="#">Hive</a></li>
-            <li><a href="#">Gems</a></li>
+            <% if Chamber.env.sidebar? %>
+              <% Chamber.env.sidebar.each do |row| %>
+                  <% if row == 'divider' %>
             <li class="divider"></li>
-            <li><a href="#">Learn more</a></li>
-            <li><a href="#">Raise an issue</a></li>
+                  <% else %>
+            <li><a href="<%= row['link'] %>"><%= row['label'] %></a></li>
+                  <% end %>
+              <% end %>
+            <li class="divider"></li>
+            <% end %>
+            <li><a href="http://bbc.github.io/hive-ci/">Learn more</a></li>
+            <li><a href="https://github.com/bbc/hive-scheduler/issues">Raise an issue</a></li>
           </ul>
         </li>
       </ul>
