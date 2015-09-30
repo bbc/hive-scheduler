@@ -5,6 +5,7 @@ class JobGroup < ActiveRecord::Base
     included do
       belongs_to :batch
       has_many :jobs, dependent: :destroy
+      has_many :test_results, through: :jobs
     end
   end
 end
