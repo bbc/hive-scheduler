@@ -5,6 +5,7 @@ class Project < ActiveRecord::Base
     included do
       belongs_to :execution_type
       has_many   :batches
+      has_many   :test_cases
     end
   end
 end

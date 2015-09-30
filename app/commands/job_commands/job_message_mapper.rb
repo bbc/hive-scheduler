@@ -46,8 +46,13 @@ module JobCommands
         [batch, job_group, job].each do |model|
           @execution_variables.merge!(model.execution_variables) if model.execution_variables.present?
         end
+        @execution_variables[:retry_urns] = retry_urns if retry_urns
       end
       @execution_variables
+    end
+    
+    def retry_urns
+      job.retriable_test_cases.collect { |t| t.urn }.compact
     end
 
     def repository

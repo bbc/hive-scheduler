@@ -23,35 +23,42 @@ module Builders
       if test_slices.count > 1
         test_slices.each_with_index.map do |test_slice, index|
           job_execution_variables = { tests: test_slice, job_index: index+1, total_jobs: test_slices.count }
-          Job.new(
+                    
+          job = Job.create(
               job_name:            "#{job_base_name} ##{index+1}",
               queued_count:        test_slice.count,
               execution_variables: job_execution_variables,
               job_group:           job_group
-
           )
+          job.associate_test_cases( *test_slice )
+          job
         end
       else
-        [Job.new(
-             job_name:            "#{job_base_name}",
-             queued_count:        nil,
-             execution_variables: {},
-             job_group:           job_group
-
-         )]
+        job = Job.new(
+              job_name:            "#{job_base_name}",
+               queued_count:        nil,
+               execution_variables: {},
+               job_group:           job_group)
+        
+        job.associate_test_cases(*sanitized_tests)
+        [job]
       end
+    end
+    
+
+    def sanitized_tests
+      (tests || []).delete_if(&:blank?)
     end
 
     def test_slices
-      sanitized_test = (tests || []).delete_if(&:blank?)
       @test_slices   ||= if batch.jobs_per_queue.present?
                            slices = []
                            batch.jobs_per_queue.to_i.times do
-                             slices << sanitized_test
+                             slices << sanitized_tests
                            end
                            slices
                          else
-                           sanitized_test.each_slice(batch.tests_per_job).to_a
+                           sanitized_tests.each_slice(batch.tests_per_job).to_a
                          end
       @test_slices
     end

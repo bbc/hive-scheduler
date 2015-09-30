@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150918102417) do
+ActiveRecord::Schema.define(version: 20150921202742) do
 
   create_table "artifacts", force: true do |t|
     t.integer  "job_id"
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 20150918102417) do
   add_index "jobs", ["device_id"], name: "index_jobs_on_device_id", using: :btree
   add_index "jobs", ["job_group_id"], name: "index_jobs_on_job_group_id", using: :btree
   add_index "jobs", ["original_job_id"], name: "index_jobs_on_original_job_id", using: :btree
+  add_index "jobs", ["state", "job_group_id"], name: "index_jobs_on_state_and_job_group_id", using: :btree
 
   create_table "projects", force: true do |t|
     t.string   "name",                              null: false

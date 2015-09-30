@@ -13,7 +13,7 @@ module JobCommands
 
       describe "#perform" do
 
-        context "job exists" do
+        context "job exists, old-style count reporting" do
           let(:job) { Fabricate(:job, running_count: 0, passed_count: 0, failed_count: 0, errored_count: 0) }
 
           let(:running_count) { 4 }
@@ -46,6 +46,7 @@ module JobCommands
           it "does not catch any exceptions raised" do
             expect { reservation_command.perform }.to raise_error(ActiveRecord::RecordNotFound)
           end
+          
         end
       end
     end
