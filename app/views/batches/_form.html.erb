@@ -98,7 +98,7 @@
       $('#batchWizard').add_build()
     </script>
   <% end %>
-  <% if @batch.execution_variables %>
+  <% unless @batch.project_id.nil? %>
     <script type="text/javascript">
       form = $('#batchWizard');
       form.add_queue();
