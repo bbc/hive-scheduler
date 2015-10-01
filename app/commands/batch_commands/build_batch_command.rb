@@ -46,7 +46,7 @@ module BatchCommands
         asset = Asset.find_or_register(project_id: project_id, name: new_name, file: b.original_filename, version: version)
         asset.asset = b
         asset.save
-      end
+      end unless build.nil?
 
       build
     end

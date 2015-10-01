@@ -26,8 +26,10 @@ class BatchesController < ApplicationController
   end
 
   def create
-
-    unless batch_params['project_id'].empty?
+    if batch_params['project_id'].empty?
+      @batch = Batch.new(params[:batch].blank? ? {} : batch_params)
+      render action: 'new'
+    else
       @batch = BatchCommands::BuildBatchCommand.build(batch_params)
       if @batch.save
         redirect_to @batch, notice: 'Batch was successfully created.'
@@ -35,8 +37,6 @@ class BatchesController < ApplicationController
         render action: 'new'
       end
     end
-    @batch = Batch.new(params[:batch].blank? ? {} : batch_params)
-    render action: 'new'
   end
 
   def filter_jobs
