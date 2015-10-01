@@ -87,6 +87,9 @@
               form.wizard('removeSteps', jobs_pos+1, 1);
               form.add_jobs()
             }
+
+            $(document).ready(add_array_item);
+            $(document).on('page:load', add_array_item);
           }
         }
       });
@@ -111,7 +114,7 @@
   <%= simple_form_for @batch  do |f| %>
     <%= f.fields_for :execution_variables, OpenStruct.new(@batch.execution_variables) do |execution_variables_builder| %>
       <% if @batch.execution_variables %>
-        <div class="step-pane sample pane-alert" id="queue">
+        <div class="step-pane sample-pane-alert" id="queue">
           <h4>Queue Options</h4>
           <%= render "fields/curated_queue", field_name: :curated_queue, f: execution_variables_builder, attribute: @batch.execution_variables %>
           <%= render "fields/array", field_name: :queues, f: execution_variables_builder, attribute: @batch.execution_variables %>
