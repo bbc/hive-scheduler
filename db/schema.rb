@@ -25,21 +25,6 @@ ActiveRecord::Schema.define(version: 20151002073630) do
 
   add_index "artifacts", ["job_id"], name: "index_artifacts_on_job_id", using: :btree
 
-  create_table "assets", force: true do |t|
-    t.integer  "project_id"
-    t.string   "name"
-    t.string   "file"
-    t.string   "version"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "asset_file_name"
-    t.string   "asset_content_type"
-    t.integer  "asset_file_size"
-    t.datetime "asset_updated_at"
-  end
-
-  add_index "assets", ["project_id"], name: "index_assets_on_project_id", using: :btree
-
   create_table "batches", force: true do |t|
     t.string   "name",                        null: false
     t.datetime "created_at"
