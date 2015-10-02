@@ -1,5 +1,5 @@
 class RenameExecutionTypes < ActiveRecord::Migration
   def change
-    rename_table :scripts, :scripts
+    rename_table :execution_types, :scripts
   end
 end
