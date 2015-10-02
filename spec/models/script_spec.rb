@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe ExecutionType do
+describe Script do
 
-  it { should be_a(ExecutionType::ExecutionTypeValidations) }
+  it { should be_a(Script::ScriptValidations) }
 
   it { should belong_to(:target) }
   it { should have_many(:projects) }

@@ -20,7 +20,7 @@ describe Project::ProjectCallbacks do
         let(:builder_options) { { "foo" => "bar" } }
 
         before(:each) do
-          project.execution_type  = Fabricate(:execution_type)
+          project.script  = Fabricate(:script)
           project.builder_options = builder_options
           project.save(validate: false)
           project.reload

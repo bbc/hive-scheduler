@@ -2,7 +2,7 @@
   <%= f.input :name %>
   <%= f.input :repository %>
   <%= f.input :execution_directory %>
-  <%= f.association :execution_type %>
+  <%= f.association :script %>
 
   <% if @builders.present? %>
     <%= field_set_tag "Population Mechanism" do %>
@@ -29,6 +29,6 @@
 
 <% end %>
 
-<% if @project.execution_type.present? %>
-  <pre id="template_preview"><%= @project.execution_type.template.html_safe %></pre>
+<% if @project.script.present? %>
+  <pre id="template_preview"><%= @project.script.template.html_safe %></pre>
 <% end %>

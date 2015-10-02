@@ -6,7 +6,7 @@ describe Batch::BatchAssociations do
   subject { batch }
 
   it { should belong_to(:project) }
-  it { should have_one(:execution_type).through(:project) }
+  it { should have_one(:script).through(:project) }
   it { should have_many(:job_groups).dependent(:destroy) }
   it { should have_many(:jobs).through(:job_groups) }
 end

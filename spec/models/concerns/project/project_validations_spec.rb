@@ -6,7 +6,7 @@ describe Project::ProjectValidations do
   subject { project }
 
   it { should validate_presence_of(:name) }
-  it { should validate_presence_of(:execution_type) }
+  it { should validate_presence_of(:script) }
   it { should_not validate_presence_of(:repository) }
   it { should validate_presence_of(:execution_directory) }
   it { should validate_presence_of(:builder_name) }

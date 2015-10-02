@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150918102417) do
+ActiveRecord::Schema.define(version: 20151002073630) do
 
   create_table "artifacts", force: true do |t|
     t.integer  "job_id"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20150918102417) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
-  create_table "execution_types", force: true do |t|
+  create_table "scripts", force: true do |t|
     t.string   "name",       null: false
     t.text     "template",   null: false
     t.datetime "created_at"
@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(version: 20150918102417) do
     t.string   "execution_directory", default: ".", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "execution_type_id",                 null: false
+    t.integer  "script_id",                         null: false
     t.string   "builder_name"
     t.binary   "builder_options"
     t.datetime "deleted_at"
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(version: 20150918102417) do
   end
 
   add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree
-  add_index "projects", ["execution_type_id"], name: "index_projects_on_execution_type_id", using: :btree
+  add_index "projects", ["script_id"], name: "index_projects_on_script_id", using: :btree
 
   create_table "targets", force: true do |t|
     t.string   "name"
