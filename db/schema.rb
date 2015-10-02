@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150918102417) do
+ActiveRecord::Schema.define(version: 20151002073630) do
 
   create_table "artifacts", force: true do |t|
     t.integer  "job_id"
@@ -24,6 +24,21 @@ ActiveRecord::Schema.define(version: 20150918102417) do
   end
 
   add_index "artifacts", ["job_id"], name: "index_artifacts_on_job_id", using: :btree
+
+  create_table "assets", force: true do |t|
+    t.integer  "project_id"
+    t.string   "name"
+    t.string   "file"
+    t.string   "version"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "asset_file_name"
+    t.string   "asset_content_type"
+    t.integer  "asset_file_size"
+    t.datetime "asset_updated_at"
+  end
+
+  add_index "assets", ["project_id"], name: "index_assets_on_project_id", using: :btree
 
   create_table "batches", force: true do |t|
     t.string   "name",                        null: false
@@ -64,14 +79,6 @@ ActiveRecord::Schema.define(version: 20150918102417) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
-
-  create_table "execution_types", force: true do |t|
-    t.string   "name",       null: false
-    t.text     "template",   null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "target_id"
-  end
 
   create_table "fields", force: true do |t|
     t.string   "name"
@@ -123,6 +130,7 @@ ActiveRecord::Schema.define(version: 20150918102417) do
   add_index "jobs", ["device_id"], name: "index_jobs_on_device_id", using: :btree
   add_index "jobs", ["job_group_id"], name: "index_jobs_on_job_group_id", using: :btree
   add_index "jobs", ["original_job_id"], name: "index_jobs_on_original_job_id", using: :btree
+  add_index "jobs", ["state", "job_group_id"], name: "index_jobs_on_state_and_job_group_id", using: :btree
 
   create_table "projects", force: true do |t|
     t.string   "name",                              null: false
@@ -130,7 +138,7 @@ ActiveRecord::Schema.define(version: 20150918102417) do
     t.string   "execution_directory", default: ".", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "execution_type_id",                 null: false
+    t.integer  "script_id",                         null: false
     t.string   "builder_name"
     t.binary   "builder_options"
     t.datetime "deleted_at"
@@ -138,7 +146,15 @@ ActiveRecord::Schema.define(version: 20150918102417) do
   end
 
   add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree
-  add_index "projects", ["execution_type_id"], name: "index_projects_on_execution_type_id", using: :btree
+  add_index "projects", ["script_id"], name: "index_projects_on_script_id", using: :btree
+
+  create_table "scripts", force: true do |t|
+    t.string   "name",       null: false
+    t.text     "template",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "target_id"
+  end
 
   create_table "targets", force: true do |t|
     t.string   "name"
@@ -147,28 +163,6 @@ ActiveRecord::Schema.define(version: 20150918102417) do
     t.datetime "updated_at"
     t.boolean  "requires_build", default: false
   end
-
-  create_table "test_cases", force: true do |t|
-    t.string   "name"
-    t.string   "urn"
-    t.integer  "project_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "test_cases", ["project_id"], name: "index_test_cases_on_project_id", using: :btree
-
-  create_table "test_results", force: true do |t|
-    t.string   "status"
-    t.text     "message"
-    t.integer  "test_case_id"
-    t.integer  "job_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "test_results", ["job_id"], name: "index_test_results_on_job_id", using: :btree
-  add_index "test_results", ["test_case_id"], name: "index_test_results_on_test_case_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string "name"

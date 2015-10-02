@@ -1,5 +1,5 @@
-class ExecutionType < ActiveRecord::Base
-  module ExecutionTypeValidations
+class Script < ActiveRecord::Base
+  module ScriptValidations
     extend ActiveSupport::Concern
 
     included do
