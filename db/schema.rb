@@ -80,6 +80,14 @@ ActiveRecord::Schema.define(version: 20151002073630) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
+  create_table "scripts", force: true do |t|
+    t.string   "name",       null: false
+    t.text     "template",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "target_id"
+  end
+
   create_table "fields", force: true do |t|
     t.string   "name"
     t.string   "field_type"
@@ -148,21 +156,27 @@ ActiveRecord::Schema.define(version: 20151002073630) do
   add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree
   add_index "projects", ["script_id"], name: "index_projects_on_script_id", using: :btree
 
-  create_table "scripts", force: true do |t|
-    t.string   "name",       null: false
-    t.text     "template",   null: false
+  create_table "test_cases", force: true do |t|
+    t.string   "name"
+    t.string   "urn"
+    t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "target_id"
   end
 
-  create_table "targets", force: true do |t|
-    t.string   "name"
-    t.string   "icon"
+  add_index "test_cases", ["project_id"], name: "index_test_cases_on_project_id", using: :btree
+
+  create_table "test_results", force: true do |t|
+    t.string   "status"
+    t.text     "message"
+    t.integer  "test_case_id"
+    t.integer  "job_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "requires_build", default: false
   end
+
+  add_index "test_results", ["job_id"], name: "index_test_results_on_job_id", using: :btree
+  add_index "test_results", ["test_case_id"], name: "index_test_results_on_test_case_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string "name"
