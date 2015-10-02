@@ -156,6 +156,14 @@ ActiveRecord::Schema.define(version: 20151002073630) do
   add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree
   add_index "projects", ["script_id"], name: "index_projects_on_script_id", using: :btree
 
+  create_table "targets", force: true do |t|
+    t.string   "name"
+    t.string   "icon"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "requires_build", default: false
+  end
+
   create_table "test_cases", force: true do |t|
     t.string   "name"
     t.string   "urn"
