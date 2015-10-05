@@ -1,6 +1,6 @@
 Fabricator(:project) do
   name { "Project #{Fabricate.sequence(:project)}" }
-  execution_type { Fabricate(:execution_type) }
+  script { Fabricate(:script) }
   repository { 'repo' }
   execution_directory { '.' }
   builder_name { Builders::Registry.registered_builders.first.builder_name }
@@ -18,7 +18,7 @@ end
 
 Fabricator(:manual_project, from: :project) do
   name { "Manual Project #{Fabricate.sequence(:manual_project)}" }
-  execution_type { Fabricate(:cucumber_execution_type) }
+  script { Fabricate(:cucumber_script) }
   builder_name { "manual_builder" }
   builder_options do
     { "cucumber_tags" => "some tag", "queues" => ["q1", "q2"] }

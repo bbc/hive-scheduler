@@ -1,10 +1,10 @@
-var execution_type_create;
-execution_type_create = function () {
+var script_create;
+script_create = function () {
 
-    if ($('.execution_type_form').length) {
-        $("#execution_type_target_id").imagepicker( {show_label: true} );
+    if ($('.script_form').length) {
+        $("#script_target_id").imagepicker( {show_label: true} );
     }
 };
 
-$(document).ready(execution_type_create);
-$(document).on('page:load', execution_type_create);
+$(document).ready(script_create);
+$(document).on('page:load', script_create);

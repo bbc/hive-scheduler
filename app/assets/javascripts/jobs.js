@@ -1,7 +1,7 @@
 var template_preview, update_graph, update_job_stats;
 
 template_preview = function() {
-  return $("#project_execution_type_id").change(function() {
+  return $("#project_script_id").change(function() {
     return $.get($(this).attr('data-path') + $(this).val(), function(data) {
       $("#template_preview").html(data);
       return template_preview();

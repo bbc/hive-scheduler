@@ -78,7 +78,7 @@ describe Batch do
                   expected_execution_variables[field.name.to_s]=field.default_value
                 end
 
-                project.execution_type.execution_variables.each do |field|
+                project.script.execution_variables.each do |field|
                   expected_execution_variables[field.name.to_s]=field.default_value
                 end
 
@@ -242,10 +242,10 @@ describe Batch do
 
       context "project is not nil" do
 
-        let(:project) { Project.new.tap { |p| p.stub(requires_build?: execution_type_value) } }
-        let(:execution_type_value) { true }
+        let(:project) { Project.new.tap { |p| p.stub(requires_build?: script_value) } }
+        let(:script_value) { true }
 
-        it { should eq execution_type_value }
+        it { should eq script_value }
       end
     end
 

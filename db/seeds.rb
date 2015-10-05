@@ -20,7 +20,7 @@ Field.where(owner_type: "Target").delete_all
   end
 end
 
-ExecutionType.where(target_id: nil).update_all(target_id: 1)
+Script.where(target_id: nil).update_all(target_id: 1)
 
 {
     1 => { name: "Ruby versions", queues: %w('1.8.7', '1.9.3', '2.1.5') },
@@ -32,7 +32,7 @@ end
 
 # For dummy data uncomment these lines before running bin/rake db:seed
 #et = ExecutionType.create!(
-#  name: 'Dummy execution type',
+#  name: 'Dummy script',
 #  template: '# Do nothing',
 #  target_id: 5
 #)

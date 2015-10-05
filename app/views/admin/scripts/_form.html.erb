@@ -3,7 +3,7 @@
     <h3 class="panel-title"><%= title %></h3>
   </div>
   <div class="panel-body">
-    <p>An execution type defines how your tests run.</p>
+    <p>An script defines how your tests run.</p>
     <p>Simply select the platform your tests run on, provide an execution script and specify any custom variables required.</p>
     <div class="bs-callout bs-callout-primary">
       <h4>Special Variables</h4>
@@ -33,7 +33,7 @@
       </table>
 
     </div>
-    <%= simple_form_for [:admin, @execution_type], html: {class: "execution_type_form"} do |f| %>
+    <%= simple_form_for [:admin, @script], html: {class: "script_form"} do |f| %>
       <%= f.error_notification %>
       <%= f.association :target_id do %>
         <%= f.label :target_id, label: 'Target platform' %>
@@ -42,12 +42,12 @@
       <%= f.input :name %>
       <%= f.input :template %>
 
-      <%= render "fields/fields_edit_form", f: f, field_type: :execution_variables, model: @execution_type %>
+      <%= render "fields/fields_edit_form", f: f, field_type: :execution_variables, model: @script %>
 
       <div class="form-actions">
         <%= f.submit nil, class: 'btn btn-primary' %>
         <%= link_to t('.cancel', default: t("helpers.links.cancel")),
-                    admin_execution_types_path, class: 'btn' %>
+                    admin_scripts_path, class: 'btn' %>
       </div>
     <% end %>
   </div>

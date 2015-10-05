@@ -22,8 +22,8 @@ describe JobCommands::JobMessageMapper do
     end
 
 
-    let(:execution_type) { Fabricate(:execution_type, template: File.read("spec/fixtures/files/erb_template.erb")) }
-    let(:project) { Fabricate(:project, execution_type: execution_type) }
+    let(:script) { Fabricate(:script, template: File.read("spec/fixtures/files/erb_template.erb")) }
+    let(:project) { Fabricate(:project, script: script) }
 
     let(:batch) { Fabricate(:batch, project: project, target_information: {location_url: "http://www.bbc.co.uk"}, execution_variables: batch_execution_variables) }
 
@@ -42,7 +42,7 @@ describe JobCommands::JobMessageMapper do
         all_execution_variables[field.name.to_sym]=field.default_value
       end
 
-      project.execution_type.execution_variables.each do |field|
+      project.script.execution_variables.each do |field|
         all_execution_variables[field.name.to_sym]=field.default_value
       end
 
