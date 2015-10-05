@@ -12,7 +12,9 @@ The scheduler component behind the hive, and the main web view.
 
 ### Configuration
 
-Add the following lines to `~/.bashrc` (or equivalent):
+Hive-Scheduler is configured using the Chamber gem. You can add configuration directly
+into the config/settings.yml file, or by setting the following environment variables (in 
+the following lines to `~/.bashrc` (or equivalent):
 
 ```bash
 export RAILS_ENV=production
