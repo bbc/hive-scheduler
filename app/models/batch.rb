@@ -42,30 +42,52 @@ class Batch < ActiveRecord::Base
     end || :invalid
   end
   
+  def test_result_count_hash
+    if !@hash
+      @hash = job_groups.collect { |g| g.test_results.group_by {|tr| tr.test_case_id}.collect { |k,v| v.last } }.flatten.group_by { |t| t.status }
+    end
+    @hash
+  end
+  
+  
   def jobs_queued
-    jobs.active.where(state: ['queued', 'pending']).count
+    if test_cases
+      (test_result_count_hash['notrun'] || []).count
+    else
+      jobs.active.where(state: ['queued', 'pending']).count
+    end
   end
 
   def jobs_running
-    jobs.active.where(state: ['preparing', 'running', 'analyzing']).count 
+    if test_cases
+      (test_result_count_hash['running'] || []).count
+    else
+      jobs.active.where(state: ['preparing', 'running', 'analyzing']).count
+    end
   end
 
   def jobs_passed
-    jobs.active.where(state: 'complete', result: ['passed']).count
+    if test_cases
+      (test_result_count_hash['passed'] || []).count
+    else
+      jobs.active.where(state: 'complete', result: ['passed']).count
+    end
   end
 
   def jobs_failed
-    jobs.active.where(result: ['failed']).count
+    if test_cases
+      (test_result_count_hash['failed'] || []).count
+    else
+      jobs.active.where(result: ['failed']).count
+    end
   end
   
   def jobs_errored
-    jobs.active.where("jobs.state='errored' or jobs.state='cancelled' or ( jobs.state='complete' and jobs.result='errored')" ).count
-  end
-  
-
-  [:queued, :running, :passed, :failed, :errored].each do |m|
-    define_method("total_#{m}") do
-      jobs.active.sum("#{m}_count")
+    if test_cases
+      (test_result_count_hash['errored'] || []).count
+    else
+      jobs.active.where("jobs.state='errored' or jobs.state='cancelled' or ( jobs.state='complete' and jobs.result='errored')" ).count
     end
   end
+  
 end

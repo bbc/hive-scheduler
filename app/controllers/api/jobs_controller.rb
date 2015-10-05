@@ -92,6 +92,6 @@ class Api::JobsController < Api::ApiController
   end
 
   def job_result_params
-    params.permit(:running_count, :passed_count, :failed_count, :errored_count)
+    params.permit(:running_count, :passed_count, :failed_count, :errored_count, :job_id, :result_details)
   end
 end

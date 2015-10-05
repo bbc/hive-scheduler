@@ -39,8 +39,6 @@
 
       <div class="col-md-6">
         <h3 id="summary"><%= full_job_name(@job) %></h3>
-
-
         <h4>Batch: <%= link_to @job.batch.name, batch_path(@job.batch) %></h4>
         <table class="table">
           <tr>
@@ -103,14 +101,15 @@
         </table>
 
 
-        <% if @job.tests.present? %>
+        <% if !@job.test_results.empty? %>
           <br/>
           <br/>
           <h4 id="tests">Tests</h4>
           <table class="table table-bordered table-condensed">
-            <% @job.tests.each do |test| %>
+            <% @job.test_results.each do |result| %>
               <tr>
-                <td><%= test %></td>
+                <td><%= result.test_case.name %></td>
+                <td><%= status_badge(result.status) %></td>
               </tr>
             <% end %>
           </table>

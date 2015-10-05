@@ -33,12 +33,18 @@ class Job < ActiveRecord::Base
     end
 
     def move_queued_to_running
+      if test_results
+        test_results.each { |tr| tr.update(status: 'running') }
+      end
       self.running_count = self.queued_count
       self.queued_count  = 0
       self.save
     end
 
     def move_all_to_errored
+      if test_results
+        test_results.each { |tr| tr.update(status: 'errored') }
+      end
       self.errored_count = self.queued_count.to_i + self.running_count.to_i
       self.running_count = 0
       self.queued_count  = 0

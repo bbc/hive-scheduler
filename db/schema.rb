@@ -65,14 +65,6 @@ ActiveRecord::Schema.define(version: 20151002073630) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
-  create_table "scripts", force: true do |t|
-    t.string   "name",       null: false
-    t.text     "template",   null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "target_id"
-  end
-
   create_table "fields", force: true do |t|
     t.string   "name"
     t.string   "field_type"
@@ -123,6 +115,7 @@ ActiveRecord::Schema.define(version: 20151002073630) do
   add_index "jobs", ["device_id"], name: "index_jobs_on_device_id", using: :btree
   add_index "jobs", ["job_group_id"], name: "index_jobs_on_job_group_id", using: :btree
   add_index "jobs", ["original_job_id"], name: "index_jobs_on_original_job_id", using: :btree
+  add_index "jobs", ["state", "job_group_id"], name: "index_jobs_on_state_and_job_group_id", using: :btree
 
   create_table "projects", force: true do |t|
     t.string   "name",                              null: false
@@ -139,6 +132,14 @@ ActiveRecord::Schema.define(version: 20151002073630) do
 
   add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree
   add_index "projects", ["script_id"], name: "index_projects_on_script_id", using: :btree
+
+  create_table "scripts", force: true do |t|
+    t.string   "name",       null: false
+    t.text     "template",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "target_id"
+  end
 
   create_table "targets", force: true do |t|
     t.string   "name"
