@@ -59,7 +59,7 @@ echo Hello $HIVE_WORD
 Add a new execution variable called `word` and set the field type to 'String'. Save the script.
 
 Go into the 'Projects' section and create a new project. Set the name to
-'Hello world' and select the script to 'Hello \<name\>'. Select the
+'Hello world' and select the 'Hello \<name\>' script. Select the
 'Manual' population mechanism and enter 'world' in the Word field and 'bash'
 in the Queues field. Leave all other fields as the defaults. Save the project.
 
