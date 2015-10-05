@@ -45,7 +45,11 @@ class BatchesController < ApplicationController
   end
 
   def download_build
-    assets = @batch.asset.where(file: params["file_name"]).first
+    if params['file_name'].nil?
+      assets = @batch.asset.first
+    else
+      assets = @batch.asset.where(file: params["file_name"]).first
+    end
     redirect_to assets.asset.expiring_url(10*60)
   end
 
