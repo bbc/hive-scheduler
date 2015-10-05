@@ -1,5 +1,9 @@
 <div id="<%= "#{field_name}_element_#{index}" %>">
-  <%= f.text_field(nil, { value: array_item, name: "#{f.object_name}[#{field_name}][]", id: "#{field_name}_text_element_#{index}", class: "#{field_name}_item", type: :text }) %>
+  <% if field_name == :build %>
+    <%= f.file_field(nil, { value: array_item, name: "#{f.object_name}[#{field_name}][]", id: "#{field_name}_text_element_#{index}", class: "#{field_name}_item" }) %>
+  <% else %>
+    <%= f.text_field(nil, { value: array_item, name: "#{f.object_name}[#{field_name}][]", id: "#{field_name}_text_element_#{index}", class: "#{field_name}_item", type: :text }) %>
+  <% end %>
   <a class="remove_array_element" data-element-id="<%= "#{field_name}_element_#{index}" %>" href="#">Remove <%= field_name.to_s.humanize.singularize.titlecase %></a>
   <br/>
 </div>

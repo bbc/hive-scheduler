@@ -17,12 +17,6 @@
         <p><%= f.association :project %></p>
         <p><%= f.input :version %></p>
       </div>
-      <div class="step-pane sample-pane-alert" data-step='4' id="build">
-        <h4>Build</h4>
-        <p>Please attach a build</p>
-        <p><%= f.input :build, input_html: { multiple: true }, as: :file %></p>
-        <%= f.submit nil, class: 'btn btn-primary', disable_with: "Creating..." %>
-      </div>
     </div>
   </div>
 
@@ -52,7 +46,7 @@
         {
           badge: '',
           label: 'Build information',
-          pane: $('#buildStepTab').removeClass('hidden')
+          pane: $('#build').html()
         }
       ]);
       return this;
@@ -89,7 +83,7 @@
             }
 
             $(document).ready(add_array_item);
-            $(document).on('page:load', add_array_item);
+            //$(document).on('page:load', add_array_item);
           }
         }
       });
@@ -126,6 +120,12 @@
         <%= render "fields/string", field_name: :tests_per_job, f: execution_variables_builder %>
         <%= render "fields/string", field_name: :jobs_per_queue, f:execution_variables_builder %>
         <%= render "fields/array", field_name: :tests, f: execution_variables_builder %>
+      </div>
+
+      <div class="step-pane sample-pane-alert" id="build">
+        <h4>Build</h4>
+        <p>Please attach a build</p>
+        <%= render "fields/array", field_name: :build, f: execution_variables_builder %>
       </div>
     <% end %>
   <% end %>

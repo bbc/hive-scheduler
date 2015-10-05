@@ -3,9 +3,7 @@
   <div class="controls" id="<%= parent_id = "#{field_name}_array_fields" %>">
 
     <% (defined?(attribute) && attribute.present? ? attribute : {}).fetch(field_name.to_s, [""]).each_with_index do |array_item, index| %>
-
-      <%= render(partial: "fields/array_element", locals: {f:f, field_name: field_name, index: index, array_item: array_item }) %>
-
+      <%= render(partial: "fields/array_element", locals: { f:f, field_name: field_name, index: index, array_item: array_item } ) %>
     <% end %>
 
   </div>
