@@ -17,6 +17,11 @@
         <p><%= f.association :project %></p>
         <p><%= f.input :version %></p>
       </div>
+      <div class="step-pane sample-pane-alert" data-step='4' id="build">
+        <h4>Build</h4>
+        <p>Please attach a build</p>
+        <%= render "fields/array", field_name: :build, f: f %>
+      </div>
     </div>
   </div>
 
@@ -46,7 +51,7 @@
         {
           badge: '',
           label: 'Build information',
-          pane: $('#build').html()
+          //pane: $('#build').html()
         }
       ]);
       return this;
@@ -122,11 +127,6 @@
         <%= render "fields/array", field_name: :tests, f: execution_variables_builder %>
       </div>
 
-      <div class="step-pane sample-pane-alert" id="build">
-        <h4>Build</h4>
-        <p>Please attach a build</p>
-        <%= render "fields/array", field_name: :build, f: execution_variables_builder %>
-      </div>
     <% end %>
   <% end %>
 </div>
