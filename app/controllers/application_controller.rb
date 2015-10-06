@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   
-  before_filter :generate_stats
+  before_filter :generate_stats, :except => :status
   helper_method :current_user
 
   # Omniauth callback handler when using force_authentication
@@ -17,9 +17,17 @@ class ApplicationController < ActionController::Base
   private
 
   def generate_stats
-    @counts  = Job.state_counts
+    @counts  = Rails.cache.fetch('sidebar_counts', expires_in: 1.minute) do
+      Job.state_counts
+    end
+    
     @version = Hive::Scheduler.const_get(:VERSION)
-    @sidebar_projects = Project.all.select {|p| p.latest_batch != nil }.sort { |a, b| b.latest_batch.updated_at <=> a.latest_batch.updated_at }[0, 10]
+    
+    
+    @sidebar_projects = Rails.cache.fetch('sidebar_projects', expires_in: 0.minute) do
+      Project.all.select {|p| p.latest_batch != nil }.sort { |a, b| b.latest_batch.updated_at <=> a.latest_batch.updated_at }[0, 10]
+    end
+
   end
 
   private
