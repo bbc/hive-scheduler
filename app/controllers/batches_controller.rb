@@ -4,7 +4,7 @@ class BatchesController < ApplicationController
   def index
     @filter_query = BatchQueries::Filters.new(params[:search])
     @page    = params[:page] || 1
-    @batches = @filter_query.scope.includes(:project).page(params[:page]).order("created_at desc")
+    @batches = @filter_query.scope.includes(:project, :test_cases, :job_groups => [:test_results]).page(params[:page]).order("created_at desc")
   end
 
   def filter
