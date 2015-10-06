@@ -6,6 +6,8 @@ class Project < ActiveRecord::Base
       belongs_to :script
       has_many   :batches
       has_many   :test_cases
+      
+      has_one    :latest_batch, -> { order id: :desc }, class_name: 'Batch'
     end
   end
 end

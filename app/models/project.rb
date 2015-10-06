@@ -31,8 +31,4 @@ class Project < ActiveRecord::Base
     @builder ||= Builders::Registry.find_by_builder_name(self.builder_name)
   end
   
-  def latest_batch
-    self.batches.last
-  end
-  
 end
