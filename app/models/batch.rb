@@ -46,58 +46,51 @@ class Batch < ActiveRecord::Base
   def test_result_count_hash
     if !@hash
       @hash = job_groups.collect { |g| g.test_results.group_by {|tr| tr.test_case_id}.collect { |k,v| v.last } }.flatten.group_by { |t| t.status }
+      @hash['queued'] = @hash['notrun']
     end
     @hash
   end
   
-  
+ 
+  #
+  # These methods provide a summary of the job statuses
+  #
   def jobs_queued
-    if !test_cases.empty?
-      (test_result_count_hash['notrun'] || []).count
-    else
-      jobs.active.where(state: ['queued', 'pending']).count
-    end
+    jobs.active.where(state: ['queued', 'pending']).count
   end
 
   def jobs_running
-    if !test_cases.empty?
-      (test_result_count_hash['running'] || []).count
-    else
-      jobs.active.where(state: ['preparing', 'running', 'analyzing']).count
-    end
+    jobs.active.where(state: ['preparing', 'running', 'analyzing']).count
   end
 
   def jobs_passed
-    if !test_cases.empty?
-      (test_result_count_hash['passed'] || []).count
-    else
-      jobs.active.where(state: 'complete', result: ['passed']).count
-    end
+    jobs.active.where(state: 'complete', result: ['passed']).count
   end
 
   def jobs_failed
-    if !test_cases.empty?
-      (test_result_count_hash['failed'] || []).count
-    else
-      jobs.active.where(result: ['failed']).count
-    end
+    jobs.active.where(result: ['failed']).count
   end
   
   def jobs_errored
-    if !test_cases.empty?
-      (test_result_count_hash['errored'] || []).count
-    else
-      jobs.active.where("jobs.state='errored' or jobs.state='cancelled' or ( jobs.state='complete' and jobs.result='errored')" ).count
-    end
+    jobs.active.where("jobs.state='errored' or jobs.state='cancelled' or ( jobs.state='complete' and jobs.result='errored')" ).count
   end
+  
 
   def asset
     assets.where(version: self.version)
   end
 
+  #
+  # queued_count, running_count, passed_count, failed_count, errored_count
+  # These methods give a total count of all tests in the batch
+  #
   [:queued, :running, :passed, :failed, :errored].each do |m|
-    define_method("total_#{m}") do
-      jobs.active.sum("#{m}_count")
+    define_method("tests_#{m}") do
+      if !test_cases.empty?
+        (test_result_count_hash[m.to_s] || []).count
+      else      
+        jobs.active.sum("#{m}_count")
+      end
     end
   end
   
