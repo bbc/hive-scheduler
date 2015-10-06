@@ -21,14 +21,12 @@ defaults: &defaults
   testmite:
     url: http://testmite.url
   test_rail:
-    testrail_account_one:
-      account:
-      user:
-      password:
-    testrail_account_two:
-      account:
-      user:
-      password:
+    #testrail_account_one:
+    #  user:
+    #  password:
+    #testrail_account_two:
+    #  user:
+    #  password:
   attachment:
     storage: filesystem
     s3_bucket:
@@ -59,7 +57,7 @@ test:
   testmite:
     url: http://localhost:3002
   test_rail:
-     test_testrail_account:
+    test_testrail_account:
       user: test_testrail_username@example.com
       password: test_testrail_password
   attachment:
