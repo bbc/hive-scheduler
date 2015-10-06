@@ -51,7 +51,7 @@
     <div class="row-fluid" >
 
         <% cache('stats_panel', :expires_in => 2.minutes ) do %>
-          <div class="col-md-2 hidden-sm hidden-xs">
+          <div class="col-lg-2 hidden-md hidden-sm hidden-xs">
             <ul class="nav nav-pills nav-stacked">
               <li class="dark"><a>Hive Status</a></li>
               <ul class="nav nav-pills nav-stacked">
@@ -66,7 +66,7 @@
               <li class="dark"><a>Recent Jobs</a></li>
               <ul class="nav nav-pills nav-stacked">
                 <% @sidebar_projects.each do |p| %>
-                <li class="light"><a title="<%= p.name %>"><%= truncate(p.name, length: 20) %>:<span class="badge badge-result badge-<%= { passed: 'success', failed: 'important', errored: 'inverse', running: 'warning', queued: 'info' }[p.latest_batch.state] %> pull-right"><%= p.latest_batch.state.to_s.first.upcase %></span></span></a>
+                <li class="light"><a title="<%= p.name %>"><%= truncate(p.name, length: 50) %>:<span class="badge badge-result badge-<%= { passed: 'success', failed: 'important', errored: 'inverse', running: 'warning', queued: 'info' }[p.latest_batch.state] %> pull-right"><%= p.latest_batch.state.to_s.first.upcase %></span></span></a>
                 </li>
                 <% end %>
               </ul>
@@ -74,7 +74,7 @@
           </div>
         <% end %>
 
-        <div class="col-md-10">
+        <div class="col-lg-10 col-sm-12">
           <%= yield %>
         </div>
       </div>
