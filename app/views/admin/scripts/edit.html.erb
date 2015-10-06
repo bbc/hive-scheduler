@@ -1,0 +1,2 @@
+<% title = t('.title', default: [:'helpers.titles.edit', 'Edit %{model}'], model: Script.model_name.human.titleize) %>
+<%= render partial: "form", locals: { title: title } %>

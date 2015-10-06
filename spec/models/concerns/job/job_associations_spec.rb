@@ -8,7 +8,7 @@ describe Job::JobAssociations do
   it { should belong_to(:job_group) }
   it { should have_one(:batch).through(:job_group) }
   it { should have_one(:project).through(:batch) }
-  it { should have_one(:execution_type).through(:project) }
+  it { should have_one(:script).through(:project) }
   it { should have_one(:replacement).class_name("Job").with_foreign_key(:original_job_id) }
   it { should belong_to(:original_job).class_name("Job").with_foreign_key(:original_job_id) }
   it { should have_many(:artifacts) }

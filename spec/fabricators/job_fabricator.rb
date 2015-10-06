@@ -36,3 +36,4 @@ Fabricator(:failed_job, from: :job) do
   state               { "complete" }
   result              { "failed"   }
 end
+

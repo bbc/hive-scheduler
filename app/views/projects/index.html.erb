@@ -7,7 +7,7 @@
     <tr>
       <th><%= model_class.human_attribute_name(:id) %></th>
       <th>Name</th>
-      <th><%= model_class.human_attribute_name(:execution_type) %></th>
+      <th><%= model_class.human_attribute_name(:script) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -17,7 +17,7 @@
       <tr>
         <td><%= project.id %></td>
         <td><%= link_to project.name, project_path(project) %></td>
-        <td><%= project.execution_type.name %></td>
+        <td><%= project.script.name %></td>
         <td><%=l project.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),

@@ -42,7 +42,7 @@ Hive::Scheduler::Application.routes.draw do
   end
 
   namespace :admin do
-    resources :execution_types, except: %w{ destroy }
+    resources :scripts, except: %w{ destroy }
   end
 
   get '/queues' => 'queues#dashboard'

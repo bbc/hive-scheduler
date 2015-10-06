@@ -1,5 +1,5 @@
-class ExecutionType < ActiveRecord::Base
-  include ExecutionTypeValidations
+class Script < ActiveRecord::Base
+  include ScriptValidations
 
   belongs_to :target
   has_many   :projects

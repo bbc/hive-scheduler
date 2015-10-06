@@ -7,6 +7,7 @@ class Job < ActiveRecord::Base
   include Cachethod
   include JobResult
   include JobDevice
+  include JobTestCases
 
   class << self
     def state_counts
@@ -40,9 +41,14 @@ class Job < ActiveRecord::Base
 
   def retry
     if can_retry?
-      total_test_count = self.passed_count.to_i + self.failed_count.to_i + self.errored_count.to_i
-      # If there is a zero test count, set it to nil, i.e. unknown
-      total_test_count = nil if total_test_count == 0
+      
+      if retriable_test_cases
+        total_test_count = retriable_test_cases.count
+      else
+        total_test_count = self.passed_count.to_i + self.failed_count.to_i + self.errored_count.to_i
+        # If there is a zero test count, set it to nil, i.e. unknown
+        total_test_count = nil if total_test_count == 0
+      end
 
       self.replacement = Job.new(
           job_name:            self.job_name,
@@ -52,6 +58,12 @@ class Job < ActiveRecord::Base
           original_job:        self,
           execution_variables: self.execution_variables
       )
+      
+      self.replacement.tap do |job|
+        retriable_test_cases.each do |tc|
+          job.associate_test_case_result(name: tc.name, urn: tc.urn, status: 'notrun')
+        end
+      end
     end
   end
   

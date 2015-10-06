@@ -3,9 +3,10 @@ class Project < ActiveRecord::Base
     extend ActiveSupport::Concern
 
     included do
-      belongs_to :execution_type
+      belongs_to :script
       has_many   :batches
       has_many   :assets
+      has_many   :test_cases
     end
   end
 end

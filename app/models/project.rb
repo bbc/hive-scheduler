@@ -7,7 +7,7 @@ class Project < ActiveRecord::Base
   serialize :builder_options, JSON
   serialize :execution_variables, JSON
 
-  delegate :requires_build?, :target, to: :execution_type, allow_nil: true
+  delegate :requires_build?, :target, to: :script, allow_nil: true
 
   after_initialize :set_default_execution_variables
 
@@ -21,7 +21,7 @@ class Project < ActiveRecord::Base
   def execution_variables_required
     if @execution_variables_required.nil?
       @execution_variables_required = []
-      @execution_variables_required = @execution_variables_required | execution_type.execution_variables if execution_type.present?
+      @execution_variables_required = @execution_variables_required | script.execution_variables if script.present?
       @execution_variables_required = @execution_variables_required | builder.execution_variables_required if builder.present?
     end
     @execution_variables_required

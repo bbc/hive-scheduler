@@ -25,7 +25,7 @@ module JobCommands
     end
 
     def command
-      execution_type.template
+      script.template
     end
 
     def job_id
@@ -46,8 +46,13 @@ module JobCommands
         [batch, job_group, job].each do |model|
           @execution_variables.merge!(model.execution_variables) if model.execution_variables.present?
         end
+        @execution_variables[:retry_urns] = retry_urns if retry_urns
       end
       @execution_variables
+    end
+    
+    def retry_urns
+      job.retriable_test_cases.collect { |t| t.urn }.compact
     end
 
     def repository
@@ -56,7 +61,7 @@ module JobCommands
 
     def target
       target = batch.target_information || {}
-      target.merge!(build: batch_download_build_path(batch.id)) if execution_type.requires_build?
+      target.merge!(build: batch_download_build_path(batch.id)) if script.requires_build?
       target
     end
 
@@ -68,8 +73,8 @@ module JobCommands
       job.job_group
     end
 
-    def execution_type
-      job.execution_type
+    def script
+      job.script
     end
   end
 end
