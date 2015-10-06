@@ -5,6 +5,7 @@ class Project < ActiveRecord::Base
     included do
       belongs_to :script
       has_many   :batches
+      has_many   :assets
       has_many   :test_cases
     end
   end

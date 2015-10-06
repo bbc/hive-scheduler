@@ -26,11 +26,16 @@ class BatchesController < ApplicationController
   end
 
   def create
-    @batch = BatchCommands::BuildBatchCommand.build(batch_params)
-    if @batch.save
-      redirect_to @batch, notice: 'Batch was successfully created.'
-    else
+    if batch_params['project_id'].empty?
+      @batch = Batch.new(params[:batch].blank? ? {} : batch_params)
       render action: 'new'
+    else
+      @batch = BatchCommands::BuildBatchCommand.build(batch_params)
+      if @batch.save
+        redirect_to @batch, notice: 'Batch was successfully created.'
+      else
+        render action: 'new'
+      end
     end
   end
 
@@ -40,7 +45,12 @@ class BatchesController < ApplicationController
   end
 
   def download_build
-    redirect_to @batch.build.expiring_url(10*60)
+    if params['file_name'].nil?
+      assets = @batch.asset.first
+    else
+      assets = @batch.asset.where(file: params["file_name"]).first
+    end
+    redirect_to assets.asset.expiring_url(10*60)
   end
 
   def chart_data

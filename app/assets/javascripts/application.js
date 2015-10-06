@@ -40,7 +40,7 @@ $(document).ready(queue_remove_item);
 $(document).on('page:load', queue_remove_item);
 
 var add_array_item;
-add_array_item = function () {
+add_array_item = function (evt) {
 
     if ($('.add_array_item').length) {
         $(".add_array_item").click(function (e) {
@@ -60,7 +60,7 @@ add_array_item = function () {
             $("#" + templateParent).append(html);
 
             queue_remove_item();
-
+            evt.stopPropagation();
             return false;
 
         });
