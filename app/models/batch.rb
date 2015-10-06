@@ -51,7 +51,7 @@ class Batch < ActiveRecord::Base
   
   
   def jobs_queued
-    if test_cases
+    if !test_cases.empty?
       (test_result_count_hash['notrun'] || []).count
     else
       jobs.active.where(state: ['queued', 'pending']).count
@@ -59,7 +59,7 @@ class Batch < ActiveRecord::Base
   end
 
   def jobs_running
-    if test_cases
+    if !test_cases.empty?
       (test_result_count_hash['running'] || []).count
     else
       jobs.active.where(state: ['preparing', 'running', 'analyzing']).count
@@ -67,7 +67,7 @@ class Batch < ActiveRecord::Base
   end
 
   def jobs_passed
-    if test_cases
+    if !test_cases.empty?
       (test_result_count_hash['passed'] || []).count
     else
       jobs.active.where(state: 'complete', result: ['passed']).count
@@ -75,7 +75,7 @@ class Batch < ActiveRecord::Base
   end
 
   def jobs_failed
-    if test_cases
+    if !test_cases.empty?
       (test_result_count_hash['failed'] || []).count
     else
       jobs.active.where(result: ['failed']).count
@@ -83,7 +83,7 @@ class Batch < ActiveRecord::Base
   end
   
   def jobs_errored
-    if test_cases
+    if !test_cases.empty?
       (test_result_count_hash['errored'] || []).count
     else
       jobs.active.where("jobs.state='errored' or jobs.state='cancelled' or ( jobs.state='complete' and jobs.result='errored')" ).count
