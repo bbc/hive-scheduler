@@ -32,6 +32,7 @@ defaults: &defaults
     s3_bucket:
     path_base: public
   sidebar:
+  better_errors_for_all: false
 
 development:
   <<: *defaults
