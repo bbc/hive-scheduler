@@ -4,7 +4,6 @@ describe Batch do
 
   it { should be_a(Batch::BatchValidations) }
   it { should be_a(Batch::BatchChart) }
-  it { should be_a(Batch::BatchAttachments) }
   it { should be_a(Batch::BatchAssociations) }
   it { should be_a(Batch::BatchScopes) }
 
@@ -318,7 +317,7 @@ describe Batch do
             let(:expected_total) { Job.active.to_a.sum(&"#{m}_count".to_sym) }
 
             it "should provide sum of #{m} jobs, ignoring retried jobs" do
-              batch.send("total_#{m}").should == expected_total
+              batch.send("tests_#{m}").should == expected_total
             end
 
           end
