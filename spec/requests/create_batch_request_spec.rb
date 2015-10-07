@@ -7,7 +7,7 @@ describe 'create batch request' do
 
   let(:name) { "#{Forgery::Name.first_name}'s Batch" }
 
-  let(:apk_file) { fixture_file_upload("files/robodemo-sample-1.0.1.apk", "application/vnd.android.package-archive") }
+  let(:apk_file) { fixture_file_upload("files/android_build.apk", "application/vnd.android.package-archive") }
   let(:version) { "1.0.1" }
   let(:tests_per_job) { 10 }
 

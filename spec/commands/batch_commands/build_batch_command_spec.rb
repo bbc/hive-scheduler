@@ -69,7 +69,7 @@ module BatchCommands
           test_builder_manifest.const_set(:BATCH_BUILDER, test_builder_batch_builder)
           test_builder.const_set(:Manifest, test_builder_manifest)
 
-          ::Builders.const_set(:TestBuilder, test_builder)
+          ::Builders.const_set(:TestBuilder, test_builder) unless defined? Builders::TestBuilder
 
           test_builder.stub(batch_builder: test_builder_batch_builder)
           test_builder.stub(execution_variables_required: execution_variables_required)

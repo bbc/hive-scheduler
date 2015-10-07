@@ -17,7 +17,7 @@ module Builders
 
     let(:project_id) { 99 }
     let(:name) { "Batch #{Fabricate.sequence(:batch_number)}" }
-    let(:build) { fixture_file_upload("files/robodemo-sample-1.0.1.apk", "application/vnd.android.package-archive") }
+    let(:build) { fixture_file_upload("files/android_build.apk", "application/vnd.android.package-archive") }
     let(:version) { Fabricate.sequence(:version_number) }
     let(:execution_variables) { { foo: :bar } }
 
@@ -47,7 +47,6 @@ module Builders
 
           its(:project_id) { should eq project_id }
           its(:name) { should eq name }
-          its(:build_file_name) { should eq "robodemo-sample-1.0.1.apk" }
           its(:version) { should eq version }
           its(:execution_variables) { should eq execution_variables }
         end

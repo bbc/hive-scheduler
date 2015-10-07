@@ -41,8 +41,7 @@ class Job < ActiveRecord::Base
 
   def retry
     if can_retry?
-      
-      if retriable_test_cases
+      if !retriable_test_cases.empty?
         total_test_count = retriable_test_cases.count
       else
         total_test_count = self.passed_count.to_i + self.failed_count.to_i + self.errored_count.to_i

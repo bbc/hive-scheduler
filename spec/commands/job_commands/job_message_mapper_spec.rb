@@ -53,7 +53,7 @@ describe JobCommands::JobMessageMapper do
 
     let(:batch_execution_variables) { { tests: %w(test1 test2) } }
     let(:job_group_execution_variables) { { job_group_variable_one: "job_group_variable_one_value" } }
-    let(:job_execution_variables) { { job_variable_one: "job_variable_one_value" } }
+    let(:job_execution_variables) { { job_variable_one: "job_variable_one_value", retry_urns: [] } }
 
 
     let(:job_message_mapper) { JobCommands::JobMessageMapper.new(job: job) }

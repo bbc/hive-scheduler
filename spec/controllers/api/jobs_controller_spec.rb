@@ -273,8 +273,8 @@ describe Api::JobsController do
 
     context 'successfully upload artifact' do
 
-      let(:file_name) { "robodemo-sample-1.0.1.apk" }
-      let(:file_data) { fixture_file_upload('files/robodemo-sample-1.0.1.apk', 'application/vnd.android.package-archive') }
+      let(:file_name) { "android_build.apk" }
+      let(:file_data) { fixture_file_upload('files/android_build.apk', 'application/vnd.android.package-archive') }
 
       it "creates a new artifact for the job" do
         expect { put :report_artifacts, job_id: job.id, filename: file_name, data: file_data }.to change { job.reload.artifacts.count }.by(1)

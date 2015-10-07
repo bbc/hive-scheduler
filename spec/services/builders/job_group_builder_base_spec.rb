@@ -91,13 +91,13 @@ describe Builders::JobGroupBuilderBase do
 
               it "set the queued count for each job correctly" do
                 jobs.each do |job|
-                  expect(job.execution_variables[:tests].count).to eq job.queued_count
+                  expect(job.execution_variables['tests'].count).to eq job.queued_count
                 end
               end
 
               it "stored the tests to be run in the job's execution variables" do
                 tests.each_slice(tests_per_job.to_i).each_with_index do |expected_test_slice, index|
-                  expect(jobs[index].execution_variables[:tests]).to eq expected_test_slice
+                  expect(jobs[index].execution_variables['tests']).to eq expected_test_slice
                 end
               end
             end
@@ -131,14 +131,14 @@ describe Builders::JobGroupBuilderBase do
 
             it "creates each job with the full suite of tests (so the daemon can chop them up as it needs to)" do
               jobs.each do |job|
-                expect(job.execution_variables[:tests]).to eq tests
+                expect(job.execution_variables['tests']).to eq tests
               end
             end
 
             it "provides each job information about what job number it is out of how many" do
               jobs.each_with_index do |job, index|
-                expect(job.execution_variables[:job_index]).to eq(index+1)
-                expect(job.execution_variables[:total_jobs]).to eq(jobs.to_a.count)
+                expect(job.execution_variables['job_index']).to eq(index+1)
+                expect(job.execution_variables['total_jobs']).to eq(jobs.to_a.count)
               end
             end
           end

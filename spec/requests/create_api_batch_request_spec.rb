@@ -7,7 +7,7 @@ describe 'create API batch request' do
 
   let(:target_information) { { application_url: "http://bbc.hive", application_url_parameters: "thing=value" } }
 
-  let(:apk_file) { fixture_file_upload("files/robodemo-sample-1.0.1.apk", "application/vnd.android.package-archive") }
+  let(:apk_file) { fixture_file_upload("files/android_build.apk", "application/vnd.android.package-archive") }
   let(:version) { "1.0.1" }
   let(:tests_per_job) { 10 }
 
