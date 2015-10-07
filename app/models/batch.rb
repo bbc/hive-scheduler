@@ -81,7 +81,6 @@ class Batch < ActiveRecord::Base
   end
 
   #
-  # queued_count, running_count, passed_count, failed_count, errored_count
   # These methods give a total count of all tests in the batch
   #
   [:queued, :running, :passed, :failed, :errored].each do |m|
