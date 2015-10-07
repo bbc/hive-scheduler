@@ -30,5 +30,8 @@
 <% end %>
 
 <% if @project.script.present? %>
-  <pre id="template_preview"><%= @project.script.template.html_safe %></pre>
+  <script type="text/javascript">
+    $('#template_preview').removeClass('hidden');
+  </script>
+  <pre id="template_preview" class="hidden"><%= @project.script.template.html_safe %></pre>
 <% end %>
