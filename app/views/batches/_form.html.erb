@@ -69,6 +69,15 @@
       return this;
     };
 
+    $.fn.add_other = function() {
+      this.wizard('addSteps', -1, [
+        {
+          label: 'Execution variables',
+          pane: $('#other').html()
+        }
+      ])
+    };
+
     $.fn.get_tabs = function() {
       var option_all = $("#batchWizard div ul li").map(function(){
         return $.trim($(this).text().substring(1));
@@ -104,6 +113,10 @@
         }
       });
     });
+
+    if ($('#other').length !== 0) {
+      $('#batchWizard').add_other();
+    }
   </script>
 
   <% if @batch.requires_build? %>
@@ -130,12 +143,34 @@
 <div class="hidden" >
   <%= simple_form_for @batch  do |f| %>
     <%= f.fields_for :execution_variables, OpenStruct.new(@batch.execution_variables) do |execution_variables_builder| %>
-      <% if @batch.execution_variables %>
+      <% if @batch.execution_variables_required %>
+        <%
+          queues = @batch.execution_variables_required.select { |a| [:curated_queue, :queues].include? a.name }
+          jobs = @batch.execution_variables_required.select { |a| [:tests_per_job, :jobs_per_queue, :tests].include? a.name }
+          other = @batch.execution_variables_required - jobs - queues
+        %>
         <div class="step-pane sample-pane-alert" id="queue">
           <h4>Queue Options</h4>
-          <%= render "fields/curated_queue", field_name: :curated_queue, f: execution_variables_builder, attribute: @batch.execution_variables %>
-          <%= render "fields/array", field_name: :queues, f: execution_variables_builder, attribute: @batch.execution_variables %>
+          <% queues.each do |queue| %>
+            <%= render "fields/#{queue.field_type}", field_name: queue.name, f: execution_variables_builder, attribute: @batch.execution_variables %>
+          <% end %>
         </div>
+
+        <div class="step-pane sample-pane-alert" id="job">
+          <h4>Job Information</h4>
+          <% jobs.each do |job| %>
+            <%= render "fields/#{job.field_type}", field_name: job.name, f: execution_variables_builder, attribute: @batch.execution_variables %>
+          <% end %>
+        </div>
+
+        <% unless other.empty? %>
+          <div class="step-pane sample-pane-alert" id="other">
+            <h4>Execution Variables</h4>
+            <% other.each do |other_field| %>
+              <%= render "fields/#{other_field.field_type}", field_name: other_field.name, f: execution_variables_builder, attribute: @batch.execution_variables %>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
 
       <% unless @batch.script.nil? %>
@@ -149,12 +184,7 @@
         <% end %>
       <% end %>
 
-      <div class="step-pane sample-pane-alert" id="job">
-        <h4>Job Information</h4>
-        <%= render "fields/string", field_name: :tests_per_job, f: execution_variables_builder %>
-        <%= render "fields/string", field_name: :jobs_per_queue, f:execution_variables_builder %>
-        <%= render "fields/array", field_name: :tests, f: execution_variables_builder %>
-      </div>
+
 
     <% end %>
   <% end %>
