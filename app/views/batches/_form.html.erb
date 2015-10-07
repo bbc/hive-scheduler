@@ -46,6 +46,15 @@
       return this;
     };
 
+    $.fn.add_tv_target = function() {
+      this.wizard('addSteps', -1, [
+        {
+          label: 'Application details',
+          pane: $('#tv_targets').html()
+        }
+      ])
+    };
+
     $.fn.add_build = function() {
       this.wizard('addSteps', -1, [
         {
@@ -102,6 +111,13 @@
       $('#batchWizard').add_build()
     </script>
   <% end %>
+  <% unless @batch.script.nil? %>
+    <% unless @batch.script.target.fields.empty? %>
+      <script type="text/javascript">
+        $('#batchWizard').add_tv_target()
+      </script>
+    <% end %>
+  <% end %>
   <% unless @batch.project_id.nil? %>
     <script type="text/javascript">
       form = $('#batchWizard');
@@ -120,6 +136,17 @@
           <%= render "fields/curated_queue", field_name: :curated_queue, f: execution_variables_builder, attribute: @batch.execution_variables %>
           <%= render "fields/array", field_name: :queues, f: execution_variables_builder, attribute: @batch.execution_variables %>
         </div>
+      <% end %>
+
+      <% unless @batch.script.nil? %>
+        <% unless @batch.script.target.fields.empty? %>
+          <div class="step-pane sample-pane-alert" id="tv_targets">
+            <h4>Application details</h4>
+            <% @batch.script.target.fields.each do |target_field| %>
+              <%= render "fields/#{target_field.field_type}", field_name: target_field.name, f:execution_variables_builder %>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
 
       <div class="step-pane sample-pane-alert" id="job">
