@@ -1,48 +1,66 @@
 defaults: &defaults
-  database:
-    adapter: <%= ENV['DATABASE_ADAPTER'] %>
-    encoding: <%= ENV['DATABASE_ENCODING'] %>
-    host: <%= ENV['DATABASE_HOST'] %>
-    username: <%= ENV['DATABASE_USERNAME'] %>
-    password: <%= ENV['DATABASE_PASSWORD'] %>
-    database: <%= ENV['DATABASE_NAME'] %>
-    port: <%= ENV['DATABASE_PORT'] %>
-    pool: <%= ENV['DATABASE_POOL'] %>
-  better_errors_for_all: <%= ENV['BETTER_ERRORS_FOR_ALL'] %>
-  job_reservation_timeout: <%= 10.seconds %>
-  stuck_running_jobs_timeout: <%= 5.hours %>
-  maximum_auto_retries: 1
-  device_db:
-    url: <%= ENV['DEVICE_DB_URL'] %>
-    client_pem: <%= ENV['CLIENT_PEM'] %>
-  testmite:
-    url: <%= ENV['TESTMITE_URL'] %>
-  attachment:
-    storage: <%= ENV['ATTACHMENT_STORAGE'] %>
-    s3_bucket: <%= ENV['ATTATCHMENT_STORAGE_S3_BUCKET'] %>
-    path_base: "<%= ENV['ATTACHMENT_STORAGE_PATH_BASE'] %>"
-  test_rail:
-    testrail_account:
-      user: testrail_user@example.com
-      password: password
-
-development:
-  <<: *defaults
+  # Settings may be over-ridden either in the section below (see the
+  # 'development' for examples) or with environment variables such as:
+  #
+  #    export DATABASE_ADAPTER=sqlite
   database:
     adapter: mysql2
     encoding: utf8
     host: localhost
     username: root
     password:
-    database: hive_development
+    database: hive_test
     port: 3306
     pool: 5
+  job_reservation_timeout: <%= 10.seconds %>
+  stuck_running_jobs_timeout: <%= 5.hours %>
+  maximum_auto_retries: 1
+  device_db:
+    url: http://devicedb.url
+    client_pem:
+  testmite:
+    url: http://testmite.url
+  test_rail:
+    #testrail_account_one:
+    #  user:
+    #  password:
+    #testrail_account_two:
+    #  user:
+    #  password:
+  attachment:
+    storage: filesystem
+    s3_bucket:
+    path_base: public
+  sidebar:
+  better_errors_for_all: false
+
+development:
+  <<: *defaults
+  database:
+    adapter: sqlite
+    database: test_database.sql
   better_errors_for_all: true
   device_db:
     url: http://localhost:3001
     client_pem:
   testmite:
     url: http://localhost:3002
+  attachment:
+    storage: filesystem
+    s3_bucket:
+    path_base: public
+
+test:
+  <<: *defaults
+  better_errors_for_all: true
+  device_db:
+    url: http://localhost:3001
+  testmite:
+    url: http://localhost:3002
+  test_rail:
+    test_testrail_account:
+      user: test_testrail_username@example.com
+      password: test_testrail_password
   attachment:
     storage: filesystem
     s3_bucket:
@@ -56,33 +74,6 @@ development:
     - { label: 'Queues', link: '/queues' }
     - { label: 'Project #1', link: '/projects/1' }
     - { label: 'Page 7 of batches', link: '/?page=7' }
-
-test:
-  <<: *defaults
-  database:
-    adapter: mysql2
-    encoding: utf8
-    host: localhost
-    username: root
-    password:
-    database: hive_test
-    port: 3306
-    pool: 5
-  better_errors_for_all: false
-  device_db:
-    url: http://test
-    client_pem: /tmp
-  test_rail:
-    testrail_account:
-      user:
-      password:
-  attachment:
-    storage: filesystem
-    s3_bucket:
-    path_base: public
-
-staging:
-  <<: *defaults
 
 production:
   <<: *defaults
