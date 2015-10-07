@@ -131,8 +131,6 @@
   <%= simple_form_for @batch  do |f| %>
     <%= f.fields_for :execution_variables, OpenStruct.new(@batch.execution_variables) do |execution_variables_builder| %>
       <% if @batch.execution_variables %>
-        <% require 'pry'
-           binding.pry %>
         <div class="step-pane sample-pane-alert" id="queue">
           <h4>Queue Options</h4>
           <%= render "fields/curated_queue", field_name: :curated_queue, f: execution_variables_builder, attribute: @batch.execution_variables %>
