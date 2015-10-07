@@ -53,7 +53,7 @@ describe Builders::ManualBuilder::BatchBuilder do
 
 
       let(:name) { "#{Fabricate.sequence(:batch_number)}" }
-      let(:build) { fixture_file_upload("files/robodemo-sample-1.0.1.apk", "application/vnd.android.package-archive") }
+      let(:build) { fixture_file_upload("files/android_build.apk", "application/vnd.android.package-archive") }
       let(:version) { Fabricate.sequence(:version_number) }
       let(:tests_per_job) { 8 }
 
@@ -84,7 +84,6 @@ describe Builders::ManualBuilder::BatchBuilder do
 
         its(:project_id)      { should eq project.id }
         its(:name)            { should eq name }
-        its(:build_file_name) { should eq "robodemo-sample-1.0.1.apk" }
         its(:version)         { should eq version }
         its(:tests_per_job)   { should eq tests_per_job }
 

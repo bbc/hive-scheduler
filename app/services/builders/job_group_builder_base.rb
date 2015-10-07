@@ -19,7 +19,6 @@ module Builders
     end
 
     def build_jobs(job_group)
-      test_slices = self.test_slices
       if test_slices.count > 1
         test_slices.each_with_index.map do |test_slice, index|
           job_execution_variables = { tests: test_slice, job_index: index+1, total_jobs: test_slices.count }

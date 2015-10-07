@@ -57,7 +57,7 @@ module BatchCommands
 
     def derived_name
       # TODO revisit how this is generated to ensure thread safety and avoid potential collisions
-      "##{Batch.maximum(:id).to_i+1} #{project.name} Batch" if generate_name
+      project.name if generate_name
     end
 
     def processed_execution_variables

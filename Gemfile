@@ -5,11 +5,12 @@ gem 'mysql2'
 gem 'state_machine'
 gem 'jquery-rails'
 gem 'sass-rails', '~> 4.0.0'
-gem 'coffee-rails', '~> 4.0.0'
 gem 'autoprefixer-rails'
 
 gem 'bootstrap-sass', '< 3.3.0'
 gem "bootstrap-switch-rails", '< 3.1.0'
+gem 'font-awesome-sass'
+gem "select2-rails"
 
 gem 'will_paginate', '~> 3.0'
 
@@ -38,11 +39,9 @@ gem 'thin'
 gem 'roar-rails'
 gem 'paranoia', '~> 2.0.2'
 gem "settingslogic"
-gem "select2-rails"
 gem 'sucker_punch', '~> 1.0'
 gem "default_value_for", "~> 3.0.0"
 gem 'cachethod', '~> 0.2.0'
-gem 'font-awesome-sass'
 gem 'image-picker-rails'
 
 gem 'did_you_mean', group: [:development, :test]

@@ -8,6 +8,10 @@ module Builders
     class << self
 
       def registered_builders
+        if @registered_builders.blank?
+          	Builders::Registry.register(Builders::TestRail)
+          	Builders::Registry.register(Builders::ManualBuilder)
+        end
         @registered_builders.values unless @registered_builders.blank?
       end
 
@@ -17,7 +21,7 @@ module Builders
       end
 
       def find_by_builder_name(name)
-        raise NoBuildersRegisteredError if @registered_builders.blank?
+        raise NoBuildersRegisteredError if registered_builders.blank?
         @registered_builders[name]
       end
     end

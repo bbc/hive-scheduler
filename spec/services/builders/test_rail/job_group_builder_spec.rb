@@ -103,14 +103,14 @@ describe Builders::TestRail::JobGroupBuilder do
 
           it "set the queued count for each job correctly" do
             jobs.each do |job|
-              expect(job.execution_variables[:tests].count).to eq job.queued_count
+              expect(job.execution_variables['tests'].count).to eq job.queued_count
             end
           end
 
           it "stored the tests to be run in the job's execution variables" do
             test_rail_tests.each_slice(batch.tests_per_job).each_with_index do |test_slice, index|
               expected_test_slice = test_slice.collect(&:title)
-              expect(jobs[index].execution_variables[:tests]).to eq expected_test_slice
+              expect(jobs[index].execution_variables['tests']).to eq expected_test_slice
             end
           end
         end

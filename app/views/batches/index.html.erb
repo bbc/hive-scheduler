@@ -5,9 +5,7 @@
 
 <div>
   <%= simple_form_for @filter_query, as: :search, url: batches_path, method: :get, html: { id: "batches_filter", class: 'form-search' } do |f| %>
-
-  <%= f.input_field :show_all, as: :boolean, label: false, class: "switch", data: { "on-text" => "All", "off-text" => "Fails" } %>
-  <%= f.input_field :project_ids, as: :select, label: false, multiple: true, collection: Project.joins(:batches).uniq %>
+    <%= f.input_field :project_ids, as: :select, placeholder: "Filter by project", label: false, multiple: true, collection: Project.joins(:batches).uniq %>
   <% end %>
 </div>
             
@@ -15,16 +13,16 @@
 
 <table class="table">
   <tr>
+    <th>ID</th>
     <th>Batch</th>
-    <th>Project</th>
     <th>Version</th>
     <th>Status</th>
     <%= render partial: "shared/status_headings" %>
     <th>Submitted</th>
   </tr>
   <%= content_tag_for(:tr, @batches) do |batch| %>
+    <td><%= batch.id -%></td>
     <td><%= link_to truncate(batch.name, length: 30), batch_path(batch) %></td>
-    <td><%= batch.project.name %></td>
     <td><code class="version-label"><%= batch.version %></code></td>
     <td>
       <span id=<%= "batch_#{batch.id}_state" %>>
@@ -48,6 +46,5 @@
 
 <%= will_paginate @batches %>
 
-<%= link_to t('.new', :default => t("helpers.links.new")), new_batch_path, :class => 'btn btn-danger' %>
 
 

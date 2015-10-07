@@ -48,12 +48,6 @@ module Builders
           end
         end
 
-        context "no builders have been registered" do
-
-          it "raises a NoBuildersRegisteredError" do
-            expect { Builders::Registry.find_by_builder_name(valid_builder.builder_name) }.to raise_error(Builders::NoBuildersRegisteredError)
-          end
-        end
       end
     end
   end
