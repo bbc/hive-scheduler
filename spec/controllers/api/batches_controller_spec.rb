@@ -101,8 +101,6 @@ describe Api::BatchesController do
       let(:batch) { Fabricate(:batch) }
       let(:batch_id) { batch.id }
 
-      require 'pry'
-      binding.pry
       it { should redirect_to(batch.build.expiring_url(10)) }
     end
 
