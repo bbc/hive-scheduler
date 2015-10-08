@@ -16,6 +16,20 @@
   <% end %>
 </p>
 <% end %>
+<%
+   defaults = Builders::Base::SPECIAL_EXECUTION_VARIABLES.keys.map { |a| a.to_s }
+   other_variables = @batch.execution_variables.select { |a| !defaults.include?(a) }
+   unless other_variables.empty?
+    other_variables.each do |key,value|
+%>
+    <p>
+      <strong><%= key.humanize %>:</strong>
+      <%= value %>
+    </p>
+  <%
+     end
+   end
+  %>
 <p><strong>Scheduled:</strong> <%= @batch.created_at.to_s(:short) %></p>
 <% if @batch.jobs.completed.count > 0 %>
 <p><strong>Testmite:</strong> <%= link_to("Results view", testmite_url(@batch.jobs.completed.first)) %></p>
