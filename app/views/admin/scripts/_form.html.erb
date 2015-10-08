@@ -3,41 +3,16 @@
     <h3 class="panel-title"><%= title %></h3>
   </div>
   <div class="panel-body">
-    <p>An script defines how your tests run.</p>
-    <p>Simply select the platform your tests run on, provide an execution script and specify any custom variables required.</p>
-    <div class="bs-callout bs-callout-primary">
-      <h4>Special Variables</h4>
-      There are a number of special variables provided by scheduler. That can be used in your execution template.
-
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Required</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% Builders::Base::SPECIAL_EXECUTION_VARIABLES.each_pair do |variable_name, attributes| %>
-          <tr>
-            <td><%= variable_name %></td>
-            <td><%= attributes[:field_type].to_s %></td>
-            <td><%= attributes[:required].to_s %></td>
-            <td><%= attributes[:description].to_s %></td>
-            <td><%= attributes[:default_value].to_s %></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-
-    </div>
+    <p>Create a shell script to run your tests. These can be shared between multiple projects.</p>
+    <p>Select the platform for your tests to run on, and fill in the exectution script.</p>
+    <p>You can parameterise your scripts by adding execution variables. You have the opportunity
+    to provide values for these variables when you set up a project, or when a batch is triggered.</p>
+    
     <%= simple_form_for [:admin, @script], html: {class: "script_form"} do |f| %>
       <%= f.error_notification %>
       <%= f.association :target_id do %>
         <%= f.label :target_id, label: 'Target platform' %>
-        <%= f.select :target_id, Target.all.map {|t| [t.name, t.id, {"data-img-src" => image_path("fa-#{t.icon}-64.png")}] } %>
+        <%= f.select :target_id, Target.all.map {|t| [t.name, t.id, {"data-img-src" => image_path("empty.png"), "data-img-label" => "<span class='large-icon'>#{icon(t.icon)}</span><br />#{t.name}"}] } %>
       <% end %>
       <%= f.input :name %>
       <%= f.input :template %>
@@ -46,8 +21,7 @@
 
       <div class="form-actions">
         <%= f.submit nil, class: 'btn btn-primary' %>
-        <%= link_to t('.cancel', default: t("helpers.links.cancel")),
-                    admin_scripts_path, class: 'btn' %>
+        <%= link_to t('.cancel', default: t("helpers.links.cancel")), admin_scripts_path, class: 'btn' %>
       </div>
     <% end %>
   </div>
