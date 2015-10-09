@@ -42,13 +42,17 @@ module BatchCommands
     end
 
     def save_build
-      build.each do |b|
+      return @build if @build.nil?
+
+      if @build.is_a? ActionDispatch::Http::UploadedFile
+        @build = [@build]
+      end
+      @build.each do |b|
         asset = Asset.find_or_register(project_id: project_id, name: new_name, file: b.original_filename, version: version)
         asset.asset = b
         asset.save
-      end unless build.nil?
-
-      build
+      end
+      @build
     end
 
     def new_name
