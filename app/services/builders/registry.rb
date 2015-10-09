@@ -9,7 +9,7 @@ module Builders
 
       def registered_builders
         if @registered_builders.blank?
-          Builders::Registry.register(Builders::TestRail) unless Chamber.env.test_rail.nil?
+          Builders::Registry.register(Builders::TestRail) if Chamber.env.test_rail?
           Builders::Registry.register(Builders::ManualBuilder)
         end
         @registered_builders.values unless @registered_builders.blank?
