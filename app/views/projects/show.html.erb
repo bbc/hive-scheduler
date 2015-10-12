@@ -5,9 +5,7 @@
   <div class="panel-body">
 
     <div class="media">
-      <a class="media-left">
-        <%= image_tag("fa-#{@project.target.icon}-64.png") %>
-      </a>
+        <span class="large-icon"><%= icon(@project.target.icon) %></span>
       <div class="media-body">
 
         <dl class="dl-horizontal">
