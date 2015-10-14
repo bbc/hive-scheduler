@@ -31,11 +31,11 @@ module Builders
 
     def batch_attributes
       {
-          project_id:          project_id,
-          name:                name,
-          version:             version,
-          target_information:  target_information,
-          execution_variables: execution_variables
+        project_id:          project_id,
+        name:                name,
+        version:             version,
+        target_information:  target_information,
+        execution_variables: execution_variables
       }
     end
   end
