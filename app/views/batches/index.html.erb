@@ -29,7 +29,7 @@
   </tr>
   <%= content_tag_for(:tr, @batches) do |batch| %>
     <td><%= batch.id -%></td>
-    <td><%= link_to truncate(batch.name, length: 30), batch_path(batch) %></td>
+    <td><%= link_to truncate(batch.name, length: 80), batch_path(batch) %></td>
     <td><code class="version-label"><%= batch.version %></code></td>
     <td>
       <span id=<%= "batch_#{batch.id}_state" %>>
