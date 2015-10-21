@@ -148,6 +148,10 @@
           queues = @batch.execution_variables_required.select { |a| [:curated_queue, :queues].include? a.name }
           jobs = @batch.execution_variables_required.select { |a| [:tests_per_job, :jobs_per_queue, :tests].include? a.name }
           other = @batch.execution_variables_required - jobs - queues
+
+          # Temporarily remove curated_queues and jobs_per_queue
+          queues = queues.select { |a| a.name != :curated_queue }
+          jobs = jobs.select { |a| a.name != :jobs_per_queue }
         %>
         <div class="step-pane sample-pane-alert" id="queue">
           <h4>Queue Options</h4>
