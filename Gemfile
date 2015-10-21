@@ -23,10 +23,9 @@ gem 'chartjs-ror'
 
 gem 'omniauth'
 
-# TODO Change the next two lines to use https when they are made public
-gem 'test_rail-api', git: 'git@github.com:bbc/test_rail-api.git', require: 'test_rail'
-gem 'devicedb_comms', git: 'git@github.com:bbc/devicedb_comms.git'
-gem 'hive-messages', git: 'https://github.com/bbc/hive-messages.git', :tag => '1.0.0' , require: "hive/messages"
+gem 'test_rail-api', '~> 0.4'
+gem 'devicedb_comms', '~> 0.1'
+gem 'hive-messages', '~> 1.0'
 
 gem 'jbuilder'
 
