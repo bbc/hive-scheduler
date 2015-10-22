@@ -30,23 +30,19 @@ end
 #TEMPLATE
 #)
 #
+#script = Script.create!(
+#  name: 'Cucumber tests',
+#  target_id: 5,
+#  template: <<TEMPLATE
+## This presumes that the Gemfile includes the line: gem 'res'
+#bundle install
+#bundle exec cucumber -f Res::Formatters::RubyCubumber -o $HIVE_RESULTS/out.res -f pretty
+#TEMPLATE
+#)
+#
 #project = Project.create!(
 #  name: 'Hive Runner rspec',
 #  repository: 'git@github.com:bbc/hive-runner',
 #  builder_name: Builders::ManualBuilder.builder_name,
 #  script: script
 #)
-#
-#batch = Batch.create!(
-#  name: 'Execute Hive Runner rspec tests',
-#  project: project,
-#  version: '1.0',
-#  execution_variables: { 'tests_per_job' => 1, 'tests_per_queue' => 10 },
-#)
-#
-#jgb1 = Builders::ManualBuilder::JobGroupBuilder.new(batch: batch)
-#jgb1.queue = 'ruby_1.9.3'
-#jgb2 = Builders::ManualBuilder::JobGroupBuilder.new(batch: batch)
-#jgb2.queue = 'ruby_2.2'
-#jgb1.perform
-#jgb2.perform
