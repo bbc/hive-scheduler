@@ -27,6 +27,10 @@ end
 #  template: <<TEMPLATE
 #bundle install
 #rspec
+#if [ -e coverage ]
+#then
+#  tar -czf $HIVE_RESULTS/coverage.gz coverage
+#fi
 #TEMPLATE
 #)
 #
