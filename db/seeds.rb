@@ -21,7 +21,7 @@ Field.where(owner_type: "Target").delete_all
 end
 
 # For dummy data uncomment these lines before running bin/rake db:seed
-#script = Script.create!(
+#rspec_script = Script.create!(
 #  name: 'Rspec tests',
 #  target_id: 5,
 #  template: <<TEMPLATE
@@ -30,7 +30,7 @@ end
 #TEMPLATE
 #)
 #
-#script = Script.create!(
+#cucumber_script = Script.create!(
 #  name: 'Cucumber tests',
 #  target_id: 5,
 #  template: <<TEMPLATE
@@ -44,5 +44,5 @@ end
 #  name: 'Hive Runner rspec',
 #  repository: 'git@github.com:bbc/hive-runner',
 #  builder_name: Builders::ManualBuilder.builder_name,
-#  script: script
+#  script: rspec_script
 #)
