@@ -36,7 +36,7 @@ end
 #  template: <<TEMPLATE
 ## This presumes that the Gemfile includes the line: gem 'res'
 #bundle install
-#bundle exec cucumber -f Res::Formatters::RubyCubumber -o $HIVE_RESULTS/out.res -f pretty
+#bundle exec cucumber -f Res::Formatters::RubyCubumber -o $HIVE_RESULTS/out.res -f pretty `retry_args`
 #TEMPLATE
 #)
 #
