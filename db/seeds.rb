@@ -42,7 +42,7 @@ end
 #
 #project = Project.create!(
 #  name: 'Hive Runner rspec',
-#  repository: 'git@github.com:bbc/hive-runner',
+#  repository: 'git@github.com:bbc/hive-runner.git',
 #  builder_name: Builders::ManualBuilder.builder_name,
 #  script: rspec_script
 #)
