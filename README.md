@@ -47,7 +47,7 @@ Some example execution scripts and projects can be created by editing the
 ### Start the server
 
 ```bash
-rails s
+./bin/rails s
 ```
 
 ## Examples
