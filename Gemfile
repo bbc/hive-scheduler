@@ -23,7 +23,7 @@ gem 'chartjs-ror'
 
 gem 'omniauth'
 
-gem 'test_rail-api', '~> 0.4'
+gem 'test_rail-api', '~> 0.4', require: 'test_rail'
 gem 'devicedb_comms', '~> 0.1'
 gem 'hive-messages', '~> 1.0'
 
@@ -43,11 +43,14 @@ gem "default_value_for", "~> 3.0.0"
 gem 'cachethod', '~> 0.2.0'
 gem 'image-picker-rails'
 
-gem 'did_you_mean', group: [:development, :test]
+group :development do
+  gem 'flatten_migrations'
+end
 
 group :development, :test do
-  gem "better_errors"
-  gem "binding_of_caller"
+  gem 'did_you_mean'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test do

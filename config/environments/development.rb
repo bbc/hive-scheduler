@@ -28,4 +28,6 @@ Hive::Scheduler::Application.configure do
   config.assets.debug = true
 
   config.cache_store = :memory_store, { size: 64.megabytes }
+
+  config.active_record.schema_format = :ruby
 end
