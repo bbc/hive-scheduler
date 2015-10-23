@@ -23,7 +23,7 @@ gem 'chartjs-ror'
 
 gem 'omniauth'
 
-gem 'test_rail-api', '~> 0.4'
+gem 'test_rail-api', '~> 0.4', require: 'test_rail'
 gem 'devicedb_comms', '~> 0.1'
 gem 'hive-messages', '~> 1.0'
 
