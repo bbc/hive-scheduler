@@ -39,6 +39,11 @@ export HIVE_QUEUES=true
 ./bin/rake assets:precompile
 ```
 
+#### Example data
+
+Some example execution scripts and projects can be created by editing the
+`db/seeds.rb` file before executing the rake tasks above.
+
 ### Start the server
 
 ```bash

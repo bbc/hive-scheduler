@@ -20,38 +20,33 @@ Field.where(owner_type: "Target").delete_all
   end
 end
 
-Script.where(target_id: nil).update_all(target_id: 1)
-
-{
-    1 => { name: "Ruby versions", queues: %w('1.8.7', '1.9.3', '2.1.5') },
-
-}.each_pair do |queue_id, attributes|
-  queue = CuratedQueue.find_or_create_by(id: queue_id)
-  queue.update!(attributes)
-end
-
 # For dummy data uncomment these lines before running bin/rake db:seed
-#et = ExecutionType.create!(
-#  name: 'Dummy script',
-#  template: '# Do nothing',
-#  target_id: 5
+#rspec_script = Script.create!(
+#  name: 'Rspec tests',
+#  target_id: 5,
+#  template: <<TEMPLATE
+#bundle install
+#rspec
+#if [ -e coverage ]
+#then
+#  tar -czf $HIVE_RESULTS/coverage.gz coverage
+#fi
+#TEMPLATE
+#)
+#
+#cucumber_script = Script.create!(
+#  name: 'Cucumber tests',
+#  target_id: 5,
+#  template: <<TEMPLATE
+## This presumes that the Gemfile includes the line: gem 'res'
+#bundle install
+#bundle exec cucumber -f Res::Formatters::RubyCubumber -o $HIVE_RESULTS/out.res -f pretty `retry_args`
+#TEMPLATE
 #)
 #
 #project = Project.create!(
-#  name: 'Dummy project',
-#  repository: 'git@localhost:/tmp/dummy_repository',
+#  name: 'Hive Runner rspec',
+#  repository: 'git@github.com:bbc/hive-runner.git',
 #  builder_name: Builders::ManualBuilder.builder_name,
-#  execution_type: et
+#  script: rspec_script
 #)
-#
-#batch = Batch.create!(
-#  name: 'Dummy batch',
-#  project: project,
-#  version: '1.0',
-#  build_file_name: '/tmp/dummy_build',
-#  execution_variables: { 'tests_per_job' => 10, 'tests_per_queue' => 10, 'tests' => [ 'one', 'two' ] },
-#)
-#
-#jgb = Builders::ManualBuilder::JobGroupBuilder.new(batch: batch)
-#jgb.queue = 'dummy_queue'
-#jgb.perform
