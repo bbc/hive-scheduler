@@ -20,7 +20,7 @@ defaults: &defaults
     client_pem:
   testmite:
     url: http://testmite.url
-#  test_rail:
+  test_rail:
     #testrail_account_one:
     #  user:
     #  password:
