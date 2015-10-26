@@ -20,7 +20,7 @@ defaults: &defaults
     client_pem:
   testmite:
     url: http://testmite.url
-  test_rail:
+#  test_rail:
     #testrail_account_one:
     #  user:
     #  password:
@@ -57,10 +57,10 @@ test:
     url: http://localhost:3001
   testmite:
     url: http://localhost:3002
-  test_rail:
-    test_testrail_account:
-      user: test_testrail_username@example.com
-      password: test_testrail_password
+#  test_rail:
+#    test_testrail_account:
+#      user: test_testrail_username@example.com
+#      password: test_testrail_password
   attachment:
     storage: filesystem
     s3_bucket:
