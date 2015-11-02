@@ -18,7 +18,8 @@ the following lines to `~/.bashrc` (or equivalent):
 
 ```bash
 export RAILS_ENV=production
-export DATABASE_ADAPTER=mysql2
+export DATABASE_ADAPTER=sqlite3
+export DATABASE_DATABASE=db/test_database.sql
 export DATABASE_ENCODING=utf8
 export DATABASE_HOST=your_database_host
 export DATABASE_PORT=3306
