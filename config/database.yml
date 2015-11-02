@@ -10,7 +10,7 @@ defaults: &defaults
   database: <%= Chamber.env.database.database %>
   port: <%= Chamber.env.database.port %>
   pool: <%= Chamber.env.database.pool %>
-  adapter: mysql2
+  adapter: <%= Chamber.env.database.adapter %>
 
 development:
   <<: *defaults
