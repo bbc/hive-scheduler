@@ -37,8 +37,8 @@ defaults: &defaults
 development:
   <<: *defaults
   database:
-    adapter: sqlite
-    database: test_database.sql
+    adapter: sqlite3
+    database: db/test_database.sql
   better_errors_for_all: true
   device_db:
     url: http://localhost:3001
