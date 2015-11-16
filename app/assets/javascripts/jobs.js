@@ -12,7 +12,7 @@ template_preview = function() {
 update_job_stats = function(batch_id, page) {
   return setTimeout((function() {
     if (visible()) {
-      $.getJSON('/batches/' + batch_id, function(jobs) {
+      $.getJSON('/batches/' + batch_id + ".json", function(jobs) {
         var fn, i, job, len, update_chart;
         update_chart = false;
         fn = function() {

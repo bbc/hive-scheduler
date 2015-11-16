@@ -5,7 +5,7 @@ has_focus = true;
 update_batch_stats = function(page) {
   return setTimeout((function() {
     if (visible()) {
-      $.getJSON('/batches?page=' + page, function(batches) {
+      $.getJSON('/batches.json?page=' + page, function(batches) {
         var batch, i, len, results;
         results = [];
         for (i = 0, len = batches.length; i < len; i++) {
