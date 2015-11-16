@@ -13,7 +13,7 @@ class Job < ActiveRecord::Base
     def device_details
       if device_id
         begin
-          Rails.cache.fetch("device_#{device_id}") do
+          Rails.cache.fetch("device_#{device_id}", expires_in: 5.minutes) do
             devicedb = DeviceDBComms::Device.new
             devicedb.find(device_id)
           end
