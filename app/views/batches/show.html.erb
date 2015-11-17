@@ -12,7 +12,7 @@
 <p>
   <strong>Builds:</strong>
   <% @batch.asset.each do |build| %>
-   <em><%= link_to build.file, batch_download_build_path(@batch, file_name: build.file) %></em>
+   <em><%= build.file %></em>
   <% end %>
 </p>
 <% end %>
