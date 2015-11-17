@@ -8,6 +8,14 @@
 
 <h4>Project: <em><%= link_to @batch.project.name, project_path(@batch.project) %></em></h4>
 <p><strong>Version:</strong> <code class="version-label"><%= @batch.version %></code></p>
+<% unless @batch.asset.empty? %>
+<p>
+  <strong>Builds:</strong>
+  <% @batch.asset.each do |build| %>
+   <em><%= build.file %></em>
+  <% end %>
+</p>
+<% end %>
 <% additional_variables.each do |key,value| %>
   <p>
     <strong><%= key.humanize %>:</strong>
