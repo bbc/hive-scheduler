@@ -25,7 +25,7 @@ gem 'omniauth'
 
 gem 'test_rail-api', '~> 0.4', require: 'test_rail'
 gem 'devicedb_comms', '~> 0.1'
-gem 'hive-messages', '~> 1.0'
+gem 'hive-messages', '~> 1.0.4'
 
 gem 'jbuilder'
 
@@ -51,6 +51,7 @@ group :development, :test do
   gem 'did_you_mean'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'sqlite3'
 end
 
 group :test do

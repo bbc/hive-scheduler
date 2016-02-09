@@ -98,7 +98,7 @@ GEM
     hashie (3.4.2)
     hike (1.2.3)
     hitimes (1.2.2)
-    hive-messages (1.0.2)
+    hive-messages (1.0.4)
       activemodel (>= 4.0, < 4.3)
       activesupport (>= 4.0, < 4.3)
       mimemagic (~> 0.3)
@@ -227,6 +227,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
+    sqlite3 (1.3.11)
     state_machine (1.2.0)
     sucker_punch (1.5.0)
       celluloid (~> 0.16.0)
@@ -281,7 +282,7 @@ DEPENDENCIES
   flatten_migrations
   font-awesome-sass
   forgery
-  hive-messages (~> 1.0)
+  hive-messages (~> 1.0.4)
   image-picker-rails
   imperator
   jbuilder
@@ -301,6 +302,7 @@ DEPENDENCIES
   shoulda-callback-matchers (~> 1.0)
   shoulda-matchers
   simple_form (~> 3.1.0.rc2)
+  sqlite3
   state_machine
   sucker_punch (~> 1.0)
   test_after_commit
@@ -308,3 +310,6 @@ DEPENDENCIES
   thin
   timecop
   will_paginate (~> 3.0)
+
+BUNDLED WITH
+   1.10.6
