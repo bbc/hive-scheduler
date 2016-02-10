@@ -6,7 +6,7 @@ class Project < ActiveRecord::Base
 
   serialize :builder_options, JSON
   serialize :execution_variables, JSON
-
+  
   delegate :requires_build?, :target, to: :script, allow_nil: true
 
   after_initialize :set_default_execution_variables

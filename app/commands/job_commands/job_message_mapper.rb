@@ -20,7 +20,8 @@ module JobCommands
           job_id:              job_id,
           repository:          repository,
           execution_directory: execution_directory,
-          target:              target
+          target:              target,
+          test_results:        test_results
       }
     end
 
@@ -75,6 +76,20 @@ module JobCommands
 
     def script
       job.script
+    end
+
+    def test_results
+      if @test_results.nil?
+        @test_results = []
+        job.test_results.each do |result|
+          @test_results << {
+            test_case: result.test_case.name,
+            urn: result.test_case.urn,
+            status: result.status
+          }
+        end
+      end
+      @test_results
     end
   end
 end

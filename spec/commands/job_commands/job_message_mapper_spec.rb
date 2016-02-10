@@ -77,6 +77,7 @@ describe JobCommands::JobMessageMapper do
       its(:repository)          { should eq project.repository }
       its(:execution_directory) { should eq project.execution_directory }
       its(:target)              { should eq batch.target_information.stringify_keys.merge(build: batch_download_build_path(batch.id)) }
+      its(:test_results)        { should eq job.test_results }
 
       it "sets the job_id" do
         expect(job_message.job_id).to eq job.id
