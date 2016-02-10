@@ -43,7 +43,6 @@ gem 'cachethod', '~> 0.2.0'
 gem 'image-picker-rails'
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'did_you_mean'
   gem 'better_errors'
   gem 'binding_of_caller'
