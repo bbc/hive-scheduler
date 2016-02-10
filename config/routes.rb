@@ -45,7 +45,7 @@ Hive::Scheduler::Application.routes.draw do
     resources :scripts, except: %w{ destroy }
   end
 
-  get '/queues' => 'queues#dashboard'
+  get '/queues' => 'monitoring#dashboard'
 
   get '/status' => 'api/status#show'
   
