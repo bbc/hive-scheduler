@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 4.1.6'
-gem 'mysql2'
 gem 'state_machine'
 gem 'jquery-rails'
 gem 'sass-rails', '~> 4.0.0'
@@ -43,11 +42,8 @@ gem "default_value_for", "~> 3.0.0"
 gem 'cachethod', '~> 0.2.0'
 gem 'image-picker-rails'
 
-group :development do
-  gem 'flatten_migrations'
-end
-
 group :development, :test do
+  gem 'sqlite3'
   gem 'did_you_mean'
   gem 'better_errors'
   gem 'binding_of_caller'
@@ -63,4 +59,8 @@ group :test do
   gem 'timecop'
   gem 'database_cleaner'
   gem 'pry-byebug'
+end
+
+group :production do
+  gem 'mysql2'
 end
