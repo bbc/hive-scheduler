@@ -48,8 +48,8 @@ describe JobCommands::JobReservation do
 
       let(:job_group_one_queue_name) { "nexus-5" }
       let(:job_group_two_queue_name) { "nexus-4" }
-      let(:job_group_one) { Fabricate(:job_group, queue_name: job_group_one_queue_name) }
-      let(:job_group_two) { Fabricate(:job_group, queue_name: job_group_two_queue_name) }
+      let(:job_group_one) { Fabricate(:job_group, hive_queue: Fabricate(:hive_queue, name: job_group_one_queue_name)) }
+      let(:job_group_two) { Fabricate(:job_group, hive_queue: Fabricate(:hive_queue, name: job_group_two_queue_name)) }
 
       let!(:job_one) { Fabricate(:job, job_group: job_group_one, created_at: 1.days.ago, state: job_group_one_jobs_state) }
       let!(:job_two) { Fabricate(:job, job_group: job_group_one, created_at: 2.days.ago, state: job_group_one_jobs_state) }

@@ -67,7 +67,8 @@ module Builders
     def job_group_attributes
       { batch:               batch,
         name:                job_group_name,
-        queue_name:          job_group_queue_name,
+#        queue_name:          job_group_queue_name,
+        hive_queue:          HiveQueue.find_or_create_by(name: job_group_queue_name),
         execution_variables: job_group_execution_variables
       }
     end

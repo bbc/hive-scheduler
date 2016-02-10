@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160209201252) do
+ActiveRecord::Schema.define(version: 20160210144225) do
 
   create_table "artifacts", force: true do |t|
     t.integer  "job_id"
@@ -107,14 +107,15 @@ ActiveRecord::Schema.define(version: 20160209201252) do
 
   create_table "job_groups", force: true do |t|
     t.integer  "batch_id"
-    t.string   "queue_name"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.binary   "execution_variables"
+    t.integer  "hive_queue_id"
   end
 
   add_index "job_groups", ["batch_id"], name: "index_job_groups_on_batch_id", using: :btree
+  add_index "job_groups", ["hive_queue_id"], name: "index_job_groups_on_hive_queue_id", using: :btree
 
   create_table "jobs", force: true do |t|
     t.string   "job_name",                        null: false
