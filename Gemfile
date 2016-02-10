@@ -42,11 +42,8 @@ gem "default_value_for", "~> 3.0.0"
 gem 'cachethod', '~> 0.2.0'
 gem 'image-picker-rails'
 
-group :development do
-  gem 'sqlite3'
-end
-
 group :development, :test do
+  gem 'sqlite3'
   gem 'did_you_mean'
   gem 'better_errors'
   gem 'binding_of_caller'
@@ -64,6 +61,6 @@ group :test do
   gem 'pry-byebug'
 end
 
-group :test, :production do
+group :production do
   gem 'mysql2'
 end
