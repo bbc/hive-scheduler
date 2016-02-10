@@ -13,7 +13,12 @@ class Api::JobsController < Api::ApiController
   # Methods that cause a job state transition
   
   def reserve
-    job = JobCommands::JobReservation.new(queue_names: params[:queue_names].split(","), reservation_details: params[:reservation_details]).perform
+    queue_names = params[:queue_names].split(",")
+    reservation_details = params[:reservation_details]
+    
+    Worker.identify( reservation_details, queue_names )
+    
+    job = JobCommands::JobReservation.new(queue_names: queue_names, reservation_details: reservation_details).perform
     if job.present?
       render_job_as_message(job)
     else

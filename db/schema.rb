@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151023162905) do
+ActiveRecord::Schema.define(version: 20160209201252) do
 
   create_table "artifacts", force: true do |t|
     t.integer  "job_id"
@@ -91,6 +91,19 @@ ActiveRecord::Schema.define(version: 20151023162905) do
   end
 
   add_index "fields", ["owner_id", "owner_type"], name: "index_fields_on_owner_id_and_owner_type", using: :btree
+
+  create_table "hive_queues", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "hive_queues_workers", id: false, force: true do |t|
+    t.integer "worker_id",     null: false
+    t.integer "hive_queue_id", null: false
+  end
+
+  add_index "hive_queues_workers", ["hive_queue_id", "worker_id"], name: "index_hive_queues_workers_on_hive_queue_id_and_worker_id", unique: true, using: :btree
 
   create_table "job_groups", force: true do |t|
     t.integer  "batch_id"
@@ -191,6 +204,14 @@ ActiveRecord::Schema.define(version: 20151023162905) do
     t.string "email"
     t.string "provider"
     t.string "uid"
+  end
+
+  create_table "workers", force: true do |t|
+    t.integer  "hive_id"
+    t.integer  "pid"
+    t.integer  "device_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
