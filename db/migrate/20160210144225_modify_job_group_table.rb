@@ -3,7 +3,7 @@ class ModifyJobGroupTable < ActiveRecord::Migration
     add_reference :job_groups, :hive_queue, index: true
     
     JobGroup.find_each do |jg|
-      queue = HiveQueue.find_or_create_by( name: jg.queue_name )
+      queue = HiveQueue.find_or_create_by( name: jg.read_queue_name_attribute )
       jg.update( hive_queue_id: queue.id )
     end
 
