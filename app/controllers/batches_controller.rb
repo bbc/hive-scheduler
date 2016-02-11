@@ -1,5 +1,5 @@
 class BatchesController < ApplicationController
-  before_filter :get_batch, only: [:show, :filter_jobs, :download_build, :chart_data]
+  before_filter :get_batch, only: [:show, :filter_jobs, :download_build, :chart_data, :cancel_jobs]
 
   def index
     # This callback is very expensive, turn it off when execution_variables aren't important
@@ -16,6 +16,13 @@ class BatchesController < ApplicationController
 
   def show
     @jobs = @batch.jobs.order(:job_group_id, :job_name).group_by { |j| j.job_group_id }
+  end
+
+  def cancel_jobs
+    @batch.jobs.queued.each do |j|
+      j.cancel! 
+    end
+    redirect_to @batch, notice: "Queued jobs cancelled"
   end
 
   def new
@@ -54,7 +61,7 @@ class BatchesController < ApplicationController
     end
     redirect_to assets.asset.expiring_url(10*60)
   end
-
+  
   def chart_data
     @chart_data = @batch.chart_data
   end

@@ -1,0 +1,32 @@
+// Place all the styles related to the Monitoring controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.warning-color {
+  color:  #b94a48;
+}
+
+.ok-color {
+  color:  #356635;
+}
+
+.label-running {
+  width: 25px;
+  background-color: #f89406;
+}
+
+.label-queued {
+  width: 25px;
+  background-color: #3a87ad;
+}
+
+.queue-table tbody:after,
+.queue-table tbody:before {
+  content: '';
+  display: block;
+  height: 5px;
+}
+
+.queue-table td {
+  padding-right: 20px;
+}

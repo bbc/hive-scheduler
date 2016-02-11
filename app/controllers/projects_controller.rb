@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects
   def index
-    @projects = Project.all
+    @projects = Project.all.reverse
   end
 
   # GET /projects/1

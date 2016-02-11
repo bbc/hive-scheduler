@@ -50,14 +50,16 @@ module Builders
     end
 
     def test_slices
-      @test_slices   ||= if batch.jobs_per_queue.present?
+      @test_slices   ||= if (batch.jobs_per_queue.present? && batch.jobs_per_queue > 0)
                            slices = []
                            batch.jobs_per_queue.to_i.times do
                              slices << sanitized_tests
                            end
                            slices
-                         else
+                         elsif (batch.tests_per_job.present? && batch.tests_per_job > 0)
                            sanitized_tests.each_slice(batch.tests_per_job).to_a
+                         else
+                           [sanitized_tests]
                          end
       @test_slices
     end
@@ -67,7 +69,7 @@ module Builders
     def job_group_attributes
       { batch:               batch,
         name:                job_group_name,
-        queue_name:          job_group_queue_name,
+        hive_queue:          HiveQueue.find_or_create_by(name: job_group_queue_name),
         execution_variables: job_group_execution_variables
       }
     end

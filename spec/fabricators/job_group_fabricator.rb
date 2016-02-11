@@ -1,6 +1,6 @@
 Fabricator(:job_group) do
   batch        { Fabricate(:batch) }
-  queue_name   { sequence(:queue_name) { |i| "queue_name_#{i}" } }
+  hive_queue { Fabricate(:hive_queue) }
   name         { sequence(:job_group) { |i| "Job Group #{i}" } }
 end
 

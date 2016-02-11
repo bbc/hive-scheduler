@@ -8,6 +8,7 @@
     <th><%= model_class.human_attribute_name(:id) %></th>
     <th>Name</th>
     <th>Template</th>
+    <th>Projects</th>
     <th><%=t '.actions', :default => t("helpers.actions") %></th>
   </tr>
   </thead>
@@ -18,8 +19,13 @@
       <td><%= script.name %></td>
       <td><%= truncate(script.template, length: 50) %></td>
       <td>
+        <% script.projects.each do |p| %>
+          <span class="label label-project"><%= link_to p.id, project_url(p) -%></span>
+        <% end %>
+      </td>
+      <td>
         <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                    edit_admin_script_path(script), :class => 'btn btn-mini' %>
+                    edit_admin_script_path(script), :class => 'btn btn-default btn-sm' %>
         <%#= link_to t('.destroy', :default => t("helpers.links.destroy")),
                     script_path(script),
                     :method => :delete,
