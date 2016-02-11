@@ -111,3 +111,13 @@ a.badge:focus {
     background-color: #1a1a1a;
 }
 
+.label-project {
+    background-color: white;
+    color: black;
+    border: 1px rgb(200,200,200) solid;
+}
+
+.label-project a {
+    background-color: white;
+    color: black;
+}

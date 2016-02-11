@@ -2,7 +2,7 @@ class Admin::ScriptsController < Admin::AdminController
   before_filter :set_exec_type, only: [:show, :edit, :update, :destroy]
 
   def index
-    @scripts = Script.all
+    @scripts = Script.all.reverse
   end
 
   def show;

@@ -6,7 +6,7 @@
 <%= hidden_field_tag :page, @page %>
 
 
-<h4>Project: <em><%= link_to @batch.project.name, project_path(@batch.project) %></em></h4>
+<h4>Project: <span class="label label-project"><%= @batch.project.id -%> </span> <em><%= link_to @batch.project.name, project_path(@batch.project) %></em></h4>
 <p><strong>Version:</strong> <code class="version-label"><%= @batch.version %></code></p>
 <% unless @batch.asset.empty? %>
 <p>

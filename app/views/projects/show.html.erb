@@ -17,6 +17,8 @@
 
           <dt><strong>Execution directory:</strong></dt>
           <dd><%= @project.execution_directory %></dd>
+          
+          <% if @project.builder %>
 
           <dt><strong>Population Mechanism:</strong></dt>
           <dd><%= @project.builder.friendly_name %></dd>
@@ -24,6 +26,13 @@
           <% @project.builder_options.each_pair do |name, value| %>
             <dt><strong><%= name.humanize %></strong></dt>
             <dd><%= value %></dd>
+          <% end %>
+          
+          <% else %>
+            
+            <dt><strong>Warning:</strong></dt>
+            <dd>No builder associated with this project. Get help!</dd>
+            
           <% end %>
 
           <% (@project.execution_variables || {}).each_pair do |name, value| %>
