@@ -1,16 +1,59 @@
 <h2>Queues</h2>
 <br />
 
-<table class="table table-striped">
-  <% @queues.each do |name, jobs| %>
+<table class="queue-table">
+    <% @queues_with_no_workers.each do |queue| %>
+    <tbody>
     <tr>
-    <th><%= name -%></th>
     <td>
-    <% jobs.each do |j| %>
-      <%= job_span(j) -%>
+    <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe,
+                "/queues/cancel/#{queue.id}",
+                :method => :cancel,
+                :data => { :confirm => "This will cancel all jobs on this queue, are you sure?" } %>    
+    <td><span class="label label-info"><%= queue.name -%></span></td>
+    <td><span class="glyphicon glyphicon-exclamation-sign warning-color"></span></td>
+    <td>
+    <% if jobs = @queued_jobs[queue] %>
+      <% jobs.each do |j| %>
+        <%= job_span(j) -%>
+      <% end %>
     <% end %>
     </td>
     </tr>
+    </tbody>
+  <% end %>
+  
+  <% @queues.each do |queue| %>
+    <tbody>
+    <tr>
+    <td>
+    <% if @queued_jobs[queue] %>
+    <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe,
+                "/queues/cancel/#{queue.id}",
+                :method => :cancel,
+                :data => { :confirm => "This will cancel all jobs on this queue, are you sure?" } %>    
+    <% end %>
+    </td>
+    <td><span class="label label-info"><%= queue.name -%></span></td>
+    <td>
+    <% queue.workers.active.each do |worker| %>
+      <% if worker.device_id %>
+        <span class="label"><%= worker.device_id %></span>
+      <% else %>
+        <span class="glyphicon glyphicon-cog ok-color" aria-hidden="true"></span>
+      <% end %>
+      <br />
+    <% end %>
+    </td>
+    <td>
+    <% if jobs = @queued_jobs[queue] %>
+      <% jobs.each do |j| %>
+        <%= job_span(j) -%>
+      <% end %>
+    <% end %>
+    </td>
+    </tr>
+    </tbody>
   <% end %>
 </table>
   

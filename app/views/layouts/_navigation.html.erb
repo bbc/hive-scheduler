@@ -15,9 +15,15 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="<%= "active" if controller_name == "batches" %>"><%= link_to 'Batches', batches_path %></li>
-        <li class="<%= "active" if controller_name == "queues" %>"><%= link_to 'Queues', queues_path %></li>
         <li class="<%= "active" if controller_name == "projects" %>"><%= link_to 'Projects', projects_path %></li>
         <li class="<%= "active" if controller_name == "scripts" %>"><%= link_to 'Scripts', admin_scripts_path %></li>
+        <li class="dropdown <%= 'active' if controller_name == 'monitoring' %>">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Monitoring <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/queues">Queues</a></li>
+            <li><a href="/workers">Workers</a></li>
+          </ul>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 

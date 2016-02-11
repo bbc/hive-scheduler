@@ -46,6 +46,8 @@ Hive::Scheduler::Application.routes.draw do
   end
 
   get '/queues' => 'monitoring#dashboard'
+  post '/queues/cancel/:hive_queue_id' => 'monitoring#cancel_jobs'
+  get '/workers' => 'monitoring#workers'
 
   get '/status' => 'api/status#show'
   

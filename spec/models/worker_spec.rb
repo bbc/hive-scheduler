@@ -20,11 +20,11 @@ describe Worker do
         expect( Worker.where( hive_id: 1, pid: 8950 ).count ).to eq 1
       end
       
-      
       it 'associates the worker with the relevant hive_queues' do
         worker = Worker.identify( reservation_details, queue_names )
         expect( worker.hive_queues.count ).to eq 3
       end
+      
     end
     
     context "Worker has already been identified once" do
@@ -43,6 +43,21 @@ describe Worker do
       
     end
 
+  end
+  
+  describe '#status' do
+    
+    it 'reports active state when timestamp up to date' do
+      worker = Worker.new( pid: 1234, updated_at: Time.now )
+      expect(worker.status).to eq :active
+    end
+    
+    it 'reports active state when timestamp up to date' do
+      worker = Worker.new( pid: 1234, updated_at: Time.now - 5.minutes )
+      expect(worker.status).to eq :inactive
+    end
+    
+    
   end
  
 end

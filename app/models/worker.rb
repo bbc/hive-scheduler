@@ -2,6 +2,8 @@ class Worker < ActiveRecord::Base
   
   has_and_belongs_to_many :hive_queues
   
+  scope :active, -> { where( "updated_at > ?", 2.minutes.ago ) }
+  
   def self.identify( reservation_details, queue_names )
     
     worker = Worker.includes(:hive_queues).find_or_create_by(
@@ -22,6 +24,14 @@ class Worker < ActiveRecord::Base
     end
     
     self.update( hive_queues: queues )
+  end
+  
+  def status
+    if updated_at < Time.now() - 2.minutes
+      :inactive
+    else
+      :active
+    end
   end
   
 end
