@@ -7,7 +7,7 @@
     <tr>
     <td>
     <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe,
-                "/queues/cancel/#{queue.id}",
+                "/queues/#{queue.id}/cancel",
                 :method => :cancel,
                 :data => { :confirm => "This will cancel all jobs on this queue, are you sure?" } %>    
     <td><span class="label label-info"><%= queue.name -%></span></td>
@@ -29,7 +29,7 @@
     <td>
     <% if @queued_jobs[queue] %>
     <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe,
-                "/queues/cancel/#{queue.id}",
+                "/queues/#{queue.id}/cancel",
                 :method => :cancel,
                 :data => { :confirm => "This will cancel all jobs on this queue, are you sure?" } %>    
     <% end %>

@@ -23,9 +23,17 @@
   </p>
 <% end %>
 <p><strong>Scheduled:</strong> <%= @batch.created_at.to_s(:short) %></p>
-<% if @batch.jobs.completed.count > 0 %>
+<% if @batch.jobs.completed_without_error.count > 0 %>
 <p><strong>Testmine:</strong> <%= link_to("Results view", testmite_url(@batch.jobs.completed_without_error.first)) %></p>
 <% end %>
+<% if @batch.jobs.queued.count > 0 %>
+  <p><strong>Cancel queued jobs:</strong> <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe,
+              "/batches/#{@batch.id}/cancel",
+              :method => :cancel,
+              :data => { :confirm => "This will cancel all queued jobs in this batch, are you sure?" } %>
+  </p>
+<% end %>
+
 
 </div>
 
