@@ -1,5 +1,7 @@
 require 'spec_helper'
 
 describe HiveQueue do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "currently just consists of a name field" do
+    expect(HiveQueue.create(name: 'myqueue')).to be_a HiveQueue
+  end
 end
