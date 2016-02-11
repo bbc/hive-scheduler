@@ -24,7 +24,7 @@
 <% end %>
 <p><strong>Scheduled:</strong> <%= @batch.created_at.to_s(:short) %></p>
 <% if @batch.jobs.completed.count > 0 %>
-<p><strong>Testmite:</strong> <%= link_to("Results view", testmite_url(@batch.jobs.completed.first)) %></p>
+<p><strong>Testmine:</strong> <%= link_to("Results view", testmite_url(@batch.jobs.completed_without_error.first)) %></p>
 <% end %>
 
 </div>

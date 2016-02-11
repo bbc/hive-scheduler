@@ -36,6 +36,7 @@ class Job < ActiveRecord::Base
   
   scope :active, -> { joins("LEFT JOIN jobs AS replacement_jobs ON jobs.id = replacement_jobs.original_job_id").where(replacement_jobs: { original_job_id: nil }) }
   scope :completed, -> { where("state in ('complete', 'errored')") }
+  scope :completed_without_error, -> { where(state: "complete").where('result <> "errored"') }
   scope :running, -> { where(state: ["preparing", "running", "analyzing"] ) }
   delegate :queue_name, to: :job_group
 
