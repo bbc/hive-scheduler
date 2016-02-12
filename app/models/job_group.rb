@@ -13,5 +13,13 @@ class JobGroup < ActiveRecord::Base
       ordered_job_states.include?(state)
     end || :invalid
   end
+
+  #
+  # This method does nothing in the app -- in fact it won't work
+  # but it's required for a tricky migration
+  #
+  def read_queue_name_attribute
+    attribute(:queue_name)
+  end
   
 end
