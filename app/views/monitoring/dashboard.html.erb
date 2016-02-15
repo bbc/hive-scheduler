@@ -11,7 +11,7 @@
                 :method => :cancel,
                 :data => { :confirm => "This will cancel all jobs on this queue, are you sure?" } %>    
     <td><span class="label label-info"><%= queue.name -%></span></td>
-    <td><span class="glyphicon glyphicon-exclamation-sign warning-color"></span></td>
+    <td><span class="glyphicon glyphicon-exclamation-sign warning-color" data-toggle="tooltip" data-placement="top" title="No workers available for queue"></span></td>
     <td>
     <% if jobs = @queued_jobs[queue] %>
       <% jobs.each do |j| %>
@@ -36,14 +36,8 @@
     </td>
     <td><span class="label label-info"><%= queue.name -%></span></td>
     <td>
-    <% queue.workers.active.each do |worker| %>
-      <% if worker.device_id %>
-        <span class="label"><%= worker.device_id %></span>
-      <% else %>
-        <span class="glyphicon glyphicon-cog ok-color" aria-hidden="true"></span>
-      <% end %>
-      <br />
-    <% end %>
+      <% worker_count = queue.workers.active.count %>
+      <span class="glyphicon glyphicon-cog ok-color" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="<%= worker_count -%> workers waiting for jobs"> <strong><%= worker_count -%></strong></span>
     </td>
     <td>
     <% if jobs = @queued_jobs[queue] %>
@@ -57,3 +51,8 @@
   <% end %>
 </table>
   
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
