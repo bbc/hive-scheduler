@@ -37,7 +37,8 @@ class Job < ActiveRecord::Base
       raise "Couldn't find or create TestCase" if !tc
       
       #2 Associate result with test case
-      if tr = TestResult.where( job_id: self.id, test_case_id: tc.id ).last
+      tr = TestResult.where( job_id: self.id, test_case_id: tc.id ).last
+      if tr && tr.status == 'notrun'
         #i Find existing result and update
         tr.update(status: status)
       else

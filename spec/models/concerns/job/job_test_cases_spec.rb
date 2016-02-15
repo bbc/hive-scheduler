@@ -74,6 +74,16 @@ describe Job::JobTestCases do
       end
     end
 
+    context "Second test result reported in for test case" do
+      
+      it "creates new test result object if result is reported in a second time" do
+        result1 = job.associate_test_case_result( name: 'test1', urn: 'file/test1:50', status: 'fail' )
+        result2 = job.associate_test_case_result( name: 'test1', urn: 'file/test1:50', status: 'fail' )
+ 
+        expect( result1 ).to_not be result2
+      end
+
+    end
     
   end
 end
