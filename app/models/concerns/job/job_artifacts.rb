@@ -3,15 +3,27 @@ class Job < ActiveRecord::Base
     extend ActiveSupport::Concern
 
     def stdout
-      Paperclip.io_adapters.for(stdout_log.asset).read if stdout_log.present?
+      begin
+        Paperclip.io_adapters.for(stdout_log.asset).read if stdout_log.present?
+      rescue
+        "Couldn't load stdout file"
+      end
     end
     
     def stderr
-      Paperclip.io_adapters.for(stderr_log.asset).read if stderr_log.present?
+      begin
+        Paperclip.io_adapters.for(stderr_log.asset).read if stderr_log.present?
+      rescue
+        "Couldn't load stderr output"
+      end
     end
     
     def command
-      Paperclip.io_adapters.for(command_log.asset).read if command_log.present?
+      begin
+        Paperclip.io_adapters.for(command_log.asset).read if command_log.present?
+      rescue
+        "Couldn't load command file"
+      end
     end
     
     def log_files
