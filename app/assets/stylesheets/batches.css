@@ -7,3 +7,7 @@ i[class^="icon-"]:before {
   display: inline-block;
   text-decoration: none;
 }
+
+.nav-stacked-tight > li > a {
+  padding: 2px 15px;
+}

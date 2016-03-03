@@ -15,7 +15,23 @@ class BatchesController < ApplicationController
   end
 
   def show
-    @jobs = @batch.jobs.order(:job_group_id, :job_name).group_by { |j| j.job_group_id }
+    if params[:view] == "artifacts"
+      @artifacts = {}
+      @batch.jobs.each do |j|
+        j.images.each do |i|
+          name = i[0]
+          file = i[1]
+          @artifacts[name] = {} if !@artifacts[name]
+          @artifacts[name][j.job_group.queue_name] = file
+        end
+      end
+      render :template => "batches/artifacts_view", :layout => 'scrollspy_menu'
+    
+    # Default view
+    else
+      @jobs = @batch.jobs.order(:job_group_id, :job_name).group_by { |j| j.job_group_id }
+      render :layout => 'scrollspy_menu'
+    end
   end
 
   def cancel_jobs

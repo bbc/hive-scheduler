@@ -1,0 +1,57 @@
+<div class="col-md-2 hidden-sm hidden-xs" id="sidenav">
+  <ul class="sidebar nav nav-pills nav-stacked nav-stacked-tight">
+    <li><a href="#details" class="active">details</a></li>
+    <% @artifacts.each do |a, b| %>
+      <li><a class="nav-stacked-tight" href="#file_<%= a.sub('.', '-')  -%>"><%= a -%></a></li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="col-md-10">
+
+  <div class="row" id="details">
+
+  <h3>Batch details: <%= @batch.name %></h3>
+  <%= hidden_field_tag :batch_id, @batch.id %>
+  <%= hidden_field_tag :page, @page %>
+
+
+  <h4>Project: <span class="label label-project"><%= @batch.project.id -%> </span> <em><%= link_to @batch.project.name, project_path(@batch.project) %></em></h4>
+  <p><strong>Version:</strong> <code class="version-label"><%= @batch.version %></code></p>
+
+  <a href="<%= batch_url( @batch ) %>" class="btn btn-small btn-default">Switch to batch view</a>
+  
+  
+  <br />
+  <br />
+  </div>
+
+  <div class="row">
+
+    <% image_index = 1 %>
+
+    <% @artifacts.each do |a, q| %>
+
+    <div class="panel panel-default" id="file_<%= a.sub('.', '-') -%>">
+
+      <div class="panel-heading"><h5 class="panel-title"><%= a -%></h5></div>
+
+        <div class="panel-body">
+        <% q.each do |queue, image| %>
+        <% image_url = image %>
+          <div class="screenshot col-md-4 col-sm-6 col-lg-3 thumbnail">
+          <%= image_tag image_url, class: 'img-responsive', 'data-toggle' => 'modal', 'data-target' => "#image-popup-#{image_index}" %>
+            <div class="caption">
+              <span class="label label-info"><%= queue -%></span>
+            </div>
+          </div>
+          <% image_index += 1 %>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+
+
+  </div>
+
+</div>
