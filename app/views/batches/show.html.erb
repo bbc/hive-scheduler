@@ -1,7 +1,20 @@
+<div class="col-md-2 hidden-sm hidden-xs" id="sidenav">
+  <ul class="sidebar nav nav-pills nav-stacked">
+    <li class="active"><a href="#batch_details">details</a></li>
+    <% @jobs.each do |group_id, jobs| %>
+      <li><a href="#group_<%= group_id %>"><%= jobs.first.job_group.queue_name %></a></li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="col-md-10">
+
+
 <div class="row">
 <div class="col-md-6 col-sm-6">
 
-<h3>Batch details: <%= @batch.name %></h3>
+
+<h3 id="batch_details">Batch details: <%= @batch.name %></h3>
 <%= hidden_field_tag :batch_id, @batch.id %>
 <%= hidden_field_tag :page, @page %>
 
@@ -34,6 +47,8 @@
   </p>
 <% end %>
 
+<a href="<%= batch_url( @batch, view: :artifacts) %>" class="btn btn-small btn-default">Switch to artifact view</a> 
+
 
 </div>
 
@@ -58,7 +73,7 @@
   </thead>
   <% @jobs.each do |group_id, jobs| %>
   <% if jobs %>
-    <thead>
+    <thead id=<%= "group_#{group_id}" -%>></thead>
       <tr><td colspan="7"><span class="label label-info"><%= jobs.first.job_group.queue_name -%></span></td></tr>
     </thead>
   
@@ -111,3 +126,5 @@
   <% end %>
 <% end %>
 </table>
+
+</div>
