@@ -73,7 +73,7 @@
   </thead>
   <% @jobs.each do |group_id, jobs| %>
   <% if jobs %>
-    <thead id=<%= "group_#{group_id}" -%>></thead>
+    <thead id=<%= "group_#{group_id}" -%>>
       <tr><td colspan="7"><span class="label label-info"><%= jobs.first.job_group.queue_name -%></span></td></tr>
     </thead>
   
