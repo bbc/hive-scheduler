@@ -28,9 +28,11 @@
 
   <div class="row">
 
-    <% image_index = 1 %>
+    <% row_index = 1 %>
 
     <% @artifacts.each do |a, q| %>
+
+    <% image_index = 1 %>
 
     <div class="panel panel-default" id="file_<%= a.sub('.', '-') -%>">
 
@@ -40,13 +42,30 @@
         <% q.each do |queue, image| %>
         <% image_url = image %>
           <div class="screenshot col-md-4 col-sm-6 col-lg-3 thumbnail">
-          <%= image_tag image_url, class: 'img-responsive', 'data-toggle' => 'modal', 'data-target' => "#image-popup-#{image_index}" %>
+          <%= image_tag image_url, class: 'img-responsive', 'data-toggle' => 'modal', 'data-target' => "#image-popup-#{row_index}-#{image_index}" %>
             <div class="caption">
               <span class="label label-info"><%= queue -%></span>
             </div>
           </div>
+          <div class='modal fade' id='image-popup-<%= row_index %>-<%= image_index %>' tabindex='-1' role='dialog' aria-labelledby='image-popup-<%= image_index %>-Label'>
+            <div class='modal-dialog' role='document'>
+              <%= image_tag image_url, class: 'img-responsive' %>
+            </div>
+            <div class='modal-footer'>
+              <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+            </div>
+          </div>
+          <% if image_index % 4 == 0 %>
+            <div class="clearfix visible-lg-block"></div>
+          <% elsif image_index % 3 == 0 %>
+            <div class="clearfix visible-md-block"></div>            
+          <% elsif image_index % 2 == 0 %>
+            <div class="clearfix visible-sm-block"></div>
+          <% end %>
+
           <% image_index += 1 %>
         <% end %>
+        <% row_index += 1 %>
       </div>
     </div>
     <% end %>
