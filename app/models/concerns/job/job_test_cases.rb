@@ -38,7 +38,7 @@ class Job < ActiveRecord::Base
       
       #2 Associate result with test case
       tr = TestResult.where( job_id: self.id, test_case_id: tc.id ).last
-      if tr && tr.status == 'notrun'
+      if tr && ( tr.status == 'notrun' || tr.status == 'running' )
         #i Find existing result and update
         tr.update(status: status)
       else
