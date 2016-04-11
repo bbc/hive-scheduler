@@ -65,3 +65,16 @@ jQuery(function() {
     return update_batch_stats($('#page').val());
   }
 });
+
+function equalize_element_heights(selector) {
+  maxHeight = 0;
+  $(selector).each( function() {
+    height = $(this).height();
+    if(height > maxHeight)
+    {
+      maxHeight = height;
+    }
+  });
+  $(selector).height(maxHeight);
+  return true;
+};

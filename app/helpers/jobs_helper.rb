@@ -25,7 +25,7 @@ module JobsHelper
 
   def device_name_db_link(job)
     details = job.device_details
-    "<a href='#{DEVICE_DB['url']}/devices/#{details['id']}'>#{details['name']}</a>".html_safe
+    "<a href='#{Rails.application.config.hive_mind_url}/devices/#{details['id']}'>#{details['name']} (#{details['brand']} #{details['model']})</a>".html_safe
   end
   
 end
