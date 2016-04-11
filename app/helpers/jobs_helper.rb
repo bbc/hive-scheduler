@@ -25,7 +25,7 @@ module JobsHelper
 
   def device_name_db_link(job)
     details = job.device_details
-    if job.device_details && !job.device_details.empty?
+    if job.device_details && job.device_details["name"]
       "<a href='#{Rails.application.config.hive_mind_url}/devices/#{details['id']}'>#{details['name']} (#{details['brand']} #{details['model']})</a>".html_safe
     end
   end
