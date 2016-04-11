@@ -3,7 +3,9 @@ class Job < ActiveRecord::Base
     extend ActiveSupport::Concern
 
     def device_type
-      device_details['brand'] + " " + device_details['model']  
+      if device_details['brand']
+        device_details['brand'] + " " + device_details['model']  
+      end 
     end
 
     def device_name
@@ -12,7 +14,6 @@ class Job < ActiveRecord::Base
     
     def device_details
       if device_id
-        device_id = 10
         begin
           Rails.cache.fetch("device_#{device_id}", expires_in: 5.minutes) do
             
