@@ -23,7 +23,7 @@
   </thead>
   <% @workers.each do |worker| %>
     <tr>
-    <td><%= worker.hive_id > 0 ? worker.hive_id : '?' -%></td>
+    <td><%= worker.hive_id.to_i > 0 ? worker.hive_id : '?' -%></td>
     <td><%= worker.pid -%></td>
     <% if worker.status == :active %>
     <td><span class="label label-success">Active</span></td>
