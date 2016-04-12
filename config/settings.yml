@@ -15,9 +15,11 @@ defaults: &defaults
   job_reservation_timeout: <%= 10.seconds %>
   stuck_running_jobs_timeout: <%= 5.hours %>
   maximum_auto_retries: 1
-  device_db:
-    url: http://devicedb.url
-    client_pem:
+  hive_mind:
+    url:
+    cert: 
+    cacert:
+    verify_mode:
   testmite:
     url: http://testmite.url
   test_rail:
@@ -40,9 +42,8 @@ development:
     adapter: sqlite3
     database: db/test_database.sql
   better_errors_for_all: true
-  device_db:
+  hive_mind:
     url: http://localhost:3001
-    client_pem:
   testmite:
     url: http://localhost:3002
   attachment:
@@ -56,7 +57,7 @@ test:
     adapter: sqlite3
     database: db/test_database.sql
   better_errors_for_all: true
-  device_db:
+  hive_mind:
     url: http://localhost:3001
   testmite:
     url: http://localhost:3002

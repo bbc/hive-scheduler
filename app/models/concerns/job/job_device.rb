@@ -3,7 +3,9 @@ class Job < ActiveRecord::Base
     extend ActiveSupport::Concern
 
     def device_type
-      device_details['formal_name'] 
+      if device_details['brand']
+        device_details['brand'] + " " + device_details['model']  
+      end 
     end
 
     def device_name
@@ -14,17 +16,23 @@ class Job < ActiveRecord::Base
       if device_id
         begin
           Rails.cache.fetch("device_#{device_id}", expires_in: 5.minutes) do
-            devicedb = DeviceDBComms::Device.new
-            devicedb.find(device_id)
+            
+            connection = MindMeld::Device.new(
+              url: Rails.application.config.hive_mind_url,
+              pem: Rails.application.config.hive_mind_cert,
+              ca_file:   Rails.application.config.hive_mind_cacert,
+              verify_mode:   Rails.application.config.hive_mind_verify_mode,
+              device: { id: device_id }
+            )
+
+            connection.device_details
           end
         rescue => e
-          Rails.logger.info "*"*50
-          Rails.logger.info "Failed to connect to DeviceDB: #{e.backtrace}"
-          Rails.logger.info "*"*50
-          Hash.new('')
+          Rails.logger.info "Failed to retrieve device details: #{e.backtrace}"
+          {}
         end
       else
-        Hash.new('')
+        {}
       end
     end
     
