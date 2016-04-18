@@ -57,6 +57,6 @@ d3.json("<%= usage_project_counts_path -%>.json", function(error, json) {
 
 d3.json("<%= usage_device_hours_path -%>.json", function(error, json) {
   if (error) return console.warn(error);
-  renderD3BarChart('.daily-device-hours', json, 'green', 'darkgreen');
+  renderD3BarChart('.daily-device-hours', json, 'mediumseagreen', 'lightseagreen');
 });
 </script>
