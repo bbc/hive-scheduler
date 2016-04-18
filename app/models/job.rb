@@ -27,7 +27,7 @@ class Job < ActiveRecord::Base
     end
   end
 
-  cache_class_method :state_counts, expires_in: 2.minutes
+  cache_class_method :state_counts, expires_in: 5.minutes
 
   serialize :execution_variables, JSON
   serialize :reservation_details, JSON

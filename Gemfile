@@ -19,6 +19,7 @@ gem 'aws-sdk', '~> 1.6'
 gem 'chamber'
 
 gem 'chartjs-ror'
+gem 'd3-rails'
 
 gem 'omniauth'
 
@@ -43,7 +44,6 @@ gem 'cachethod', '~> 0.2.0'
 gem 'image-picker-rails'
 
 group :development, :test do
-  gem 'did_you_mean'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'sqlite3'

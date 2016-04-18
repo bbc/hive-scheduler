@@ -21,6 +21,7 @@
 //= require bootstrap-switch
 //= require image-picker
 //= require handlebars-v2.0.0
+//= require d3
 //= require_tree .
 
 var queue_remove_item;

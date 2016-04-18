@@ -28,4 +28,13 @@ class MonitoringController < ApplicationController
     redirect_to "/queues"
   end
   
+  def usage
+    @batch_count_url = usage_batch_counts_path
+  end
+  
+  def batch_counts
+    months = params[:months].to_i == 0 ? 24 : params[:months].to_i
+    @monthly_counts = Hive::UsageCounts.jobs_count( months: months )
+  end
+  
 end
