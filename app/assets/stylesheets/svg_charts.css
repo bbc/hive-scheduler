@@ -1,9 +1,9 @@
-.monthly-counts text {
-  font: 10px sans-serif;
+.usage-charts text {
+  font: 12px sans-serif;
 }
 
-.monthly-counts path,
-.monthly-counts line {
+.usage-charts path,
+.usage-charts line {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
