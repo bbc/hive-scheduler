@@ -1,0 +1,11 @@
+<h2>Batch counts</h2>
+<p>Batches triggered per calendar month</p>
+
+<svg class="monthly-counts col-xs-12" width="900" height="400"></svg>
+
+<script>
+d3.json("<%= usage_batch_counts_path -%>.json", function(error, json) {
+  if (error) return console.warn(error);
+  renderD3BarChart('.monthly-counts', json);
+});
+</script>

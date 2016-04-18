@@ -1,0 +1,10 @@
+.monthly-counts text {
+  font: 10px sans-serif;
+}
+
+.monthly-counts path,
+.monthly-counts line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}

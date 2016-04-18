@@ -15,7 +15,7 @@ class Job < ActiveRecord::Base
     def device_details
       if device_id
         begin
-          Rails.cache.fetch("device_#{device_id}", expires_in: 5.minutes) do
+          Rails.cache.fetch("device_#{device_id}", expires_in: 5.hours) do
             
             connection = MindMeld::Device.new(
               url: Rails.application.config.hive_mind_url,
