@@ -34,7 +34,17 @@ class MonitoringController < ApplicationController
   
   def batch_counts
     months = params[:months].to_i == 0 ? 24 : params[:months].to_i
-    @monthly_counts = Hive::UsageCounts.jobs_count( months: months )
+    @monthly_counts = Hive::UsageCounts.batch_counts( months: months )
+  end
+  
+  def project_counts
+    months = params[:months].to_i == 0 ? 18 : params[:months].to_i
+    @project_counts = Hive::UsageCounts.project_counts( months: months )
+  end
+  
+  def device_hours
+    days = params[:days].to_i == 0 ? 6 : params[:days].to_i
+    @device_hours = Hive::UsageCounts.device_hours( days: days )
   end
   
 end

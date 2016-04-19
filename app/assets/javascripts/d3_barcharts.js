@@ -4,13 +4,14 @@
 // You also need to provide a destination svg element where
 // the chart will be drawn
 //
-function renderD3BarChart(destination, data) {  
+function renderD3BarChart(destination, data, primary, secondary) {  
 
   var svg = d3.select(destination)
   
   var margin = {top: 20, right: 30, bottom: 60, left: 60}
-  var width = svg.attr('width') - margin.left - margin.right
-  var height = svg.attr('height') - margin.top - margin.bottom;
+  var width = svg.node().clientWidth - margin.left - margin.right
+  
+  var height = svg.node().clientHeight - margin.top - margin.bottom;
   
   var svg = d3.select(destination)
   
@@ -30,7 +31,7 @@ function renderD3BarChart(destination, data) {
   
   bar.append('rect')
   .attr('width', x.rangeBand())
-  .attr('fill', function(d,i) { return ( i == data.length - 1 ?  'lightsteelblue' : 'steelblue') } )
+  .attr('fill', function(d,i) { return ( i == data.length - 1 ?  secondary :  primary ) } )
   .attr('x', function(d,i) { return margin.left + x(d.date) })
   .attr('height', 0 )
   .attr('y', margin.top + height)
