@@ -48,6 +48,7 @@ module Hive
         end_time =  time.end_of_day
         
         hours = Job.where( 'created_at > ? and created_at <= ?', start_time, end_time ).collect { |j| j.end_time.to_i > 0 ? j.end_time.to_f -  j.start_time.to_f : 0.0 }.sum / 60 / 60
+
         
         if args[:scale_partial] && i == 0
           ratio = (time - time.beginning_of_day) / (time.end_of_day - time.beginning_of_day)
