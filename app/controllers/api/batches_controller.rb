@@ -3,14 +3,6 @@ class Api::BatchesController < Api::ApiController
   include Roar::Rails::ControllerAdditions
   respond_to :json
 
-  # == Create a batch from Jenkins
-  #
-  # Params:
-  #
-  #  version    # Version of APK file
-  #  build      # APK file
-  #  project_id # ID of Hive project batch should be associated with
-  #
   def create
     version            = params[:version]
     build              = params[:build]
@@ -53,19 +45,14 @@ class Api::BatchesController < Api::ApiController
     respond_with batches, represent_items_with: BatchRepresenter
   end
 
-  # == Download build APK file from S3
-  #
-  # Params:
-  #
-  #  batch_id   # ID of batch for loacted build asset
-  #
   def download_build
-    batch = Batch.find_by_id(params[:batch_id])
-    if batch.present?
-      redirect_to batch.build.expiring_url(10*60)
+    @batch = Batch.find_by_id(params[:batch_id])
+    if params['file_name'].nil?
+      build = @batch.assets.first
     else
-      render status: :not_found, json: { errors: [t('.not_found')] }
+      build = @batch.assets.where(file: params["file_name"]).first
     end
+    redirect_to build.asset.expiring_url(10*60)
   end
 
   private

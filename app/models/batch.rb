@@ -10,8 +10,6 @@ class Batch < ActiveRecord::Base
   delegate :requires_build?, to: :project, allow_nil: true
   delegate :execution_variables_required, to: :project, allow_nil: true
 
-  attr_accessor :build
-
   self.per_page = 20
 
   default_value_for :number_of_automatic_retries, 1
@@ -85,8 +83,8 @@ class Batch < ActiveRecord::Base
   end
   
 
-  def asset
-    assets.where(version: self.version)
+  def assets
+    project_assets.where(version: self.version).group_by { |a| a.asset_file_name }.collect { |k,v| v.first }
   end
 
   #

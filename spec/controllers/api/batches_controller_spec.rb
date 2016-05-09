@@ -91,27 +91,4 @@ describe Api::BatchesController do
     it { should respond_with(:success) }
   end
 
-  describe 'GET #download_build' do
-
-    before(:each) do
-      get :download_build, batch_id: batch_id
-    end
-
-    context "batch_id is for a valid batch" do
-      let(:batch) { Fabricate(:batch) }
-      let(:batch_id) { batch.id }
-
-      it { should redirect_to(batch.build.expiring_url(10)) }
-    end
-
-    context "batch_id is not for a valid batch" do
-      let(:batch_id) { -99 }
-      let(:response_body) { JSON.parse(response.body) }
-
-      it { should respond_with(:not_found) }
-      it "responds with a batch not found error message" do
-        expect(response_body).to eq({ "errors" => ["Batch not found"] })
-      end
-    end
-  end
 end

@@ -62,7 +62,7 @@ module JobCommands
 
     def target
       target = batch.target_information || {}
-      target.merge!(build: batch_download_build_path(batch.id)) if script.requires_build?
+      target.merge!(build: api_batch_download_build_path(batch.id)) if script.requires_build?
       target
     end
 

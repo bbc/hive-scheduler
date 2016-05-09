@@ -28,6 +28,7 @@ module BatchCommands
 
     def builder
       @builder ||= project.builder
+      @builder
     end
 
     def batch_builder_arguments
