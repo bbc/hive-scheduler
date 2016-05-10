@@ -11,6 +11,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   def show
     @project = Project.find(params[:id])
+    @related_projects = @project.script.projects.where( 'id != ?', @project.id )
   end
 
   # GET /projects/new

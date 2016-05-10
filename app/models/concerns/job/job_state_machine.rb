@@ -52,7 +52,7 @@ class Job < ActiveRecord::Base
           job.calculate_result
         end
         
-        after_transition to: :complete do |job|
+        after_transition to: [:complete, :errored] do |job|
           if job.can_retry?
             JobCommands::AutoJobRetrier.new(job: job).perform
           end

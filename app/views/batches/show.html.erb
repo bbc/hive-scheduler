@@ -21,10 +21,10 @@
 
 <h4>Project: <span class="label label-project"><%= @batch.project.id -%> </span> <em><%= link_to @batch.project.name, project_path(@batch.project) %></em></h4>
 <p><strong>Version:</strong> <code class="version-label"><%= @batch.version %></code></p>
-<% unless @batch.asset.empty? %>
+<% unless @batch.assets.empty? %>
 <p>
   <strong>Builds:</strong>
-  <% @batch.asset.each do |build| %>
+  <% @batch.assets.each do |build| %>
    <em><%= build.file %></em>
   <% end %>
 </p>

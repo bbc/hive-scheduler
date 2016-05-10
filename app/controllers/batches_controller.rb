@@ -1,5 +1,5 @@
 class BatchesController < ApplicationController
-  before_filter :get_batch, only: [:show, :filter_jobs, :download_build, :chart_data, :cancel_jobs]
+  before_filter :get_batch, only: [:show, :filter_jobs, :chart_data, :cancel_jobs]
 
   def index
     # This callback is very expensive, turn it off when execution_variables aren't important
@@ -67,15 +67,6 @@ class BatchesController < ApplicationController
   def filter_jobs
     @jobs = @batch.jobs.where(state: params[:state]).page(params[:page]).order(:created_at)
     render :show
-  end
-
-  def download_build
-    if params['file_name'].nil?
-      assets = @batch.asset.first
-    else
-      assets = @batch.asset.where(file: params["file_name"]).first
-    end
-    redirect_to assets.asset.expiring_url(10*60)
   end
   
   def chart_data

@@ -58,7 +58,6 @@ module BatchCommands
 
         before(:each) do
 
-
           test_builder               = Module.new
           test_builder_batch_builder = Class.new
           test_builder.const_set(:BatchBuilder, test_builder_batch_builder)
@@ -69,7 +68,8 @@ module BatchCommands
           test_builder_manifest.const_set(:BATCH_BUILDER, test_builder_batch_builder)
           test_builder.const_set(:Manifest, test_builder_manifest)
 
-          ::Builders.const_set(:TestBuilder, test_builder) unless defined? Builders::TestBuilder
+          ::Builders.send(:remove_const, :TestBuilder) if defined? Builders::TestBuilder
+          ::Builders.const_set(:TestBuilder, test_builder)
 
           test_builder.stub(batch_builder: test_builder_batch_builder)
           test_builder.stub(execution_variables_required: execution_variables_required)
@@ -88,7 +88,7 @@ module BatchCommands
         let(:version) { "#{Fabricate.sequence(:version_number)}" }
         let(:target_information) { { location_url: "http://www.bbc.co.uk" } }
         let(:execution_variables) { { ex_var_one: "ex_var_one" } }
-        let(:build) { :build }
+        let(:build) { [ Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/files/android_build.apk"), 'application/vnd.android.package-archive', false) ] }
 
         let(:execution_variables_required) { [] }
 
@@ -153,7 +153,7 @@ module BatchCommands
 
           context "generate_name is true" do
             let(:generate_name) { true }
-            let(:expected_name) { "##{Batch.maximum(:id).to_i+1} #{project.name} Batch" }
+            let(:expected_name) { project.name }
 
             let(:expected_batch_builder_arguments) do
               {

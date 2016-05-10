@@ -2,11 +2,6 @@ Fabricator(:batch) do
   project { Fabricate(:project) }
   name { "Fabricated Batch #{Fabricate.sequence(:fabricated_job)}" }
   version { 123 }
-  build do
-    #TODO This needs to be purged from the code base
-    path=Rails.root.join("spec/fixtures/files/android_build.apk")
-    Rack::Test::UploadedFile.new(path, 'application/vnd.android.package-archive', false)
-  end
 end
 
 Fabricator(:batch_with_job, from: :batch) do
