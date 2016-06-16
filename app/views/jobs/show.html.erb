@@ -129,7 +129,7 @@
         <br/>
         <br/>
         <h4 id="command">command</h4>
-        <pre class="log-command"><%= @job.command %></pre>
+        <pre class="log-command ansi-color"><%= @job.command %></pre>
       <% end %>
 
 
@@ -137,14 +137,14 @@
         <br/>
         <br/>
         <h4 id="stdout">stdout</h4>
-        <pre class="log-stdout"><%= @job.stdout %></pre>
+        <pre class="log-stdout ansi-color"><%= @job.stdout %></pre>
       <% end %>
 
       <% if @job.stderr.present? %>
         <br/>
         <br/>
         <h4 id="stderr">stderr</h4>
-        <pre class="log-stderr"><%= @job.stderr %></pre>
+        <pre class="log-stderr ansi-color"><%= @job.stderr %></pre>
       <% end %>
 
 
@@ -185,6 +185,9 @@
   </div>
 
   <script>
-    $('pre').each( function(index) { $(this).text().replace(ansi_up.ansi_to_html( $(this).html() )) } )
+    $('pre.ansi-color').each( function(index) {
+        console.log( this )
+        this.innerHTML = ansi_up.ansi_to_html( this.innerText )
+    } )
   </script>
 

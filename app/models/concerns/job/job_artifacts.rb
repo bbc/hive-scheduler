@@ -5,16 +5,16 @@ class Job < ActiveRecord::Base
     def stdout
       begin
         Paperclip.io_adapters.for(stdout_log.asset).read if stdout_log.present?
-      rescue
-        "Couldn't load stdout file"
+      rescue => e
+        "Couldn't load stdout file #{e.message}"
       end
     end
     
     def stderr
       begin
         Paperclip.io_adapters.for(stderr_log.asset).read if stderr_log.present?
-      rescue
-        "Couldn't load stderr output"
+      rescue => e
+        "Couldn't load stderr output #{e.message}"
       end
     end
     
