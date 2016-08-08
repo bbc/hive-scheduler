@@ -160,13 +160,13 @@
             <div class="caption">
               <span class="label label-info"><%= image_name %></span>
             </div>
-          </div>
-          <div class='modal fade' id='image-popup-<%= image_index %>' tabindex='-1' role='dialog' aria-labelledby='image-popup-<%= image_index %>-Label'>
-            <div class='modal-dialog' role='document'>
-              <%= image_tag image_url, class: 'img-responsive' %>
-            </div>
-            <div class='modal-footer'>
-              <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+            <div class='modal fade' id='image-popup-<%= image_index %>' tabindex='-1' role='dialog' aria-labelledby='image-popup-<%= image_index %>-Label'>
+              <div class='modal-dialog' role='document'>
+                <%= image_tag image_url, class: 'img-responsive' %>
+              </div>
+              <div class='modal-footer'>
+                <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+              </div>
             </div>
           </div>
           <% image_index += 1 %>
@@ -176,6 +176,7 @@
 
 
       <% if @job.log_files.present? %>
+        <div style="clear: both"></div>
         <br/>
         <br/>
         <h4 id="logs">logs</h4>

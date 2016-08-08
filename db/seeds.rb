@@ -100,6 +100,12 @@ def add_test_results
       asset_file_name: 'test.jpg',
       asset_content_type: 'image/png'
   )
+
+  Artifact.find_or_create_by(
+      job_id: 1,
+      asset_file_name: 'test.log',
+      asset_content_type: 'text/x-log'
+  )
 end
 
 add_test_results
