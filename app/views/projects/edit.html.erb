@@ -1,5 +1,8 @@
+<head>
+  <% provide(:title, "Edit Project: #{@project.name}") %>
+</head>
 <%- model_class = Project -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize %></h1>
+  <h1><%= t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize %></h1>
 </div>
 <%= render :partial => 'form' %>

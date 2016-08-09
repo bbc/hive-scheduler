@@ -1,47 +1,50 @@
+<head>
+  <% provide(:title, "Hive Workers") %>
+</head>
 <h2>Hive Workers</h2>
-<br />
+<br/>
 
 <% if @workers.count == 0 %>
-  
-<p class="lead">No workers currently polling the hive</p>
 
-<p>You might want to start some up!</p>
-  
+    <p class="lead">No workers currently polling the hive</p>
+
+    <p>You might want to start some up!</p>
+
 <% else %>
 
-<p class="lead">Workers currently polling for jobs</p>
+    <p class="lead">Workers currently polling for jobs</p>
 
-<table class="table table-condensed">
-  <thead>
-    <tr>
-      <th>Hive</th>
-      <th>Pid</th>
-      <th>Status</th>
-      <th>Device</th>
-      <th>Queues</th>
-    </tr>
-  </thead>
-  <% @workers.each do |worker| %>
-    <tr>
-    <td><%= worker.hive_id.to_i > 0 ? worker.hive_id : '?' -%></td>
-    <td><%= worker.pid -%></td>
-    <% if worker.status == :active %>
-    <td><span class="label label-success">Active</span></td>
-    <% else %>
-    <td><span class="label label-failure">Inactive</span></td>
-    <% end %>
-    <% if worker.device_id %>
-    <td><%= worker.device_id %></td>
-    <% else %>
-    <td><span class="glyphicon glyphicon-question-sign"></span></td>
-    <% end %>
-    <td>
-    <% worker.hive_queues.each do |queue| %>
-      <span class="label label-info"><%= queue.name -%></span>
-    <% end %>
-    </td>
-    </tr>
-  <% end %>
-</table>
-  
+    <table class="table table-condensed">
+      <thead>
+      <tr>
+        <th>Hive</th>
+        <th>Pid</th>
+        <th>Status</th>
+        <th>Device</th>
+        <th>Queues</th>
+      </tr>
+      </thead>
+      <% @workers.each do |worker| %>
+          <tr>
+            <td><%= worker.hive_id.to_i > 0 ? worker.hive_id : '?' -%></td>
+            <td><%= worker.pid -%></td>
+            <% if worker.status == :active %>
+                <td><span class="label label-success">Active</span></td>
+            <% else %>
+                <td><span class="label label-failure">Inactive</span></td>
+            <% end %>
+            <% if worker.device_id %>
+                <td><%= worker.device_id %></td>
+            <% else %>
+                <td><span class="glyphicon glyphicon-question-sign"></span></td>
+            <% end %>
+            <td>
+              <% worker.hive_queues.each do |queue| %>
+                  <span class="label label-info"><%= queue.name -%></span>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+    </table>
+
 <% end %>

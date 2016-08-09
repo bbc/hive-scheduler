@@ -1,79 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= content_for?(:title) ? yield(:title) : "HIVE" %></title>
-    <%= csrf_meta_tags %>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= content_for?(:title) ? "HIVE - #{yield(:title)}" : "HIVE" %></title>
+  <%= csrf_meta_tags %>
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
-    <![endif]-->
+  <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+  <!--[if lt IE 9]>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+  <![endif]-->
 
-    <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
 
-    <%= render partial: 'layouts/favicons' %>    
+  <%= render partial: 'layouts/favicons' %>
 
-    <%= javascript_include_tag "application" %>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//www.fuelcdn.com/fuelux/3.11.0/css/fuelux.min.css">
+  <%= javascript_include_tag "application" %>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//www.fuelcdn.com/fuelux/3.11.0/css/fuelux.min.css">
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="//www.fuelcdn.com/fuelux/3.11.0/js/fuelux.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//www.fuelcdn.com/fuelux/3.11.0/js/fuelux.min.js"></script>
 
-  </head>
-  <body class="fuelux">
+</head>
+<body class="fuelux">
 
-  <%= render partial: "layouts/navigation" %>
-  
-  <div class="container-fluid">
-    <%= bootstrap_flash %>
-    <div class="row-fluid" >
+<%= render partial: "layouts/navigation" %>
 
-        <% cache('stats_panel', :expires_in => 2.minutes ) do %>
-          <div class="col-lg-2 hidden-md hidden-sm hidden-xs">
+<div class="container-fluid">
+  <%= bootstrap_flash %>
+  <div class="row-fluid">
+
+    <% cache('stats_panel', :expires_in => 2.minutes) do %>
+        <div class="col-lg-2 hidden-md hidden-sm hidden-xs">
+          <ul class="nav nav-pills nav-stacked">
+
+            <li class="dark"><a>Hive Status</a></li>
             <ul class="nav nav-pills nav-stacked">
-
-              <li class="dark"><a>Hive Status</a></li>
-              <ul class="nav nav-pills nav-stacked">
-                <% if @version.to_s != ''  %>
-                <li class="light"><a href="https://github.com/bbc-test/hive-scheduler/releases/tag/<%=@version-%>">Version: <code class="pull-right"><%= @version -%></code></a></li>
-                <% end %>
-                <li class="light"><a>Running Jobs:<span class="badge badge-result badge-warning pull-right"><%= "#{@counts['running']}" %></span></a></li>
-                <li class="light"><a>Queued Jobs:<span class="badge badge-result badge-info pull-right"><%= "#{@counts['queued']}" %></span></a></li>
-              </ul>
+              <% if @version.to_s != '' %>
+                  <li class="light"><a href="https://github.com/bbc-test/hive-scheduler/releases/tag/<%= @version -%>">Version:
+                    <code class="pull-right"><%= @version -%></code></a></li>
+              <% end %>
+              <li class="light"><a>Running Jobs:<span class="badge badge-result badge-warning pull-right"><%= "#{@counts['running']}" %></span></a>
               </li>
-              <br />
-              <li class="dark"><a>Latest Results</a></li>
-              <ul class="nav nav-pills nav-stacked">
-                <% @sidebar_projects.each do |p| %>
-                <li class="light">
-                  <a title="<%= p.name %>">
-                    <span class="badge badge-result badge-<%= { passed: 'success', failed: 'important', errored: 'inverse', running: 'warning', queued: 'info' }[p.latest_batch.state] %> pull-right"><%= p.latest_batch.state.to_s.first.upcase %></span>
-                    <%= truncate(p.name, length: 50) %>
-                  </a>
-                </li>
-                <% end %>
-              </ul>
+              <li class="light"><a>Queued Jobs:<span class="badge badge-result badge-info pull-right"><%= "#{@counts['queued']}" %></span></a>
+              </li>
             </ul>
-          </div>
-        <% end %>
-
-        <div class="col-lg-10 col-sm-12">
-          <%= yield %>
+            </li>
+            <br/>
+            <li class="dark"><a>Latest Results</a></li>
+            <ul class="nav nav-pills nav-stacked">
+              <% @sidebar_projects.each do |p| %>
+                  <li class="light">
+                    <a title="<%= p.name %>">
+                      <span class="badge badge-result badge-<%= {passed: 'success', failed: 'important', errored: 'inverse', running: 'warning', queued: 'info'}[p.latest_batch.state] %> pull-right"><%= p.latest_batch.state.to_s.first.upcase %></span>
+                      <%= truncate(p.name, length: 50) %>
+                    </a>
+                  </li>
+              <% end %>
+            </ul>
+          </ul>
         </div>
-      </div>
+    <% end %>
+
+    <div class="col-lg-10 col-sm-12">
+      <%= yield %>
     </div>
   </div>
+</div>
+</div>
 
-  <footer>
-    <div class="col-md-12">
-      <hr />
-      <p class="text-center">&copy; BBC HIVE <%= Date.today.year %></p>
-    </div>
-  </footer>
+<footer>
+  <div class="col-md-12">
+    <hr/>
+    <p class="text-center">&copy; BBC HIVE <%= Date.today.year %></p>
+  </div>
+</footer>
 
-  </body>
+</body>
 </html>

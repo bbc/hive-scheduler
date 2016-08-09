@@ -1,56 +1,61 @@
+<head>
+  <% provide(:title, "Queues") %>
+</head>
 <h2>Queues</h2>
-<br />
+<br/>
 
 <table class="queue-table">
-    <% @queues_with_no_workers.each do |queue| %>
-    <tbody>
-    <tr>
-    <td>
-    <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe,
-                "/queues/#{queue.id}/cancel",
-                :method => :cancel,
-                :data => { :confirm => "This will cancel all jobs on this queue, are you sure?" } %>    
-    <td><span class="label label-info"><%= queue.name -%></span></td>
-    <td><span class="glyphicon glyphicon-exclamation-sign warning-color" data-toggle="tooltip" data-placement="top" title="No workers available for queue"></span></td>
-    <td>
-    <% if jobs = @queued_jobs[queue] %>
-      <% jobs.each do |j| %>
-        <%= job_span(j) -%>
-      <% end %>
-    <% end %>
-    </td>
-    </tr>
-    </tbody>
+  <% @queues_with_no_workers.each do |queue| %>
+      <tbody>
+      <tr>
+        <td>
+          <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe,
+                      "/queues/#{queue.id}/cancel",
+                      :method => :cancel,
+                      :data => {:confirm => "This will cancel all jobs on this queue, are you sure?"} %>
+        <td><span class="label label-info"><%= queue.name -%></span></td>
+        <td>
+          <span class="glyphicon glyphicon-exclamation-sign warning-color" data-toggle="tooltip" data-placement="top" title="No workers available for queue"></span>
+        </td>
+        <td>
+          <% if jobs = @queued_jobs[queue] %>
+              <% jobs.each do |j| %>
+                  <%= job_span(j) -%>
+              <% end %>
+          <% end %>
+        </td>
+      </tr>
+      </tbody>
   <% end %>
-  
+
   <% @queues.each do |queue| %>
-    <tbody>
-    <tr>
-    <td>
-    <% if @queued_jobs[queue] %>
-    <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe,
-                "/queues/#{queue.id}/cancel",
-                :method => :cancel,
-                :data => { :confirm => "This will cancel all jobs on this queue, are you sure?" } %>    
-    <% end %>
-    </td>
-    <td><span class="label label-info"><%= queue.name -%></span></td>
-    <td>
-      <% worker_count = queue.workers.active.count %>
-      <span class="glyphicon glyphicon-cog ok-color" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="<%= worker_count -%> workers waiting for jobs"> <strong><%= worker_count -%></strong></span>
-    </td>
-    <td>
-    <% if jobs = @queued_jobs[queue] %>
-      <% jobs.each do |j| %>
-        <%= job_span(j) -%>
-      <% end %>
-    <% end %>
-    </td>
-    </tr>
-    </tbody>
+      <tbody>
+      <tr>
+        <td>
+          <% if @queued_jobs[queue] %>
+              <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe,
+                          "/queues/#{queue.id}/cancel",
+                          :method => :cancel,
+                          :data => {:confirm => "This will cancel all jobs on this queue, are you sure?"} %>
+          <% end %>
+        </td>
+        <td><span class="label label-info"><%= queue.name -%></span></td>
+        <td>
+          <% worker_count = queue.workers.active.count %>
+          <span class="glyphicon glyphicon-cog ok-color" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="<%= worker_count -%> workers waiting for jobs"> <strong><%= worker_count -%></strong></span>
+        </td>
+        <td>
+          <% if jobs = @queued_jobs[queue] %>
+              <% jobs.each do |j| %>
+                  <%= job_span(j) -%>
+              <% end %>
+          <% end %>
+        </td>
+      </tr>
+      </tbody>
   <% end %>
 </table>
-  
+
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()

@@ -1,13 +1,16 @@
+<head>
+  <% provide(:title, "Create A New Batch") %>
+</head>
 <div class="page-header">
-  <h1><%=t '.title', default: [:'helpers.titles.new', 'Create a new batch'], model: 'Batch' %></h1>
+  <h1><%= t '.title', default: [:'helpers.titles.new', 'Create a new batch'], model: 'Batch' %></h1>
 </div>
 
 <% if @batch.errors.any? %>
-  <ul>
-    <% @batch.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-  </ul>
+    <ul>
+      <% @batch.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+      <% end %>
+    </ul>
 <% end %>
 
 <%= render :partial => 'form' %>

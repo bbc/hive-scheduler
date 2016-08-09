@@ -1,4 +1,7 @@
-  <div class="col-md-2 hidden-sm hidden-xs" id="sidenav">
+<head>
+  <% provide(:title, "Job Details: #{@job.batch.name} #{@job.id}") %>
+</head>
+<div class="col-md-2 hidden-sm hidden-xs" id="sidenav">
     <ul class="sidebar nav nav-pills nav-stacked">
       <li class="active"><a href="#summary">summary</a></li>
       <% if @job.tests.present? %>
