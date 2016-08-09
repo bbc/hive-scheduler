@@ -47,8 +47,7 @@
           </p>
       <% end %>
       <% if @batch.jobs.queued.count > 0 %>
-          <p><strong>Cancel queued
-            jobs:</strong> <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe,
+          <p><strong>Cancel queued jobs:</strong> <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe,
                                        "/batches/#{@batch.id}/cancel",
                                        :method => :cancel,
                                        :data => {:confirm => "This will cancel all queued jobs in this batch, are you sure?"} %>
