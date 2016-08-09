@@ -1,43 +1,46 @@
+<head>
+  <% provide(:title, "Projects") %>
+</head>
 <%- model_class = Project -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h1><%= t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
 <table class="table table-striped">
   <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th>Name</th>
-      <th><%= model_class.human_attribute_name(:script) %></th>
-      <th>Modified</th>
-      <th>Last Run</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
+  <tr>
+    <th><%= model_class.human_attribute_name(:id) %></th>
+    <th>Name</th>
+    <th><%= model_class.human_attribute_name(:script) %></th>
+    <th>Modified</th>
+    <th>Last Run</th>
+    <th><%= t '.actions', :default => t("helpers.actions") %></th>
+  </tr>
   </thead>
   <tbody>
-    <% @projects.each do |project| %>
+  <% @projects.each do |project| %>
       <tr>
         <td><span class="label label-project"><%= project.id %></span></td>
         <td><%= link_to project.name, project_path(project) %></td>
         <td><%= link_to project.script.name, edit_admin_script_path(project.script) %></td>
         <td><%= time_ago_in_words(project.updated_at) %></td>
         <% if project.batches.last %>
-        <td><%= time_ago_in_words(project.batches.last.created_at) %></td>
+            <td><%= time_ago_in_words(project.batches.last.created_at) %></td>
         <% else %>
-        <td>Not run</td>
+            <td>Not run</td>
         <% end %>
         <td>
           <div class="btn-group btn-group-sm">
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_project_path(project), :class => 'btn btn-default' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      project_path(project),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-danger' %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        edit_project_path(project), :class => 'btn btn-default' %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                        project_path(project),
+                        :method => :delete,
+                        :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?'))},
+                        :class => 'btn btn-danger' %>
           </div>
         </td>
       </tr>
-    <% end %>
+  <% end %>
   </tbody>
 </table>
 

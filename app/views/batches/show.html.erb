@@ -1,8 +1,11 @@
+<head>
+  <% provide(:title, "Batch Details: #{@batch.name}") %>
+</head>
 <div class="col-md-2 hidden-sm hidden-xs" id="sidenav">
   <ul class="sidebar nav nav-pills nav-stacked">
     <li class="active"><a href="#batch_details">details</a></li>
     <% @jobs.each do |group_id, jobs| %>
-      <li><a href="#group_<%= group_id %>"><%= jobs.first.job_group.queue_name %></a></li>
+        <li><a href="#group_<%= group_id %>"><%= jobs.first.job_group.queue_name %></a></li>
     <% end %>
   </ul>
 </div>
@@ -10,121 +13,128 @@
 <div class="col-md-10">
 
 
-<div class="row">
-<div class="col-md-6 col-sm-6">
+  <div class="row">
+    <div class="col-md-6 col-sm-6">
 
 
-<h3 id="batch_details">Batch details: <%= @batch.name %></h3>
-<%= hidden_field_tag :batch_id, @batch.id %>
-<%= hidden_field_tag :page, @page %>
+      <h3 id="batch_details">Batch details: <%= @batch.name %></h3>
+      <%= hidden_field_tag :batch_id, @batch.id %>
+      <%= hidden_field_tag :page, @page %>
 
 
-<h4>Project: <span class="label label-project"><%= @batch.project.id -%> </span> <em><%= link_to @batch.project.name, project_path(@batch.project) %></em></h4>
-<p><strong>Version:</strong> <code class="version-label"><%= @batch.version %></code></p>
-<% unless @batch.assets.empty? %>
-<p>
-  <strong>Builds:</strong>
-  <% @batch.assets.each do |build| %>
-   <em><%= build.file %></em>
-  <% end %>
-</p>
-<% end %>
-<% additional_variables.each do |key,value| %>
-  <p>
-    <strong><%= key.humanize %>:</strong>
-    <%= value %>
-  </p>
-<% end %>
-<p><strong>Scheduled:</strong> <%= @batch.created_at.to_s(:short) %></p>
-<% if @batch.jobs.completed_without_error.count > 0 %>
-<p><strong>Testmine:</strong> <%= link_to("Results view", testmite_url(@batch.jobs.completed_without_error.first)) %></p>
-<% end %>
-<% if @batch.jobs.queued.count > 0 %>
-  <p><strong>Cancel queued jobs:</strong> <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe,
-              "/batches/#{@batch.id}/cancel",
-              :method => :cancel,
-              :data => { :confirm => "This will cancel all queued jobs in this batch, are you sure?" } %>
-  </p>
-<% end %>
+      <h4>Project: <span class="label label-project"><%= @batch.project.id -%> </span>
+        <em><%= link_to @batch.project.name, project_path(@batch.project) %></em></h4>
 
-<a href="<%= batch_url( @batch, view: :artifacts) %>" class="btn btn-small btn-default">Switch to artifact view</a> 
+      <p><strong>Version:</strong> <code class="version-label"><%= @batch.version %></code></p>
+      <% unless @batch.assets.empty? %>
+          <p>
+            <strong>Builds:</strong>
+            <% @batch.assets.each do |build| %>
+                <em><%= build.file %></em>
+            <% end %>
+          </p>
+      <% end %>
+      <% additional_variables.each do |key, value| %>
+          <p>
+            <strong><%= key.humanize %>:</strong>
+            <%= value %>
+          </p>
+      <% end %>
+      <p><strong>Scheduled:</strong> <%= @batch.created_at.to_s(:short) %></p>
+      <% if @batch.jobs.completed_without_error.count > 0 %>
+          <p>
+            <strong>Testmine:</strong> <%= link_to("Results view", testmite_url(@batch.jobs.completed_without_error.first)) %>
+          </p>
+      <% end %>
+      <% if @batch.jobs.queued.count > 0 %>
+          <p><strong>Cancel queued
+            jobs:</strong> <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe,
+                                       "/batches/#{@batch.id}/cancel",
+                                       :method => :cancel,
+                                       :data => {:confirm => "This will cancel all queued jobs in this batch, are you sure?"} %>
+          </p>
+      <% end %>
+
+      <a href="<%= batch_url(@batch, view: :artifacts) %>" class="btn btn-small btn-default">Switch to artifact view</a>
 
 
-</div>
+    </div>
 
-<div class="col-md-6 col-sm-6 hidden-xs" id=<%= "batch_chart_#{@batch.id}" %>>
-  <%= render partial: 'shared/chart', locals: { chart_data: @batch.chart_data, options: { id: 'chart_graph', width: 300, height: 300} } %>    
-</div>
+    <div class="col-md-6 col-sm-6 hidden-xs" id=<%= "batch_chart_#{@batch.id}" %>>
+      <%= render partial: 'shared/chart', locals: {chart_data: @batch.chart_data, options: {id: 'chart_graph', width: 300, height: 300}} %>
+    </div>
 
-</div>
+  </div>
 
-<br />
+  <br/>
 
-<table class="table table-hover table-striped table-responsive">
-  <thead>
-  <tr>
-    <th>Job</th>
-    <th></th>
-    <th>Device</th>
-    <th>Duration</th>
-    <th>Status</th>
-    <%= render partial: "shared/status_headings" %>
-  </tr>
-  </thead>
-  <% @jobs.each do |group_id, jobs| %>
-  <% if jobs %>
-    <thead id=<%= "group_#{group_id}" -%>>
-      <tr><td colspan="7"><span class="label label-info"><%= jobs.first.job_group.queue_name -%></span></td></tr>
+  <table class="table table-hover table-striped table-responsive">
+    <thead>
+    <tr>
+      <th>Job</th>
+      <th></th>
+      <th>Device</th>
+      <th>Duration</th>
+      <th>Status</th>
+      <%= render partial: "shared/status_headings" %>
+    </tr>
     </thead>
-  
-    <tbody>
-  
-    <%= content_tag_for(:tr, jobs, class: 'active') do |job| %>
-      <td>
-        <% if job.original_job %>
-          <%= link_to "<span class='glyphicon glyphicon-chevron-up'></span> (retry)".html_safe, job_path(job) %>
-        <% else %>
-          <%= link_to "##{job.id}", job_path(job) %>
-        <% end %>
-      </td>
-      <td>
-        <% if job.can_retry? %>
-          <%= link_to('<span class="glyphicon glyphicon-repeat"></span>'.html_safe, job_retry_path(job.id), method: 'put', title: 'Retry this job') %>
-        <% elsif job.retried? %>
-          <span class="glyphicon glyphicon glyphicon-ok-circle"></span>
-        <% end %>
-        <% if job.can_cancel? %>
-          <%= link_to('<span class="glyphicon glyphicon-remove"></span>'.html_safe, job_cancel_path(job.id), method: 'put', title: 'Cancel this job') %>
-        <% end %>
-      </td>
-      <td>
+    <% @jobs.each do |group_id, jobs| %>
+        <% if jobs %>
+            <thead id=<%= "group_#{group_id}" -%>>
+            <tr>
+              <td colspan="7"><span class="label label-info"><%= jobs.first.job_group.queue_name -%></span></td>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <%= content_tag_for(:tr, jobs, class: 'active') do |job| %>
+                <td>
+                  <% if job.original_job %>
+                      <%= link_to "<span class='glyphicon glyphicon-chevron-up'></span> (retry)".html_safe, job_path(job) %>
+                  <% else %>
+                      <%= link_to "##{job.id}", job_path(job) %>
+                  <% end %>
+                </td>
+                <td>
+                  <% if job.can_retry? %>
+                      <%= link_to('<span class="glyphicon glyphicon-repeat"></span>'.html_safe, job_retry_path(job.id), method: 'put', title: 'Retry this job') %>
+                  <% elsif job.retried? %>
+                      <span class="glyphicon glyphicon glyphicon-ok-circle"></span>
+                  <% end %>
+                  <% if job.can_cancel? %>
+                      <%= link_to('<span class="glyphicon glyphicon-remove"></span>'.html_safe, job_cancel_path(job.id), method: 'put', title: 'Cancel this job') %>
+                  <% end %>
+                </td>
+                <td>
         <span id=<%= "job_#{job.id}_device_details" %>>
            <%= device_name_db_link(job) %>
         </span>
-      </td>
-      <td>
-        <%= job_duration(job) -%>
-      </td>
-      <td>
+                </td>
+                <td>
+                  <%= job_duration(job) -%>
+                </td>
+                <td>
         <span id=<%= "job_#{job.id}_state" %>>
           <%= status_badge(job.status) %>
         </span>
-      </td>
-      <%=
-        render partial: "shared/status_counts",
-               locals: {
-                   id:      job.id,
-                   type:    'job',
-                   queued:  job.queued_count,
-                   running: job.running_count,
-                   passed:  job.passed_count,
-                   failed:  job.failed_count,
-                   errored: job.errored_count }
-      %>
+                </td>
+                <%=
+                    render partial: "shared/status_counts",
+                           locals: {
+                                   id: job.id,
+                                   type: 'job',
+                                   queued: job.queued_count,
+                                   running: job.running_count,
+                                   passed: job.passed_count,
+                                   failed: job.failed_count,
+                                   errored: job.errored_count}
+                %>
+            <% end %>
+            </tbody>
+        <% end %>
     <% end %>
-    </tbody>
-  <% end %>
-<% end %>
-</table>
+  </table>
 
 </div>

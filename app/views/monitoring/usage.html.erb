@@ -1,30 +1,35 @@
+<head>
+  <% provide(:title, "Usage") %>
+</head>
 <div class="panel panel-primary">
   <div class="panel-heading">
-  <h3>Batch counts</h3>
-  <p>Batches triggered per calendar month</p>  
+    <h3>Batch counts</h3>
+
+    <p>Batches triggered per calendar month</p>
   </div>
   <div class="panel-body">
-  <svg class="usage-charts monthly-batch-counts" width="100%" height="400"></svg>
+    <svg class="usage-charts monthly-batch-counts" width="100%" height="400"></svg>
 
   </div>
 </div>
 
 
 <script>
-d3.json("<%= usage_batch_counts_path -%>.json", function(error, json) {
-  if (error) return console.warn(error);
-  renderD3BarChart('.monthly-batch-counts', json, '#428bca', 'lightsteelblue');
-});
+    d3.json("<%= usage_batch_counts_path -%>.json", function (error, json) {
+        if (error) return console.warn(error);
+        renderD3BarChart('.monthly-batch-counts', json, '#428bca', 'lightsteelblue');
+    });
 </script>
 
 
 <div class="row">
-  
+
   <div class="col-md-6">
-  
+
     <div class="panel panel-info">
       <div class="panel-heading">
         <h3>Projects counts</h3>
+
         <p>Active projects each calendar month</p>
       </div>
       <div class="panel-body">
@@ -32,12 +37,13 @@ d3.json("<%= usage_batch_counts_path -%>.json", function(error, json) {
       </div>
     </div>
   </div>
-  
-    <div class="col-md-6">
-  
+
+  <div class="col-md-6">
+
     <div class="panel panel-success">
       <div class="panel-heading">
         <h3>Device hours</h3>
+
         <p>Hours spent testing this week</p>
       </div>
       <div class="panel-body">
@@ -45,18 +51,18 @@ d3.json("<%= usage_batch_counts_path -%>.json", function(error, json) {
       </div>
     </div>
   </div>
-  
+
 </div>
 
 
 <script>
-d3.json("<%= usage_project_counts_path -%>.json", function(error, json) {
-  if (error) return console.warn(error);
-  renderD3BarChart('.monthly-project-counts', json, 'lightsteelblue', 'steelblue');
-});
+    d3.json("<%= usage_project_counts_path -%>.json", function (error, json) {
+        if (error) return console.warn(error);
+        renderD3BarChart('.monthly-project-counts', json, 'lightsteelblue', 'steelblue');
+    });
 
-d3.json("<%= usage_device_hours_path -%>.json", function(error, json) {
-  if (error) return console.warn(error);
-  renderD3BarChart('.daily-device-hours', json, 'mediumseagreen', 'lightseagreen');
-});
+    d3.json("<%= usage_device_hours_path -%>.json", function (error, json) {
+        if (error) return console.warn(error);
+        renderD3BarChart('.daily-device-hours', json, 'mediumseagreen', 'lightseagreen');
+    });
 </script>
