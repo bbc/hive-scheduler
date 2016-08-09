@@ -2,164 +2,167 @@
   <% provide(:title, "Job Details: #{@job.batch.name} #{@job.id}") %>
 </head>
 <div class="col-md-2 hidden-sm hidden-xs" id="sidenav">
-  <ul class="sidebar nav nav-pills nav-stacked">
-    <li class="active"><a href="#summary">summary</a></li>
-    <% if @job.tests.present? %>
+    <ul class="sidebar nav nav-pills nav-stacked">
+      <li class="active"><a href="#summary">summary</a></li>
+      <% if @job.tests.present? %>
         <li><a href="#tests">tests</a></li>
-    <% end %>
+      <% end %>
 
-    <% if @job.command.present? %>
+      <% if @job.command.present? %>
         <li><a href="#command">command</a></li>
-    <% end %>
+      <% end %>
 
-    <% if @job.stdout.present? %>
+      <% if @job.stdout.present? %>
         <li><a href="#stdout">stdout</a></li>
-    <% end %>
+      <% end %>
 
-    <% if @job.stderr.present? %>
+      <% if @job.stderr.present? %>
         <li><a href="#stderr">stderr</a></li>
-    <% end %>
+      <% end %>
 
-    <% if @job.images.present? %>
+      <% if @job.images.present? %>
         <li><a href="#images">images</a></li>
-    <% end %>
+      <% end %>
 
-    <% if @job.log_files.present? %>
+      <% if @job.log_files.present? %>
         <li><a href="#logs">logs</a></li>
-    <% end %>
-  </ul>
-</div>
+      <% end %>
+    </ul>
+  </div>
 
-<div class="col-md-10">
+  <div class="col-md-10">
 
-  <div class="row">
+    <div class="row">
+      
+      <% if @message %>
+      <div class="well">
+        <strong><%= @message -%></strong>
+      </div>
+      <% end %>
 
-    <% if @message %>
-        <div class="well">
-          <strong><%= @message -%></strong>
-        </div>
-    <% end %>
-
-    <div class="col-md-6">
-      <h3 id="summary"><%= full_job_name(@job) %></h3>
-      <h4>Batch: <%= link_to @job.batch.name, batch_path(@job.batch) %></h4>
-      <table class="table">
-        <tr>
-          <td><strong>Queue:</strong></td>
-          <td><%= @job.queue_name %></td>
-        </tr>
-        <tr>
-          <td><strong>Device type:</strong></td>
-          <td>
+      <div class="col-md-6">
+        <h3 id="summary"><%= full_job_name(@job) %></h3>
+        <h4>Batch: <%= link_to @job.batch.name, batch_path(@job.batch) %></h4>
+        <table class="table">
+          <tr>
+            <td><strong>Queue:</strong></td>
+            <td><%= @job.queue_name %></td>
+          </tr>
+          <tr>
+            <td><strong>Device type:</strong></td>
+            <td>
               <span id=<%= "job_#{@job.id}_device_details" %>>
               <%= @job.device_type %>
               </span>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>Device name:</strong></td>
-          <td>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Device name:</strong></td>
+            <td>
               <span id=<%= "job_#{@job.id}_device_details" %>>
               <%= device_name_db_link(@job) %>
               </span>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>Scheduled:</strong></td>
-          <td><%= @job.created_at.to_s(:short) %></td>
-        </tr>
-        <tr>
-          <td><strong>Started:</strong></td>
-          <td><%= @job.start_time.to_s(:short) if @job.start_time %></td>
-        </tr>
-        <tr>
-          <td><strong>Completed:</strong></td>
-          <td><%= @job.end_time.to_s(:short) if @job.end_time %></td>
-        </tr>
-        <tr>
-          <td><strong>Status:</strong></td>
-          <td><%= status_badge(@job.status) %>
-            <% if @job.can_retry? %>
+            </td></tr>
+          <tr>
+            <td><strong>Scheduled:</strong></td>
+            <td><%= @job.created_at.to_s(:short) %></td>
+          </tr>
+          <tr>
+            <td><strong>Started:</strong></td>
+            <td><%= @job.start_time.to_s(:short) if @job.start_time %></td>
+          </tr>
+          <tr>
+            <td><strong>Completed:</strong></td>
+            <td><%= @job.end_time.to_s(:short) if @job.end_time %></td>
+          </tr>
+          <tr>
+            <td><strong>Status:</strong></td>
+            <td><%= status_badge(@job.status) %>
+              <% if @job.can_retry? %>
                 <%= link_to('<span class="glyphicon glyphicon-repeat"></span>'.html_safe, job_retry_path(@job.id), method: 'put', title: 'Retry this job') %>
-            <% end %>
-            <% if @job.can_cancel? %>
+              <% end %>
+              <% if @job.can_cancel? %>
                 <%= link_to('<span class="glyphicon glyphicon-remove"></span>'.html_safe, job_cancel_path(@job.id), method: 'put', title: 'Cancel this job') %>
-            <% end %>
-          </td>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <%=
+                render partial: "shared/status_counts",
+                       locals:  {
+                           id:      @job.id,
+                           type:    'job',
+                           queued:  @job.queued_count,
+                           running: @job.running_count,
+                           passed:  @job.passed_count,
+                           failed:  @job.failed_count,
+                           errored: @job.errored_count }
+            %>
         </tr>
-      </table>
-      <table>
-        <tr>
-          <%=
-              render partial: "shared/status_counts",
-                     locals: {
-                             id: @job.id,
-                             type: 'job',
-                             queued: @job.queued_count,
-                             running: @job.running_count,
-                             passed: @job.passed_count,
-                             failed: @job.failed_count,
-                             errored: @job.errored_count}
-          %>
-        </tr>
-      </table>
+        </table>
 
 
-      <% if !@job.test_results.empty? %>
+        <% if !@job.test_results.empty? %>
           <br/>
           <br/>
           <h4 id="tests">Tests</h4>
           <table class="table table-bordered table-condensed">
             <% @job.test_results.each do |result| %>
-                <tr>
-                  <td><%= result.test_case.name %></td>
-                  <td><%= status_badge(result.status) %></td>
-                </tr>
+              <tr>
+                <td><%= result.test_case.name %></td>
+                <td><%= status_badge(result.status) %></td>
+              </tr>
             <% end %>
           </table>
-      <% end %>
+        <% end %>
+
+      </div>
+
+      <div class="col-md-6">
+        <%= render partial: 'shared/chart', locals: { chart_data: @job.chart_data, options: { id: 'chart_graph', width: 300, height: 300} } %>
+      </div>
 
     </div>
 
-    <div class="col-md-6">
-      <%= render partial: 'shared/chart', locals: {chart_data: @job.chart_data, options: {id: 'chart_graph', width: 300, height: 300}} %>
-    </div>
+    <div class="row">
 
-  </div>
-
-  <div class="row">
-
-    <% if @job.command.present? %>
+      <% if @job.command.present? %>
         <br/>
         <br/>
         <h4 id="command">command</h4>
         <pre class="log-command ansi-color"><%= @job.command %></pre>
-    <% end %>
+      <% end %>
 
 
-    <% if @job.stdout.present? %>
+      <% if @job.stdout.present? %>
         <br/>
         <br/>
         <h4 id="stdout">stdout</h4>
         <pre class="log-stdout ansi-color"><%= @job.stdout %></pre>
-    <% end %>
+      <% end %>
 
-    <% if @job.stderr.present? %>
+      <% if @job.stderr.present? %>
         <br/>
         <br/>
         <h4 id="stderr">stderr</h4>
         <pre class="log-stderr ansi-color"><%= @job.stderr %></pre>
-    <% end %>
+      <% end %>
 
 
 
-    <% if @job.images.present? %>
+      <% if @job.images.present? %>
         <br/>
         <br/>
         <h4 id="images">images</h4>
         <% image_index=1 %>
         <% @job.images.each do |image_name, image_url| %>
+          <div class="screenshot col-md-4 col-sm-6 col-lg-3 thumbnail">
             <%= image_tag image_url, class: 'img-polaroid img-test-asset', 'data-toggle' => 'modal', 'data-target' => "#image-popup-#{image_index}" %>
+            <div class="caption">
+              <span class="label label-info"><%= image_name %></span>
+            </div>
             <div class='modal fade' id='image-popup-<%= image_index %>' tabindex='-1' role='dialog' aria-labelledby='image-popup-<%= image_index %>-Label'>
               <div class='modal-dialog' role='document'>
                 <%= image_tag image_url, class: 'img-responsive' %>
@@ -168,30 +171,32 @@
                 <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
               </div>
             </div>
-            <% image_index += 1 %>
+          </div>
+          <% image_index += 1 %>
         <% end %>
-    <% end %>
+      <% end %>
 
 
 
-    <% if @job.log_files.present? %>
+      <% if @job.log_files.present? %>
+        <div style="clear: both"></div>
         <br/>
         <br/>
         <h4 id="logs">logs</h4>
         <ul>
           <% @job.log_files.each do |log_name, log_url| %>
-              <li><%= link_to log_name, log_url %></li>
+            <li><%= link_to log_name, log_url %></li>
           <% end %>
         </ul>
-    <% end %>
+      <% end %>
 
+    </div>
   </div>
-</div>
 
-<script>
-    $('pre.ansi-color').each(function (index) {
-        console.log(this)
-        this.innerHTML = ansi_up.ansi_to_html(this.innerText)
-    })
-</script>
+  <script>
+    $('pre.ansi-color').each( function(index) {
+        console.log( this )
+        this.innerHTML = ansi_up.ansi_to_html( this.innerText )
+    } )
+  </script>
 
