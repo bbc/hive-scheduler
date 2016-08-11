@@ -84,7 +84,7 @@ class Batch < ActiveRecord::Base
   
 
   def assets
-    project_assets.where(version: self.version).group_by { |a| a.asset_file_name }.collect { |k,v| v.first }
+    project_assets.where(version: self.version).group_by { |a| a.asset_file_name }.collect { |k,v| v.last }
   end
 
   #
