@@ -1,6 +1,6 @@
 # Hive Scheduler
 
-The scheduler component behind the hive, and the main web view.
+The scheduler component behind the hive, and the main web view. For a full list of release notes, see the [change log](CHANGELOG.md)
 
 ## Installing
 
