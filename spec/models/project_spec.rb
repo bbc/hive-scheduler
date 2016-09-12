@@ -20,7 +20,6 @@ describe Project do
     describe "#execution_variables_required" do
 
       let(:project) { Project.new(script: script, builder_name: builder_name ) }
-
       context "no script or builder has been set" do
 
         let(:script) { nil }
@@ -68,6 +67,14 @@ describe Project do
 
       it "fetches the correct builder" do
         expect(project.builder).to eq(Builders::TestRail)
+      end
+
+      it "doesn't allow two projects with the same name" do
+        project_1 = Project.create(name: 'Name test', repository: 'repo', script_id: 1, builder_name: 'manual_builder')
+        project_2 = Project.create(name: 'Name test', repository: 'repo', script_id: 1, builder_name: 'manual_builder')
+
+        project_1.save
+        expect(project_2.save).to eq(false)
       end
     end
   end
