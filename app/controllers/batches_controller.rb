@@ -65,8 +65,8 @@ class BatchesController < ApplicationController
   end
 
   def filter_jobs
-    @jobs = @batch.jobs.where(state: params[:state]).page(params[:page]).order(:created_at)
-    render :show
+    @jobs = @batch.jobs.where(state: params[:state]).page(params[:page]).order(:created_at).group_by { |j| j.job_group_id }
+    render action: 'show', :layout => 'scrollspy_menu'
   end
   
   def chart_data
