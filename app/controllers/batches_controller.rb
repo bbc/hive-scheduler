@@ -59,6 +59,8 @@ class BatchesController < ApplicationController
       if @batch.save
         redirect_to @batch, notice: 'Batch was successfully created.'
       else
+        # Required as job_groups is a generated required parameter and so shouldn't be displayed
+        @batch.errors.messages.reject! {|k,v| k == :job_groups }
         render action: 'new'
       end
     end
