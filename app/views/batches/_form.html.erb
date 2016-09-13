@@ -33,6 +33,8 @@
           pane: $('#queue').html()
         }
       ]);
+      $(document).ready(queue_remove_item);
+      $(document).on('page:load', queue_remove_item);
       return this;
     };
 
