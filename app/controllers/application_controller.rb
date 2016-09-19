@@ -22,11 +22,6 @@ class ApplicationController < ActionController::Base
     end
     
     @version = Hive::Scheduler.const_get(:VERSION)
-    
-    
-    @sidebar_projects = Rails.cache.fetch('sidebar_projects', expires_in: 1.minute) do
-      Project.all.includes(:latest_batch).select {|p| p.latest_batch != nil }.sort { |a, b| b.latest_batch.updated_at <=> a.latest_batch.updated_at }[0, 10]
-    end
 
   end
 

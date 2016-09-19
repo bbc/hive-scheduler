@@ -49,17 +49,6 @@
             </ul>
             </li>
             <br/>
-            <li class="dark"><a>Latest Results</a></li>
-            <ul class="nav nav-pills nav-stacked">
-              <% @sidebar_projects.each do |p| %>
-                  <li class="light">
-                    <a title="<%= p.name %>">
-                      <span class="badge badge-result badge-<%= {passed: 'success', failed: 'important', errored: 'inverse', running: 'warning', queued: 'info'}[p.latest_batch.state] %> pull-right"><%= p.latest_batch.state.to_s.first.upcase %></span>
-                      <%= truncate(p.name, length: 50) %>
-                    </a>
-                  </li>
-              <% end %>
-            </ul>
           </ul>
         </div>
     <% end %>
