@@ -21,7 +21,8 @@ module JobCommands
           repository:          repository,
           execution_directory: execution_directory,
           target:              target,
-          test_results:        test_results
+          test_results:        test_results,
+          log_files:           log_files,
       }
     end
 
@@ -90,6 +91,16 @@ module JobCommands
         end
       end
       @test_results
+    end
+
+    def log_files
+      if @log_files.nil?
+        @log_files = {}
+        job.log_files.each do |log_name, log_url|
+          @log_files[log_name] = log_url
+        end
+      end
+      @log_files
     end
   end
 end

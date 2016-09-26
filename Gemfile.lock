@@ -92,7 +92,7 @@ GEM
     hashie (3.4.2)
     hike (1.2.3)
     hitimes (1.2.2)
-    hive-messages (1.0.4)
+    hive-messages (1.0.5)
       activemodel (>= 4.0, < 4.3)
       activesupport (>= 4.0, < 4.3)
       mimemagic (~> 0.3)
@@ -275,7 +275,7 @@ DEPENDENCIES
   fabrication (< 2.11.0)
   font-awesome-sass
   forgery
-  hive-messages (~> 1.0.4)
+  hive-messages (~> 1.0.5)
   image-picker-rails
   imperator
   jbuilder
