@@ -27,6 +27,10 @@ class Project < ActiveRecord::Base
     @execution_variables_required
   end
 
+  def default_retries
+    Chamber.env.maximum_auto_retries
+  end
+
   def builder
     @builder ||= Builders::Registry.find_by_builder_name(self.builder_name)
   end

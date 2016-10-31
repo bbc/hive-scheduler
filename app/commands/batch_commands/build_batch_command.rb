@@ -38,8 +38,7 @@ module BatchCommands
           build:               save_build,
           version:             version,
           target_information:  target_information,
-          execution_variables: processed_execution_variables,
-          retries:             retries
+          execution_variables: processed_execution_variables
       }
     end
 
@@ -55,10 +54,6 @@ module BatchCommands
         asset.save
       end
       @build
-    end
-
-    def retries
-      1
     end
 
     def new_name
