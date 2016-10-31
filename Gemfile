@@ -59,6 +59,7 @@ group :test do
   gem 'timecop'
   gem 'database_cleaner'
   gem 'pry-byebug'
+  gem 'codeclimate-test-reporter', require: nil
 end
 
 group :production do
