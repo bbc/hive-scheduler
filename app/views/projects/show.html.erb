@@ -33,6 +33,8 @@
           <dd><%= @project.repository %></dd>
           <dt><strong>Execution directory:</strong></dt>
           <dd><%= @project.execution_directory %></dd>
+          <dt><strong>Automatic retries:</strong></dt>
+          <dd><%= @project.retries %></dd>
 
           <% if @project.builder %>
 
@@ -40,7 +42,7 @@
               <dd><%= @project.builder.friendly_name %></dd>
 
               <% @project.builder_options.each_pair do |name, value| %>
-                  <dt><strong><%= name.humanize %></strong></dt>
+                  <dt><strong><%= name.humanize %>:</strong></dt>
                   <dd><%= value %></dd>
               <% end %>
 
@@ -52,7 +54,7 @@
           <% end %>
 
           <% (@project.execution_variables || {}).each_pair do |name, value| %>
-              <dt><strong><%= name.humanize %></strong></dt>
+              <dt><strong><%= name.humanize %>:</strong></dt>
               <dd><%= value %></dd>
           <% end %>
 

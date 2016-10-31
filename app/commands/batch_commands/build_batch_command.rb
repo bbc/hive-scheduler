@@ -8,6 +8,7 @@ module BatchCommands
     attribute :name, String
     attribute :target_information, Hash
     attribute :execution_variables, Hash
+    attribute :retries, String
     attribute :generate_name, Boolean, default: false
 
     validates_presence_of :project_id, :version
@@ -37,7 +38,8 @@ module BatchCommands
           build:               save_build,
           version:             version,
           target_information:  target_information,
-          execution_variables: processed_execution_variables
+          execution_variables: processed_execution_variables,
+          retries:             retries
       }
     end
 
@@ -53,6 +55,10 @@ module BatchCommands
         asset.save
       end
       @build
+    end
+
+    def retries
+      1
     end
 
     def new_name
