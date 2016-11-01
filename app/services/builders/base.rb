@@ -6,7 +6,8 @@ module Builders
         curated_queue:  { required: true, field_type: :curated_queue, description: "A curated list of queues", default_value: nil },
         tests:          { required: false, field_type: :array, description: "List of tests to be run", default_value: [""] },
         tests_per_job:  { required: false, field_type: :integer, description: "The number of tests to be run per job", default_value: "10" },
-        jobs_per_queue: { required: false, field_type: :integer, description: "The number of jobs to create per queue (overrides tests_per_job)", default_value: nil }
+        jobs_per_queue: { required: false, field_type: :integer, description: "The number of jobs to create per queue (overrides tests_per_job)", default_value: nil },
+        retries:        { required: false, field_type: :integer, description: 'The number of automatic retry attempts', default_value: Chamber.env.maximum_auto_retries}
     }
 
     class << self

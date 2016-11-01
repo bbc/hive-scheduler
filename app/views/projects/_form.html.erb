@@ -3,7 +3,6 @@
   <%= f.input :repository %>
   <%= f.input :execution_directory %>
   <%= f.association :script %>
-  <%= f.input :retries, input_html: {value: f.object.retries || @project.default_retries} %>
 
   <% if @builders.present? %>
     <%= field_set_tag "Population Mechanism" do %>
