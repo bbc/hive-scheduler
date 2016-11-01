@@ -29,7 +29,8 @@ describe 'create API batch request' do
         "cucumber_tags"  => "tags",
         "tests_per_job"  => 10,
         "curated_queue"  => nil,
-        "jobs_per_queue" => nil
+        "jobs_per_queue" => nil,
+        "retries"        => 1
     }
   end
 
