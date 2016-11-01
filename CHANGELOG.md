@@ -1,15 +1,66 @@
 # Change Log
 
-## [Unreleased](https://github.com/bbc/hive-scheduler/tree/HEAD)
+## [5.4.11](https://github.com/bbc/hive-scheduler/tree/5.4.11) (2016-11-01)
+[Full Changelog](https://github.com/bbc/hive-scheduler/compare/5.4.10...5.4.11)
 
-[Full Changelog](https://github.com/bbc/hive-scheduler/compare/5.4.6...HEAD)
+**Fixed bugs:**
+
+- Investigate public folder accessibility [\#100](https://github.com/bbc/hive-scheduler/issues/100)
 
 **Closed issues:**
 
+- Links to files in API [\#137](https://github.com/bbc/hive-scheduler/issues/137)
+- Hive load time [\#133](https://github.com/bbc/hive-scheduler/issues/133)
+
+**Merged pull requests:**
+
+- User configurable auto-retries [\#141](https://github.com/bbc/hive-scheduler/pull/141) ([jonpwilson](https://github.com/jonpwilson))
+- Added Travis and CodeClimate coverage config [\#140](https://github.com/bbc/hive-scheduler/pull/140) ([jonpwilson](https://github.com/jonpwilson))
+
+## [5.4.10](https://github.com/bbc/hive-scheduler/tree/5.4.10) (2016-09-26)
+[Full Changelog](https://github.com/bbc/hive-scheduler/compare/5.4.9...5.4.10)
+
+**Merged pull requests:**
+
+- Add log files to job api [\#138](https://github.com/bbc/hive-scheduler/pull/138) ([jrmhaig](https://github.com/jrmhaig))
+
+## [5.4.9](https://github.com/bbc/hive-scheduler/tree/5.4.9) (2016-09-19)
+[Full Changelog](https://github.com/bbc/hive-scheduler/compare/5.4.8...5.4.9)
+
+**Merged pull requests:**
+
+- Removed the 'latest batch' information [\#135](https://github.com/bbc/hive-scheduler/pull/135) ([jonpwilson](https://github.com/jonpwilson))
+
+## [5.4.8](https://github.com/bbc/hive-scheduler/tree/5.4.8) (2016-09-19)
+[Full Changelog](https://github.com/bbc/hive-scheduler/compare/5.4.7...5.4.8)
+
+**Merged pull requests:**
+
+- Added index to workers and hive\_queues\_workers [\#134](https://github.com/bbc/hive-scheduler/pull/134) ([jonpwilson](https://github.com/jonpwilson))
+
+## [5.4.7](https://github.com/bbc/hive-scheduler/tree/5.4.7) (2016-09-13)
+[Full Changelog](https://github.com/bbc/hive-scheduler/compare/5.4.6...5.4.7)
+
+**Fixed bugs:**
+
+- Adding anything to the end of the batches URL produces a strange view... [\#114](https://github.com/bbc/hive-scheduler/issues/114)
+- Pre-populated queues can't be removed when creating a new batch [\#51](https://github.com/bbc/hive-scheduler/issues/51)
+- Should not be able to create two projects with the same name [\#46](https://github.com/bbc/hive-scheduler/issues/46)
+- "Jobs group is invalid" when not entering all mandatory fields [\#22](https://github.com/bbc/hive-scheduler/issues/22)
+
+**Closed issues:**
+
+- Feature: Modify Scripts, Projects and create Batch [\#80](https://github.com/bbc/hive-scheduler/issues/80)
 - CSS Cleanup [\#7](https://github.com/bbc/hive-scheduler/issues/7)
 
 **Merged pull requests:**
 
+- Added the remove\_queue hooks into the display queue tab JS [\#132](https://github.com/bbc/hive-scheduler/pull/132) ([jonpwilson](https://github.com/jonpwilson))
+- Fix the filter\_jobs action [\#131](https://github.com/bbc/hive-scheduler/pull/131) ([jonpwilson](https://github.com/jonpwilson))
+- Project naming [\#130](https://github.com/bbc/hive-scheduler/pull/130) ([jonpwilson](https://github.com/jonpwilson))
+- Don't display 'job\_group' errors [\#129](https://github.com/bbc/hive-scheduler/pull/129) ([jonpwilson](https://github.com/jonpwilson))
+- Point to the correct repo [\#128](https://github.com/bbc/hive-scheduler/pull/128) ([jonpwilson](https://github.com/jonpwilson))
+- Added changelog [\#127](https://github.com/bbc/hive-scheduler/pull/127) ([jonpwilson](https://github.com/jonpwilson))
 - Change to use the last uploaded build [\#120](https://github.com/bbc/hive-scheduler/pull/120) ([jonpwilson](https://github.com/jonpwilson))
 
 ## [5.4.6](https://github.com/bbc/hive-scheduler/tree/5.4.6) (2016-08-09)
