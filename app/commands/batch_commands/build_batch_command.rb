@@ -8,7 +8,6 @@ module BatchCommands
     attribute :name, String
     attribute :target_information, Hash
     attribute :execution_variables, Hash
-    attribute :retries, String
     attribute :generate_name, Boolean, default: false
 
     validates_presence_of :project_id, :version
