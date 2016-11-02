@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/bbc/hive-scheduler.svg?branch=master,osx)](https://travis-ci.org/craigcitro/r-travis)
+[![Build Status](https://travis-ci.org/bbc/hive-scheduler.svg?branch=master)](https://travis-ci.org/bbc/hive-scheduler)
 
 # Hive Scheduler 
 
