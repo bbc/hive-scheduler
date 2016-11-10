@@ -1,4 +1,6 @@
-# Hive Scheduler
+[![Build Status](https://travis-ci.org/bbc/hive-scheduler.svg?branch=master)](https://travis-ci.org/bbc/hive-scheduler)
+
+# Hive Scheduler 
 
 The scheduler component behind the hive, and the main web view. For a full list of release notes, see the [change log](CHANGELOG.md)
 
