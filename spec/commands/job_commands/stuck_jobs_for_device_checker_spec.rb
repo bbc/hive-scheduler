@@ -2,7 +2,7 @@ require "spec_helper"
 
 module JobCommands
 
-  describe StuckJobsForDeviceChecker do
+  describe StuckJobsForDeviceChecker, type: :model do
 
 
     describe "validations" do

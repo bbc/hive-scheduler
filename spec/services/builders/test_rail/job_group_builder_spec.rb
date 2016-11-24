@@ -1,6 +1,7 @@
 require "spec_helper"
+require "shoulda/matchers"
 
-describe Builders::TestRail::JobGroupBuilder do
+describe Builders::TestRail::JobGroupBuilder, type: :model  do
 
   describe "validations" do
 

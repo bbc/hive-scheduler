@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Builders::JobGroupBuilderBase do
+describe Builders::JobGroupBuilderBase, type: :model do
 
   describe "validations" do
 

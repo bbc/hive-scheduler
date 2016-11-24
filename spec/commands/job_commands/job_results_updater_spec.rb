@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module JobCommands
-  describe JobResultsUpdater do
+  describe JobResultsUpdater, type: :model do
 
     describe "validations" do
       it { should validate_presence_of(:job_id) }

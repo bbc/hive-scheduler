@@ -1,7 +1,7 @@
 require "spec_helper"
 require "sucker_punch/testing/inline"
 
-describe JobCommands::JobReservationCheck, job: true do
+describe JobCommands::JobReservationCheck, job: true, type: :model do
 
   describe "instance methods" do
 

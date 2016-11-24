@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Builders::ManualBuilder::BatchBuilder do
+describe Builders::ManualBuilder::BatchBuilder, type: :model  do
   include ActionDispatch::TestProcess
 
   describe "validations" do
