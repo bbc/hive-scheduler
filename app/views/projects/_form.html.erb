@@ -1,6 +1,7 @@
 <%= simple_form_for @project do |f| %>
   <%= f.input :name %>
   <%= f.input :repository %>
+  <%= f.input :branch %>
   <%= f.input :execution_directory %>
   <%= f.association :script %>
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Job::JobStateMachine do
+describe Job::JobStateMachine, type: :model do
 
   describe 'state machine' do
 

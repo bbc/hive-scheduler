@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe JobCommands::JobMessageMapper do
+describe JobCommands::JobMessageMapper, type: :model do
   include Rails.application.routes.url_helpers
 
   describe "validations" do

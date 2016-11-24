@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919104207) do
+ActiveRecord::Schema.define(version: 20161123143055) do
 
   create_table "artifacts", force: true do |t|
     t.integer  "job_id"
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(version: 20160919104207) do
     t.binary   "builder_options"
     t.datetime "deleted_at"
     t.binary   "execution_variables"
+    t.string   "branch"
   end
 
   add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at"

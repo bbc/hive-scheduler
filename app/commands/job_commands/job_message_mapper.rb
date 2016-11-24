@@ -19,6 +19,7 @@ module JobCommands
           execution_variables: execution_variables,
           job_id:              job_id,
           repository:          repository,
+          branch:              branch,
           execution_directory: execution_directory,
           target:              target,
           test_results:        test_results,
@@ -59,6 +60,10 @@ module JobCommands
 
     def repository
       batch.project.repository
+    end
+
+    def branch
+      batch.project.branch
     end
 
     def target

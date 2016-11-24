@@ -70,7 +70,7 @@ class ProjectsController < ApplicationController
   # Only allow a trusted parameter "white list" through.
   def project_params
     if @project_params.nil?
-      @project_params = params.require(:project).permit(:name, :platform, :plan_id, :script_id, :builder_name, :repository, :execution_directory, :retries)
+      @project_params = params.require(:project).permit(:name, :platform, :plan_id, :script_id, :builder_name, :repository, :branch, :execution_directory, :retries)
       @project_params.merge!(builder_options: params[:project][:builder_options])
       @project_params.merge!(execution_variables: params[:project][:execution_variables])
     end

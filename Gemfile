@@ -25,7 +25,7 @@ gem 'omniauth'
 
 gem 'test_rail-api', '~> 0.4', require: 'test_rail'
 gem 'mind_meld', '~> 0.1'
-gem 'hive-messages', '~> 1.0.5'
+gem 'hive-messages', '~> 1.0', '>=1.0.6'
 
 gem 'jbuilder'
 

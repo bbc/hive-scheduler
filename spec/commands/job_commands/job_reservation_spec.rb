@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe JobCommands::JobReservation do
+describe JobCommands::JobReservation, type: :model do
 
   let(:reservation_command) { JobCommands::JobReservation.new(params) }
   let(:reservation_details) { { hive_id: 33, worker_pid: 222 } }
