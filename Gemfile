@@ -18,7 +18,7 @@ gem 'aws-sdk', '~> 1.6'
 
 gem 'chamber'
 
-gem 'chartjs-ror'
+gem 'chartjs-ror', '>= 3'
 gem 'd3-rails'
 
 gem 'omniauth'
@@ -63,5 +63,5 @@ group :test do
 end
 
 group :production do
-  gem 'mysql2'
+  gem 'mysql2', '~> 0.3.18'
 end
