@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
-//= require Chart
+//= require Chart.min
 //= require cocoon
 //= require js-routes
 //= require jquery.serialize-hash
