@@ -287,7 +287,7 @@ DEPENDENCIES
   bootstrap-switch-rails (< 3.1.0)
   cachethod (~> 0.2.0)
   chamber
-  chartjs-ror
+  chartjs-ror (>= 3)
   cocoon
   codeclimate-test-reporter
   d3-rails
