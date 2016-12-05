@@ -108,9 +108,9 @@ def add_test_results
   )
 end
 
-add_test_results
-
 # For dummy data uncomment these lines before running bin/rake db:seed
+#add_test_results
+
 #rspec_script = Script.create!(
 #  name: 'Rspec tests',
 #  target_id: 5,
