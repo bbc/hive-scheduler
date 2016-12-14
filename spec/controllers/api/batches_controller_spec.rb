@@ -4,6 +4,7 @@ describe Api::BatchesController do
 
   describe "POST #create" do
 
+    context 'no build' do
     let(:version) { '1' }
     let(:tests_per_job) { "11" }
     let(:params) { { format: :json, project_id: project_id, version: version, tests_per_job: tests_per_job, build: :build } }
@@ -50,6 +51,25 @@ describe Api::BatchesController do
         it "responds with the error messages in the json body" do
           expect(response_body).to eq({ "errors" => error_messages })
         end
+      end
+    end
+    end
+
+    context "mobile tests" do
+      let(:target) { Target.create! requires_build: true }
+      let(:script) { Script.create! target: target, name: 'Test script', template: 'Test template' }
+      let(:project) { Project.create! script: script, name: 'Test project', builder_name: Builders::ManualBuilder.builder_name, repository: '' }
+
+      it 'creates a new asset for the build' do
+#target.save
+#script.save
+#project.save
+puts target
+puts script
+puts project
+        file = fixture_file_upload('test_files/test_1.apk', 'application/vnd.android.package-archive')
+        expect(file).to receive(:original_filename) { 'Old_filename.apk' }
+        expect{ post :create, { format: :json, version: '1', build: file, project_id: project.id} }.to change(Asset, :count).by 1
       end
     end
   end

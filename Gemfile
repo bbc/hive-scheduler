@@ -51,6 +51,7 @@ end
 
 group :test do
   gem 'rspec-rails', "2.14.2"
+  gem 'rspec-mocks'
   gem 'fabrication', '< 2.11.0'
   gem 'shoulda-matchers', require: false
   gem 'forgery'

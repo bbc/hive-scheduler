@@ -310,6 +310,7 @@ DEPENDENCIES
   pry-byebug
   rails (~> 4.1.6)
   roar-rails
+  rspec-mocks
   rspec-rails (= 2.14.2)
   sass-rails (~> 4.0.0)
   select2-rails
