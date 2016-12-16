@@ -11,6 +11,7 @@ class Batch < ActiveRecord::Base
       has_many   :project_assets, through: :project, foreign_key: 'version', source: :assets
       
       has_many   :test_cases, through: :project
+      has_many   :batch_assets
       
     end
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161123143055) do
+ActiveRecord::Schema.define(version: 20161216112314) do
 
   create_table "artifacts", force: true do |t|
     t.integer  "job_id"
@@ -39,6 +39,16 @@ ActiveRecord::Schema.define(version: 20161123143055) do
   end
 
   add_index "assets", ["project_id"], name: "index_assets_on_project_id"
+
+  create_table "batch_assets", force: true do |t|
+    t.integer  "batch_id"
+    t.integer  "asset_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "batch_assets", ["asset_id"], name: "index_batch_assets_on_asset_id"
+  add_index "batch_assets", ["batch_id"], name: "index_batch_assets_on_batch_id"
 
   create_table "batches", force: true do |t|
     t.string   "name",                        null: false

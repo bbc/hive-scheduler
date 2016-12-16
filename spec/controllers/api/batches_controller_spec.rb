@@ -60,9 +60,26 @@ describe Api::BatchesController do
       let(:script) { Script.create! target: target, name: 'Test script', template: 'Test template' }
       let(:project) { Project.create! script: script, name: 'Test project', builder_name: Builders::ManualBuilder.builder_name, repository: '' }
       let(:build) { [ Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/files/android_build.apk"), 'application/vnd.android.package-archive', false) ] }
+      let(:build2) { [ Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/files/android_build_2.apk"), 'application/vnd.android.package-archive', false) ] }
 
       it 'creates a new asset for the build' do
         expect{ post :create, { format: :json, version: '1', build: build, project_id: project.id} }.to change(Asset, :count).by 1
+      end
+
+      it 'creates a single asset for two batchs of the same project and version with the same file' do
+        post :create, { format: :json, version: '1', build: build, project_id: project.id }
+        expect{ post :create, { format: :json, version: '1', build: build, project_id: project.id} }.to change(Asset, :count).by 0
+      end
+
+      it 'creates a new asset for a second batch of the same project and version with a different file name' do
+        post :create, { format: :json, version: '1', build: build, project_id: project.id }
+        expect{ post :create, { format: :json, version: '1', build: build2, project_id: project.id} }.to change(Asset, :count).by 1
+      end
+
+      it 'links a new asset to the batch' do
+        expect{ post :create, { format: :json, version: '1', build: build, project_id: project.id} }.to change(BatchAsset, :count).by 1
+        expect(BatchAsset.last.batch).to eq Batch.last
+        expect(BatchAsset.last.asset).to eq Asset.last
       end
     end
   end

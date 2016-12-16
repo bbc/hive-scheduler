@@ -23,7 +23,7 @@ require 'pry'
         execution_variables: execution_variables
     )
     
-binding.pry
+#binding.pry
     if @batch.save
       respond_with @batch, represent_with: BatchRepresenter
     else
