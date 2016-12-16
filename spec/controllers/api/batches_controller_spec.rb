@@ -4,55 +4,55 @@ describe Api::BatchesController do
 
   describe "POST #create" do
 
-    context 'no build' do
-    let(:version) { '1' }
-    let(:tests_per_job) { "11" }
-    let(:params) { { format: :json, project_id: project_id, version: version, tests_per_job: tests_per_job, build: :build } }
-    let(:batch) { Fabricate(:batch) }
+    context 'batches without a build' do
+      let(:version) { '1' }
+      let(:tests_per_job) { "11" }
+      let(:params) { { format: :json, project_id: project_id, version: version, tests_per_job: tests_per_job, build: :build } }
+      let(:batch) { Fabricate(:batch) }
 
-    before(:each) do
-      BatchCommands::BuildBatchCommand.stub(build: batch)
-      post :create, params
-    end
-
-    context "invalid project_id provided" do
-      let(:project_id) { -99 }
-      let(:response_body) { JSON.parse(response.body) }
-
-      it { should respond_with(:not_found) }
-      it "responds with the error messages in the json body" do
-        expect(response_body).to eq({ "errors" => ["Project not found"] })
-      end
-    end
-
-    context "valid project id provided" do
-      let(:project_id) { Fabricate(:project).id }
-
-
-      context "batch created successfully" do
-
-        it "rendered using the BatchRepresenter" do
-          batch = assigns(:batch)
-          BatchRepresenter.prepare(batch)
-          expect(response.body).to eq batch.to_json
-        end
-        let(:batch) { Fabricate.build(:batch) }
-        it { should respond_with(:created) }
+      before(:each) do
+        BatchCommands::BuildBatchCommand.stub(build: batch)
+        post :create, params
       end
 
-      context "batch has errors" do
-
-        let(:batch) { double(Batch, save: false, errors: errors) }
-        let(:errors) { double(ActiveModel::Errors, full_messages: error_messages) }
-        let(:error_messages) { ["An error occurred", "There was a problem"] }
+      context "invalid project_id provided" do
+        let(:project_id) { -99 }
         let(:response_body) { JSON.parse(response.body) }
 
-        it { should respond_with(:unprocessable_entity) }
+        it { should respond_with(:not_found) }
         it "responds with the error messages in the json body" do
-          expect(response_body).to eq({ "errors" => error_messages })
+          expect(response_body).to eq({ "errors" => ["Project not found"] })
         end
       end
-    end
+
+      context "valid project id provided" do
+        let(:project_id) { Fabricate(:project).id }
+
+
+        context "batch created successfully" do
+
+          it "rendered using the BatchRepresenter" do
+            batch = assigns(:batch)
+            BatchRepresenter.prepare(batch)
+            expect(response.body).to eq batch.to_json
+          end
+          let(:batch) { Fabricate.build(:batch) }
+          it { should respond_with(:created) }
+        end
+
+        context "batch has errors" do
+
+          let(:batch) { double(Batch, save: false, errors: errors) }
+          let(:errors) { double(ActiveModel::Errors, full_messages: error_messages) }
+          let(:error_messages) { ["An error occurred", "There was a problem"] }
+          let(:response_body) { JSON.parse(response.body) }
+
+          it { should respond_with(:unprocessable_entity) }
+          it "responds with the error messages in the json body" do
+            expect(response_body).to eq({ "errors" => error_messages })
+          end
+        end
+      end
     end
 
     context "mobile tests" do
