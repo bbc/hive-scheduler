@@ -293,8 +293,6 @@ module BatchCommands
 
             it "replaces the list of queues with the curated queues" do
               expect(Builders::TestBuilder::BatchBuilder).to have_received(:build).with(expected_batch_builder_arguments)
-
-#Builders::TestBuilders::BatchBuilder.build( expectec_batch_builder_arguments )
             end
           end
         end
