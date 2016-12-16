@@ -26,7 +26,6 @@ module BatchCommands
       @assets.each do |asset|
         BatchAsset.create batch: batch, asset: asset
       end
-binding.pry
       batch
     end
 

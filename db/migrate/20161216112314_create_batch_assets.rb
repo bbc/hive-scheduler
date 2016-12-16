@@ -6,5 +6,17 @@ class CreateBatchAssets < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    reversible do |dir|
+      dir.up do
+        Project.all.each do |p|
+          p.batches.all.each do |b|
+            p.assets.where(version: b.version).each do |a|
+              BatchAsset.create! batch: b, asset: a
+            end
+          end
+        end
+      end
+    end
   end
 end

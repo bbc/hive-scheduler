@@ -4,7 +4,6 @@ class Api::BatchesController < Api::ApiController
   respond_to :json
 
   def create
-require 'pry'
     version            = params[:version]
     build              = params[:build]
     tests_per_job      = params[:tests_per_job] || 10
@@ -23,7 +22,6 @@ require 'pry'
         execution_variables: execution_variables
     )
     
-#binding.pry
     if @batch.save
       respond_with @batch, represent_with: BatchRepresenter
     else

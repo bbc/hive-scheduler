@@ -82,9 +82,8 @@ class Batch < ActiveRecord::Base
     jobs.active.where("jobs.state='errored' or jobs.state='cancelled' or ( jobs.state='complete' and jobs.result='errored')" ).count
   end
   
-
   def assets
-    project_assets.where(version: self.version).group_by { |a| a.asset_file_name }.collect { |k,v| v.last }
+    self.batch_assets.map { |ba| ba.asset }
   end
 
   #

@@ -106,7 +106,7 @@ module BatchCommands
           }
         end
 
-        let(:batch_stub) { double(Batch, save: nil, save!: nil) }
+        let(:batch_stub) { mock_model("Batch", save: nil, save!: nil) }
 
         let(:build_batch_command) { BatchCommands::BuildBatchCommand.new(batch_attributes) }
 
@@ -293,6 +293,8 @@ module BatchCommands
 
             it "replaces the list of queues with the curated queues" do
               expect(Builders::TestBuilder::BatchBuilder).to have_received(:build).with(expected_batch_builder_arguments)
+
+#Builders::TestBuilders::BatchBuilder.build( expectec_batch_builder_arguments )
             end
           end
         end
