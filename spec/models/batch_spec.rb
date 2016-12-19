@@ -329,4 +329,56 @@ describe Batch do
     end
 
   end
+
+  describe '#assets' do
+    context 'single batch with single asset' do
+      let(:target) { Target.create! requires_build: true }
+      let(:script) { Script.create! target: target, name: 'Test script', template: 'Test template' }
+      let(:project) { Project.create! script: script, name: 'Test project', builder_name: Builders::ManualBuilder.builder_name, repository: '' }
+      let(:build) { [ Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/android_build.apk'), 'application/vnd.android.package-archive', false) ] }
+      let(:batch) { BatchCommands::BuildBatchCommand.build(
+          project_id: project.id,
+          version: 1,
+          build: build,
+          name: 'Test batch'
+        )
+      }
+
+      it 'returns a single asset for a single batch' do
+        expect(batch.assets).to match_array([Asset.last])
+      end
+    end
+
+    context 'two batches of the same project with different assets' do
+      let(:target) { Target.create! requires_build: true }
+      let(:script) { Script.create! target: target, name: 'Test script', template: 'Test template' }
+      let(:project) { Project.create! script: script, name: 'Test project', builder_name: Builders::ManualBuilder.builder_name, repository: '' }
+      let(:build1) { [ Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/android_build.apk'), 'application/vnd.android.package-archive', false) ] }
+      let(:build2) { [ Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/android_build_2.apk'), 'application/vnd.android.package-archive', false) ] }
+      let(:batch1) { BatchCommands::BuildBatchCommand.build(
+          project_id: project.id,
+          version: 1,
+          build: build1,
+          name: 'Batch one'
+        )
+      }
+      let(:batch2) { BatchCommands::BuildBatchCommand.build(
+          project_id: project.id,
+          version: 1,
+          build: build2,
+          name: 'Batch two'
+        )
+      }
+
+      it 'returns a single asset for each batch' do
+        expect(batch1.assets.length).to eq 1
+        expect(batch2.assets.length).to eq 1
+      end
+
+      it 'returns the correct asset for each batch' do
+        expect(batch1.assets.first.file).to eq 'android_build.apk'
+        expect(batch2.assets.first.file).to eq 'android_build_2.apk'
+      end
+    end
+  end
 end

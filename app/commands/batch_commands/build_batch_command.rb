@@ -21,7 +21,12 @@ module BatchCommands
     end
 
     action do
-      builder.batch_builder.build(batch_builder_arguments)
+      batch = builder.batch_builder.build(batch_builder_arguments)
+
+      @assets.each do |asset|
+        BatchAsset.create batch: batch, asset: asset
+      end
+      batch
     end
 
     private
@@ -42,6 +47,7 @@ module BatchCommands
     end
 
     def save_build
+      @assets = []
       return @build if @build.nil?
 
       if @build.is_a? ActionDispatch::Http::UploadedFile
@@ -51,6 +57,7 @@ module BatchCommands
         asset = Asset.find_or_register(project_id: project_id, name: new_name, file: b.original_filename, version: version)
         asset.asset = b
         asset.save
+        @assets << asset
       end
       @build
     end

@@ -106,7 +106,7 @@ module BatchCommands
           }
         end
 
-        let(:batch_stub) { double(Batch, save: nil, save!: nil) }
+        let(:batch_stub) { mock_model("Batch", save: nil, save!: nil) }
 
         let(:build_batch_command) { BatchCommands::BuildBatchCommand.new(batch_attributes) }
 
