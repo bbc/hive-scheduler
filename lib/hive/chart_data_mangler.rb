@@ -5,38 +5,30 @@ module Hive
     # a pie chart
     def self.pie_result_data( data )
       data.default = 0
-      [
-        {
-          value: data[:queued],
-          color:"#3a87ad",
-          highlight:"#4a97bd",
-          label: "Queued"
-        },
-        {
-          value: data[:running],
-          color:"#f89406",
-          highlight: "#ffa416",
-          label: "Running"
-        },
-        {
-          value: data[:passed],
-          color:"#468847",
-          highlight: "#569857",
-          label: "Passed"
-        },
-        {
-          value: data[:failed],
-          color:"#b94a48",
-          highlight: "#e94b58",
-          label: "Failed"
-        },
-        {
-          value: data[:errored],
-          color:"#333333",
-          highlight: "#434343",
-          label: "Errored"
-        }
-      ]
+      data = {
+        labels: [ "Queued", "Running", "Passed", "Failed", "Errored" ],
+        datasets:
+        [
+          {
+              data: [data[:queued], data[:running], data[:passed], data[:failed], data[:errored]],
+              backgroundColor: [
+                "#3a87ad",
+                "#f89406",
+                "#569857",
+                "#b94a48",
+                "#333333",
+                ],
+              hoverBackgroundColor: [
+                "#4a97bd",
+                "#ffa416",
+                "#569857",
+                "#e94b58",
+                "#434343"
+             ]
+         }
+        ]
+     }
     end
+
   end
 end
