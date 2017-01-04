@@ -14,7 +14,7 @@
 
 
   <div class="row">
-    <div class="col-md-6 col-sm-6">
+    <div class="col-md-8 col-sm-8">
 
 
       <h3 id="batch_details">Batch details: <%= @batch.name %></h3>
@@ -59,7 +59,7 @@
 
     </div>
 
-    <div class="col-md-6 col-sm-6 hidden-xs" id=<%= "batch_chart_#{@batch.id}" %>>
+    <div class="col-md-4 col-sm-4 hidden-xs" id=<%= "batch_chart_#{@batch.id}" %>>
       <%= render partial: 'shared/chart', locals: {chart_data: @batch.chart_data, options: {id: 'chart_graph', width: 300, height: 300}} %>
     </div>
 
