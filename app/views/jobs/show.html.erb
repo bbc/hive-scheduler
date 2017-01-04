@@ -40,7 +40,7 @@
       </div>
       <% end %>
 
-      <div class="col-md-6">
+      <div class="col-md-8">
         <h3 id="summary"><%= full_job_name(@job) %></h3>
         <h4>Batch: <%= link_to @job.batch.name, batch_path(@job.batch) %></h4>
         <table class="table">
@@ -120,7 +120,7 @@
 
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-4">
         <%= render partial: 'shared/chart', locals: { chart_data: @job.chart_data, options: { id: 'chart_graph', width: 300, height: 300} } %>
       </div>
 
