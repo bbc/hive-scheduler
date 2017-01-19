@@ -15,6 +15,7 @@
         <%= f.select :target_id, Target.all.map {|t| [t.name, t.id, {"data-img-src" => image_path("empty.png"), "data-img-label" => "<span class='large-icon'>#{icon(t.icon)}</span><br />#{t.name}"}] } %>
       <% end %>
       <%= f.input :name %>
+      <%= f.input :install_build, as: :boolean, label: false, inline_label: true %>
       <%= f.input :template %>
 
       <%= render "fields/fields_edit_form", f: f, field_type: :execution_variables, model: @script %>

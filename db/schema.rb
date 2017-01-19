@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161216112314) do
+ActiveRecord::Schema.define(version: 20170116093749) do
 
   create_table "artifacts", force: true do |t|
     t.integer  "job_id"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20161216112314) do
     t.datetime "asset_updated_at"
   end
 
-  add_index "artifacts", ["job_id"], name: "index_artifacts_on_job_id"
+  add_index "artifacts", ["job_id"], name: "index_artifacts_on_job_id", using: :btree
 
   create_table "assets", force: true do |t|
     t.integer  "project_id"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20161216112314) do
     t.datetime "asset_updated_at"
   end
 
-  add_index "assets", ["project_id"], name: "index_assets_on_project_id"
+  add_index "assets", ["project_id"], name: "index_assets_on_project_id", using: :btree
 
   create_table "batch_assets", force: true do |t|
     t.integer  "batch_id"
@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(version: 20161216112314) do
     t.datetime "updated_at"
   end
 
-  add_index "batch_assets", ["asset_id"], name: "index_batch_assets_on_asset_id"
-  add_index "batch_assets", ["batch_id"], name: "index_batch_assets_on_batch_id"
+  add_index "batch_assets", ["asset_id"], name: "index_batch_assets_on_asset_id", using: :btree
+  add_index "batch_assets", ["batch_id"], name: "index_batch_assets_on_batch_id", using: :btree
 
   create_table "batches", force: true do |t|
     t.string   "name",                        null: false
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20161216112314) do
     t.binary   "execution_variables"
   end
 
-  add_index "batches", ["project_id"], name: "index_batches_on_project_id"
+  add_index "batches", ["project_id"], name: "index_batches_on_project_id", using: :btree
 
   create_table "curated_queues", force: true do |t|
     t.string   "name"
@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(version: 20161216112314) do
     t.datetime "updated_at"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "fields", force: true do |t|
     t.string   "name"
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 20161216112314) do
     t.string   "default_value"
   end
 
-  add_index "fields", ["owner_id", "owner_type"], name: "index_fields_on_owner_id_and_owner_type"
+  add_index "fields", ["owner_id", "owner_type"], name: "index_fields_on_owner_id_and_owner_type", using: :btree
 
   create_table "hive_queues", force: true do |t|
     t.string   "name"
@@ -113,8 +113,8 @@ ActiveRecord::Schema.define(version: 20161216112314) do
     t.integer "hive_queue_id", null: false
   end
 
-  add_index "hive_queues_workers", ["hive_queue_id", "worker_id"], name: "index_hive_queues_workers_on_hive_queue_id_and_worker_id", unique: true
-  add_index "hive_queues_workers", ["worker_id"], name: "index_hive_queues_workers_on_worker_id"
+  add_index "hive_queues_workers", ["hive_queue_id", "worker_id"], name: "index_hive_queues_workers_on_hive_queue_id_and_worker_id", unique: true, using: :btree
+  add_index "hive_queues_workers", ["worker_id"], name: "index_hive_queues_workers_on_worker_id", using: :btree
 
   create_table "job_groups", force: true do |t|
     t.integer  "batch_id"
@@ -125,8 +125,8 @@ ActiveRecord::Schema.define(version: 20161216112314) do
     t.integer  "hive_queue_id"
   end
 
-  add_index "job_groups", ["batch_id"], name: "index_job_groups_on_batch_id"
-  add_index "job_groups", ["hive_queue_id"], name: "index_job_groups_on_hive_queue_id"
+  add_index "job_groups", ["batch_id"], name: "index_job_groups_on_batch_id", using: :btree
+  add_index "job_groups", ["hive_queue_id"], name: "index_job_groups_on_hive_queue_id", using: :btree
 
   create_table "jobs", force: true do |t|
     t.string   "job_name",                        null: false
@@ -152,10 +152,10 @@ ActiveRecord::Schema.define(version: 20161216112314) do
     t.text     "message"
   end
 
-  add_index "jobs", ["device_id"], name: "index_jobs_on_device_id"
-  add_index "jobs", ["job_group_id"], name: "index_jobs_on_job_group_id"
-  add_index "jobs", ["original_job_id"], name: "index_jobs_on_original_job_id"
-  add_index "jobs", ["state", "job_group_id"], name: "index_jobs_on_state_and_job_group_id"
+  add_index "jobs", ["device_id"], name: "index_jobs_on_device_id", using: :btree
+  add_index "jobs", ["job_group_id"], name: "index_jobs_on_job_group_id", using: :btree
+  add_index "jobs", ["original_job_id"], name: "index_jobs_on_original_job_id", using: :btree
+  add_index "jobs", ["state", "job_group_id"], name: "index_jobs_on_state_and_job_group_id", using: :btree
 
   create_table "projects", force: true do |t|
     t.string   "name",                              null: false
@@ -171,15 +171,16 @@ ActiveRecord::Schema.define(version: 20161216112314) do
     t.string   "branch"
   end
 
-  add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at"
-  add_index "projects", ["script_id"], name: "index_projects_on_script_id"
+  add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree
+  add_index "projects", ["script_id"], name: "index_projects_on_script_id", using: :btree
 
   create_table "scripts", force: true do |t|
-    t.string   "name",       null: false
-    t.text     "template",   null: false
+    t.string   "name",                         null: false
+    t.text     "template",                     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "target_id"
+    t.boolean  "install_build", default: true
   end
 
   create_table "targets", force: true do |t|
@@ -198,7 +199,7 @@ ActiveRecord::Schema.define(version: 20161216112314) do
     t.datetime "updated_at"
   end
 
-  add_index "test_cases", ["project_id"], name: "index_test_cases_on_project_id"
+  add_index "test_cases", ["project_id"], name: "index_test_cases_on_project_id", using: :btree
 
   create_table "test_results", force: true do |t|
     t.string   "status"
@@ -209,8 +210,8 @@ ActiveRecord::Schema.define(version: 20161216112314) do
     t.datetime "updated_at"
   end
 
-  add_index "test_results", ["job_id"], name: "index_test_results_on_job_id"
-  add_index "test_results", ["test_case_id"], name: "index_test_results_on_test_case_id"
+  add_index "test_results", ["job_id"], name: "index_test_results_on_job_id", using: :btree
+  add_index "test_results", ["test_case_id"], name: "index_test_results_on_test_case_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string "name"
@@ -227,6 +228,6 @@ ActiveRecord::Schema.define(version: 20161216112314) do
     t.datetime "updated_at"
   end
 
-  add_index "workers", ["hive_id", "pid", "device_id"], name: "index_hive_id_pid_on_workers"
+  add_index "workers", ["hive_id", "pid", "device_id"], name: "index_hive_id_pid_on_workers", using: :btree
 
 end
