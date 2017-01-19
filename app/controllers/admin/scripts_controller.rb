@@ -44,6 +44,7 @@ class Admin::ScriptsController < Admin::AdminController
         :target_id,
         :name,
         :template,
+        :install_build,
         :requires_build,
         target_fields_attributes: [:id, :name, :field_type, :_destroy],
         execution_variables_attributes: [:id, :name, :field_type, :_destroy]
