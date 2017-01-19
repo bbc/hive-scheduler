@@ -175,12 +175,12 @@ ActiveRecord::Schema.define(version: 20170116093749) do
   add_index "projects", ["script_id"], name: "index_projects_on_script_id", using: :btree
 
   create_table "scripts", force: true do |t|
-    t.string   "name",                         null: false
-    t.text     "template",                     null: false
+    t.string   "name",                          null: false
+    t.text     "template",                      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "target_id"
-    t.boolean  "install_build", default: true
+    t.boolean  "install_build", default: false
   end
 
   create_table "targets", force: true do |t|
