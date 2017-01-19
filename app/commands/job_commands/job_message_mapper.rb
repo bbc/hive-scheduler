@@ -22,6 +22,7 @@ module JobCommands
           branch:              branch,
           execution_directory: execution_directory,
           target:              target,
+          install_build:       install_build,
           test_results:        test_results,
           log_files:           log_files,
       }
@@ -70,6 +71,10 @@ module JobCommands
       target = batch.target_information || {}
       target.merge!(build: api_batch_download_build_path(batch.id)) if script.requires_build?
       target
+    end
+
+    def install_build
+      script.install_build
     end
 
     def batch

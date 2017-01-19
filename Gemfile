@@ -25,13 +25,13 @@ gem 'omniauth'
 
 gem 'test_rail-api', '~> 0.4', require: 'test_rail'
 gem 'mind_meld', '~> 0.1'
-gem 'hive-messages', '~> 1.0', '>=1.0.6'
+gem 'hive-messages', '~> 1.0', '>=1.0.7'
 
 gem 'jbuilder'
 
 gem 'imperator'
 gem "cocoon"
-gem 'simple_form', '~> 3.1.0.rc2'
+gem 'simple_form', '~> 3.4'
 gem "js-routes"
 gem 'thin'
 
