@@ -107,7 +107,7 @@ GEM
     hashie (3.4.6)
     hike (1.2.3)
     hitimes (1.2.4)
-    hive-messages (1.0.6)
+    hive-messages (1.0.7)
       activemodel (>= 4.0, < 4.3)
       activesupport (>= 4.0, < 4.3)
       mimemagic (~> 0.3)
@@ -224,9 +224,9 @@ GEM
       activesupport (>= 3)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
-    simple_form (3.1.1)
-      actionpack (~> 4.0)
-      activemodel (~> 4.0)
+    simple_form (3.4.0)
+      actionpack (> 4, < 5.1)
+      activemodel (> 4, < 5.1)
     simplecov (0.12.0)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
@@ -296,7 +296,7 @@ DEPENDENCIES
   fabrication (< 2.11.0)
   font-awesome-sass
   forgery
-  hive-messages (~> 1.0, >= 1.0.6)
+  hive-messages (~> 1.0, >= 1.0.7)
   image-picker-rails
   imperator
   jbuilder
@@ -316,7 +316,7 @@ DEPENDENCIES
   settingslogic
   shoulda-callback-matchers (~> 1.0)
   shoulda-matchers
-  simple_form (~> 3.1.0.rc2)
+  simple_form (~> 3.4)
   sqlite3
   state_machine
   sucker_punch (~> 1.0)
@@ -327,4 +327,4 @@ DEPENDENCIES
   will_paginate (~> 3.0)
 
 BUNDLED WITH
-   1.13.6
+   1.13.7
