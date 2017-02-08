@@ -16,6 +16,7 @@
         <p><%= f.input :name %></p>
         <p><%= f.association :project %></p>
         <p><%= f.input :version %></p>
+        <p><%= f.input :tarball, as: :file %></p>
       </div>
       <div class="step-pane sample-pane-alert" id="build">
         <h4>Build</h4>

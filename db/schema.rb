@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170120142108) do
+ActiveRecord::Schema.define(version: 20170207163504) do
 
   create_table "artifacts", force: true do |t|
     t.integer  "job_id"
@@ -63,6 +63,10 @@ ActiveRecord::Schema.define(version: 20170120142108) do
     t.binary   "target_information"
     t.integer  "number_of_automatic_retries"
     t.binary   "execution_variables"
+    t.string   "tarball_file_name"
+    t.string   "tarball_content_type"
+    t.integer  "tarball_file_size"
+    t.datetime "tarball_updated_at"
   end
 
   add_index "batches", ["project_id"], name: "index_batches_on_project_id", using: :btree

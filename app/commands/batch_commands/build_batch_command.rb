@@ -5,6 +5,7 @@ module BatchCommands
     attribute :project_id, Integer
     attribute :version, String
     attribute :build
+    attribute :tarball
     attribute :name, String
     attribute :target_information, Hash
     attribute :execution_variables, Hash
@@ -40,6 +41,7 @@ module BatchCommands
           project_id:          project_id,
           name:                new_name,
           build:               save_build,
+          tarball:             tarball,
           version:             version,
           target_information:  target_information,
           execution_variables: processed_execution_variables

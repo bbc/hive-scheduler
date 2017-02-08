@@ -4,6 +4,7 @@ module Builders
     attribute :project_id
     attribute :name
     attribute :build
+    attribute :tarball
     attribute :version
     attribute :target_information
     attribute :execution_variables
@@ -33,6 +34,7 @@ module Builders
       {
         project_id:          project_id,
         name:                name,
+        tarball:             tarball,
         version:             version,
         target_information:  target_information,
         execution_variables: execution_variables

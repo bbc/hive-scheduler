@@ -20,6 +20,7 @@ module JobCommands
           job_id:              job_id,
           repository:          repository,
           branch:              branch,
+          tarball_url:         tarball_url,
           execution_directory: execution_directory,
           target:              target,
           install_build:       install_build,
@@ -65,6 +66,10 @@ module JobCommands
 
     def branch
       batch.project.branch
+    end
+
+    def tarball_url
+      batch.tarball.url
     end
 
     def target

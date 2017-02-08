@@ -4,6 +4,10 @@ class Batch < ActiveRecord::Base
   include BatchAssociations
   include BatchScopes
 
+  has_attached_file :tarball
+  # Is this the correct content_type?
+  validates_attachment_content_type :tarball, content_type: [ 'application/gzip' ]
+
   serialize :target_information, JSON
   serialize :execution_variables, JSON
 
