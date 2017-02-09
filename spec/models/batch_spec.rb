@@ -169,7 +169,7 @@ describe Batch do
               ]
             end
 
-            it { should eq :running }
+            it { should eq :queued }
           end
 
           context "some jobs have completed, some jobs have errored" do
@@ -195,7 +195,7 @@ describe Batch do
               ]
             end
 
-            it { should eq :running }
+            it { should eq :errored }
           end
 
           context "jobs have retries so the originals should be discounted" do
@@ -221,6 +221,145 @@ describe Batch do
             end
 
             it { should eq :passed }
+          end
+
+          context "some jobs are analyzing" do
+            let(:jobs) do
+              [
+                  Fabricate.build(:job, state: :complete, result: :passed),
+                  Fabricate.build(:job, state: :complete, result: :passed),
+                  Fabricate.build(:job, state: :analyzing)
+              ]
+            end
+
+            it { should eq :analyzing }
+          end
+        end
+
+        context "correct ordering of state" do
+          # The overall state of a batch is based on an ordering of the states of the jobs
+          # The possible states are:
+          #    * errored
+          #    * failed
+          #    * queued
+          #    * reserved
+          #    * retried     - This state probably never appears any more
+          #    * preparing
+          #    * running
+          #    * analyzing
+          #    * passed
+          #    * complete    - This state probably never occurs
+          #    * cancelled   - These tests should be ignored
+          #
+          # The highest most state is the one reported for the batch
+          context "one job is errored; one job is failed" do
+            let(:jobs) do
+              [
+                  Fabricate.build(:job, state: :complete, result: :errored),
+                  Fabricate.build(:job, state: :complete, result: :failed)
+              ]
+            end
+
+            it { should eq :errored }
+          end
+
+          context "one job is failed; one job is queued" do
+            let(:jobs) do
+              [
+                  Fabricate.build(:job, state: :queued),
+                  Fabricate.build(:job, state: :complete, result: :failed)
+              ]
+            end
+
+            it { should eq :failed }
+          end
+
+          context "one job is queued; one job is reserved" do
+            let(:jobs) do
+              [
+                  Fabricate.build(:job, state: :queued),
+                  Fabricate.build(:job, state: :reserved)
+              ]
+            end
+
+            it { should eq :queued }
+          end
+
+          context "one job is reserved; one job is retried" do
+            let(:jobs) do
+              [
+                  Fabricate.build(:job, state: :complete, result: :retried),
+                  Fabricate.build(:job, state: :reserved)
+              ]
+            end
+
+            it { should eq :reserved }
+          end
+
+          context "one job is retried; one job is preparing" do
+            let(:jobs) do
+              [
+                  Fabricate.build(:job, state: :complete, result: :retried),
+                  Fabricate.build(:job, state: :preparing)
+              ]
+            end
+
+            it { should eq :retried }
+          end
+
+          context "one job is preparing; one job is running" do
+            let(:jobs) do
+              [
+                  Fabricate.build(:job, state: :running),
+                  Fabricate.build(:job, state: :preparing)
+              ]
+            end
+
+            it { should eq :preparing }
+          end
+
+          context "one job is running; one job is analyzing" do
+            let(:jobs) do
+              [
+                  Fabricate.build(:job, state: :running),
+                  Fabricate.build(:job, state: :analyzing)
+              ]
+            end
+
+            it { should eq :running }
+          end
+
+          context "one job is analyzing; one job is passed" do
+            let(:jobs) do
+              [
+                  Fabricate.build(:job, state: :complete, result: :passed),
+                  Fabricate.build(:job, state: :analyzing)
+              ]
+            end
+
+            it { should eq :analyzing }
+          end
+
+          context "one job is passed; one job is complete" do
+            let(:jobs) do
+              [
+                  Fabricate.build(:job, state: :complete, result: :passed),
+                  Fabricate.build(:job, state: :complete)
+              ]
+            end
+
+            it { should eq :passed }
+          end
+
+          context "one job is complete; one job is cancelled" do
+            let(:jobs) do
+              [
+                  Fabricate.build(:job, state: :cancelled),
+                  Fabricate.build(:job, state: :complete)
+              ]
+            end
+
+            it { should eq :complete }
           end
         end
       end
