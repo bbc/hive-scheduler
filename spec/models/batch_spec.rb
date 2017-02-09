@@ -243,7 +243,7 @@ describe Batch do
           #    * failed
           #    * queued
           #    * reserved
-          #    * retried
+          #    * retried     - This state probably never appears any more
           #    * preparing
           #    * running
           #    * analyzing
