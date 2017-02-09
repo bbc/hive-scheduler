@@ -159,19 +159,18 @@ describe Batch do
 
         context "jobs are in different states" do
 
-          # Queued now favoured over running
-          #context "some jobs are queued, some jobs are running" do
+          context "some jobs are queued, some jobs are running" do
 
-          #  let(:jobs) do
-          #    [
-          #        Fabricate.build(:job, state: :queued),
-          #        Fabricate.build(:job, state: :reserved),
-          #        Fabricate.build(:job, state: :running)
-          #    ]
-          #  end
+            let(:jobs) do
+              [
+                  Fabricate.build(:job, state: :queued),
+                  Fabricate.build(:job, state: :reserved),
+                  Fabricate.build(:job, state: :running)
+              ]
+            end
 
-          #  it { should eq :running }
-          #end
+            it { should eq :queued }
+          end
 
           context "some jobs have completed, some jobs have errored" do
 
