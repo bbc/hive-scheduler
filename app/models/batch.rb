@@ -33,9 +33,8 @@ class Batch < ActiveRecord::Base
 
   def state
     if !@state_cache
-      ordered_job_states = [:running, :queued, :errored, :failed, :passed, :complete, :analyzing, :preparing, :retried, :cancelled]
+      ordered_job_states = [:errored, :failed, :queued, :reserved, :retried, :preparing, :running, :analyzing, :passed, :complete, :cancelled]
       job_states         = latest_jobs.collect { |job| job.status.to_sym }.uniq
-      job_states.delete(:reserved)
       job_states = job_states.sort_by { |state| ordered_job_states.index(state) }
       @state_cache = job_states.find do |state|
         ordered_job_states.include?(state)
