@@ -48,6 +48,7 @@ Hive::Scheduler::Application.routes.draw do
   post '/queues/:hive_queue_id/cancel' => 'monitoring#cancel_jobs'
   get '/workers' => 'monitoring#workers'
   get '/usage' => 'monitoring#usage'
+  get '/job_status' => 'monitoring#job_status'
   
   # Usage stats as json
   get '/usage/batch_counts' => 'monitoring#batch_counts'

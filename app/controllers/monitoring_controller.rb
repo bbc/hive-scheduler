@@ -46,5 +46,39 @@ class MonitoringController < ApplicationController
     days = params[:days].to_i == 0 ? 6 : params[:days].to_i
     @device_hours = Hive::UsageCounts.device_hours( days: days )
   end
+
+  def job_status
+    jbs = Job.joins(job_group: :hive_queue).where("jobs.created_at < ? AND jobs.created_at >= ?", 1.minute.ago, (1.minute + 24.hours).ago)
+
+    total = jbs.count
+    not_queued = jbs.where.not(start_time: nil)
+    one_minute = not_queued.where("start_time <= jobs.created_at + ?", 1.minute)
+    twenty_minutes = not_queued.where("start_time <= jobs.created_at + ?", 20.minutes)
+
+    @job_status_data = [
+      {
+        queue: 'overall',
+        count: total,
+        pc_queued: 100.0 * (total - not_queued.count)/total,
+        pc_1_min: 100.0 * one_minute.count/total,
+        pc_20_min: 100.0 * twenty_minutes.count/total,
+      }
+    ]
+
+    grpd = jbs.group_by{|j| j.job_group.hive_queue}
+
+    @tmp_data = []
+    grpd.each_pair do |q, data|
+      @tmp_data << {
+        queue: q.name,
+        count: data.count,
+        pc_queued: 100.0 * data.select{|d| d.start_time == nil }.count/data.count,
+        pc_1_min: 100.0 * data.select{|d| d.start_time and d.start_time - d.created_at < 1.minute }.count/data.count,
+        pc_20_min: 100.0 * data.select{|d| d.start_time and d.start_time - d.created_at < 20.minutes }.count/data.count,
+      }
+    end
+
+    @job_status_data = @job_status_data + @tmp_data.sort{ |a, b| a[:queue] <=> b[:queue] }
+  end
   
 end
