@@ -1,0 +1,34 @@
+<head>
+  <% provide(:title, "Job Status") %>
+</head>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3>Time to start</h3>
+
+    <p>Time to start jobs by batch in last 24 hours</p>
+  </div>
+  <div class="panel-body">
+    <table class='table table-striped'>
+      <thead>
+        <tr>
+          <th>Queue</th>
+          <th>Jobs</th>
+          <th>% queued</th>
+          <th>% start within 1 minute</th>
+          <th>% start within 20 minutes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @job_status_data.each do |jsd| %>
+        <tr>
+          <td><%= jsd[:queue] %></td>
+          <td><%= jsd[:count] %></td>
+          <td><%= jsd[:pc_queued].round(2) %></td>
+          <td><%= jsd[:pc_1_min].round(2) %></td>
+          <td><%= jsd[:pc_20_min].round(2) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
