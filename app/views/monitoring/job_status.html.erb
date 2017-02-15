@@ -5,7 +5,7 @@
   <div class="panel-heading">
     <h3>Time to start</h3>
 
-    <p>Time to start jobs by batch in last 24 hours</p>
+    <p><%= @description %></p>
   </div>
   <div class="panel-body">
     <table class='table table-striped'>
@@ -13,6 +13,7 @@
         <tr>
           <th>Queue</th>
           <th>Jobs</th>
+          <th>Cancelled</th>
           <th>% queued</th>
           <th>% start within 1 minute</th>
           <th>% start within 20 minutes</th>
@@ -23,6 +24,7 @@
         <tr>
           <td><%= jsd[:queue] %></td>
           <td><%= jsd[:count] %></td>
+          <td><%= jsd[:cancelled] %></td>
           <td><%= jsd[:pc_queued].round(2) %></td>
           <td><%= jsd[:pc_1_min].round(2) %></td>
           <td><%= jsd[:pc_20_min].round(2) %></td>

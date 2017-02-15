@@ -48,37 +48,40 @@ class MonitoringController < ApplicationController
   end
 
   def job_status
-    jbs = Job.joins(job_group: :hive_queue).where("jobs.created_at < ? AND jobs.created_at >= ?", 1.minute.ago, (1.minute + 24.hours).ago)
+    day = 1.day.ago
+    jbs = Job.joins(job_group: :hive_queue)
+            .where("jobs.created_at < ? AND jobs.created_at >= ?",
+                        day.change(hour: 17, minute: 0, second: 0),
+                        day.change(hour: 9, minute: 0, second: 0))
 
-    total = jbs.count
-    not_queued = jbs.where.not(start_time: nil)
-    one_minute = not_queued.where("start_time <= jobs.created_at + ?", 1.minute)
-    twenty_minutes = not_queued.where("start_time <= jobs.created_at + ?", 20.minutes)
+    @description = "Time to start jobs by queue between 9:00 and 17:00 on #{day.strftime('%A %d %B %Y')} (excluding cancelled jobs)"
 
-    @job_status_data = [
-      {
-        queue: 'overall',
-        count: total,
-        pc_queued: 100.0 * (total - not_queued.count)/total,
-        pc_1_min: 100.0 * one_minute.count/total,
-        pc_20_min: 100.0 * twenty_minutes.count/total,
-      }
-    ]
+    @job_status_data = [ parse_job_status('All queues', jbs) ]
 
     grpd = jbs.group_by{|j| j.job_group.hive_queue}
 
     @tmp_data = []
     grpd.each_pair do |q, data|
-      @tmp_data << {
-        queue: q.name,
-        count: data.count,
-        pc_queued: 100.0 * data.select{|d| d.start_time == nil }.count/data.count,
-        pc_1_min: 100.0 * data.select{|d| d.start_time and d.start_time - d.created_at < 1.minute }.count/data.count,
-        pc_20_min: 100.0 * data.select{|d| d.start_time and d.start_time - d.created_at < 20.minutes }.count/data.count,
-      }
+      @tmp_data << parse_job_status(q.name, data)
     end
 
     @job_status_data = @job_status_data + @tmp_data.sort{ |a, b| a[:queue] <=> b[:queue] }
+  end
+
+  private
+  def parse_job_status queue, data
+    not_cancelled = data.select { |d| d.status != 'cancelled' }
+    qd = not_cancelled.select{ |d| d.start_time == nil }
+    one_min = not_cancelled.select{ |d| d.start_time and d.start_time - d.created_at < 1.minute }
+    twenty_mins = not_cancelled.select{ |d| d.start_time and d.start_time - d.created_at < 20.minutes }
+    {
+      queue: queue,
+      count: data.count,
+      cancelled: data.count - not_cancelled.count,
+      pc_queued: 100.0 * qd.count / not_cancelled.count,
+      pc_1_min: 100.0 * one_min.count / not_cancelled.count,
+      pc_20_min: 100.0 * twenty_mins.count / not_cancelled.count
+    }
   end
   
 end
