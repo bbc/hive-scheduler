@@ -30,7 +30,8 @@ describe 'create API batch request' do
         "tests_per_job"  => 10,
         "curated_queue"  => nil,
         "jobs_per_queue" => nil,
-        "retries"        => 1
+        "retries"        => 1,
+        "job_timeout"    => 120
     }
   end
 
