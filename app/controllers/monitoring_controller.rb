@@ -54,7 +54,7 @@ class MonitoringController < ApplicationController
                         day.change(hour: 17, minute: 0, second: 0),
                         day.change(hour: 9, minute: 0, second: 0))
 
-    @description = "Time to start jobs by queue between 9:00 and 17:00 on #{day.strftime('%A %d %B %Y')} (excluding cancelled jobs)"
+    @description = "Time to start jobs by queue between 9:00 and 17:00 on #{day.strftime('%A %d %B %Y')}"
 
     @job_status_data = [ parse_job_status('All queues', jbs) ]
 
@@ -74,13 +74,23 @@ class MonitoringController < ApplicationController
     qd = not_cancelled.select{ |d| d.start_time == nil }
     one_min = not_cancelled.select{ |d| d.start_time and d.start_time - d.created_at < 1.minute }
     twenty_mins = not_cancelled.select{ |d| d.start_time and d.start_time - d.created_at < 20.minutes }
+    results = {}
+    [ 'passed', 'failed', 'errored' ].each do |r|
+      results[r] = not_cancelled.select{ |d| d.status == r }
+    end
     {
       queue: queue,
       count: data.count,
       cancelled: data.count - not_cancelled.count,
       pc_queued: 100.0 * qd.count / not_cancelled.count,
       pc_1_min: 100.0 * one_min.count / not_cancelled.count,
-      pc_20_min: 100.0 * twenty_mins.count / not_cancelled.count
+      pc_20_min: 100.0 * twenty_mins.count / not_cancelled.count,
+      passed: results['passed'].count,
+      passed_pc: 100.0 * results['passed'].count / data.count,
+      failed: results['failed'].count,
+      failed_pc: 100.0 * results['failed'].count / data.count,
+      errored: results['errored'].count,
+      errored_pc: 100.0 * results['errored'].count / data.count,
     }
   end
   
