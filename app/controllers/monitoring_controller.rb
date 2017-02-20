@@ -55,17 +55,21 @@ class MonitoringController < ApplicationController
                         day.change(hour: 9, minute: 0, second: 0))
 
     @description = "Time to start jobs by queue between 9:00 and 17:00 on #{day.strftime('%A %d %B %Y')}"
+    if jbs.count > 0
 
-    @job_status_data = [ parse_job_status('All queues', jbs) ]
+      @job_status_data = [ parse_job_status('All queues', jbs) ]
 
-    grpd = jbs.group_by{|j| j.job_group.hive_queue}
+      grpd = jbs.group_by{|j| j.job_group.hive_queue}
 
-    @tmp_data = []
-    grpd.each_pair do |q, data|
-      @tmp_data << parse_job_status(q.name, data)
+      @tmp_data = []
+      grpd.each_pair do |q, data|
+        @tmp_data << parse_job_status(q.name, data)
+      end
+
+      @job_status_data = @job_status_data + @tmp_data.sort{ |a, b| a[:queue] <=> b[:queue] }
+    else
+      @job_status_data = []
     end
-
-    @job_status_data = @job_status_data + @tmp_data.sort{ |a, b| a[:queue] <=> b[:queue] }
   end
 
   private
