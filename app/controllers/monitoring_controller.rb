@@ -73,6 +73,7 @@ class MonitoringController < ApplicationController
     not_cancelled = data.select { |d| d.status != 'cancelled' }
     qd = not_cancelled.select{ |d| d.start_time == nil }
     one_min = not_cancelled.select{ |d| d.start_time and d.start_time - d.created_at < 1.minute }
+    two_min = not_cancelled.select{ |d| d.start_time and d.start_time - d.created_at < 2.minute }
     twenty_mins = not_cancelled.select{ |d| d.start_time and d.start_time - d.created_at < 20.minutes }
     results = {}
     [ 'passed', 'failed', 'errored' ].each do |r|
@@ -84,6 +85,7 @@ class MonitoringController < ApplicationController
       cancelled: data.count - not_cancelled.count,
       pc_queued: 100.0 * qd.count / not_cancelled.count,
       pc_1_min: 100.0 * one_min.count / not_cancelled.count,
+      pc_2_min: 100.0 * two_min.count / not_cancelled.count,
       pc_20_min: 100.0 * twenty_mins.count / not_cancelled.count,
       passed: results['passed'].count,
       passed_pc: 100.0 * results['passed'].count / data.count,

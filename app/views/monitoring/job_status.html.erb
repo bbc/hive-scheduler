@@ -24,6 +24,7 @@
               <th>Cancelled</th>
               <th>% queued</th>
               <th>% start within 1 minute</th>
+              <th>% start within 2 minute</th>
               <th>% start within 20 minutes</th>
             </tr>
           </thead>
@@ -35,6 +36,7 @@
               <td><%= jsd[:cancelled] %></td>
               <td><%= jsd[:pc_queued].round(2) %></td>
               <td><%= jsd[:pc_1_min].round(2) %></td>
+              <td><%= jsd[:pc_2_min].round(2) %></td>
               <td><%= jsd[:pc_20_min].round(2) %></td>
             </tr>
             <% end %>
