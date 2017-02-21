@@ -50,7 +50,7 @@ class MonitoringController < ApplicationController
   def job_status
     jbs = Job.slo_core_hours.joins(job_group: :hive_queue)
             
-    @description = "Time to start jobs by queue between 9:00 and 17:00 on #{day.strftime('%A %d %B %Y')}"
+    @description = "Time to start jobs by queue between 9:00 and 17:00 on #{1.day.ago.strftime('%A %d %B %Y')}"
     if jbs.count > 0
 
       @job_status_data = [ parse_job_status('All queues', jbs) ]
