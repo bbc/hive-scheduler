@@ -48,7 +48,7 @@ class MonitoringController < ApplicationController
   end
 
   def job_status
-    jbs = Job.core_hours_today.joins(job_group: :hive_queue)
+    jbs = Job.slo_core_hours.joins(job_group: :hive_queue)
             
     @description = "Time to start jobs by queue between 9:00 and 17:00 on #{1.day.ago.strftime('%A %d %B %Y')} (excluding cancelled jobs)"
 
