@@ -50,18 +50,22 @@ class MonitoringController < ApplicationController
   def job_status
     jbs = Job.slo_core_hours.joins(job_group: :hive_queue)
             
-    @description = "Time to start jobs by queue between 9:00 and 17:00 on #{1.day.ago.strftime('%A %d %B %Y')} (excluding cancelled jobs)"
+    @description = "Time to start jobs by queue between 9:00 and 17:00 on #{day.strftime('%A %d %B %Y')}"
+    if jbs.count > 0
 
-    @job_status_data = [ parse_job_status('All queues', jbs) ]
+      @job_status_data = [ parse_job_status('All queues', jbs) ]
 
-    grpd = jbs.group_by{|j| j.job_group.hive_queue}
+      grpd = jbs.group_by{|j| j.job_group.hive_queue}
 
-    @tmp_data = []
-    grpd.each_pair do |q, data|
-      @tmp_data << parse_job_status(q.name, data)
+      @tmp_data = []
+      grpd.each_pair do |q, data|
+        @tmp_data << parse_job_status(q.name, data)
+      end
+
+      @job_status_data = @job_status_data + @tmp_data.sort{ |a, b| a[:queue] <=> b[:queue] }
+    else
+      @job_status_data = []
     end
-
-    @job_status_data = @job_status_data + @tmp_data.sort{ |a, b| a[:queue] <=> b[:queue] }
   end
 
   private
@@ -69,14 +73,26 @@ class MonitoringController < ApplicationController
     not_cancelled = data.select { |d| d.status != 'cancelled' }
     qd = not_cancelled.select{ |d| d.start_time == nil }
     one_min = not_cancelled.select{ |d| d.start_time and d.start_time - d.created_at < 1.minute }
+    two_min = not_cancelled.select{ |d| d.start_time and d.start_time - d.created_at < 2.minute }
     twenty_mins = not_cancelled.select{ |d| d.start_time and d.start_time - d.created_at < 20.minutes }
+    results = {}
+    [ 'passed', 'failed', 'errored' ].each do |r|
+      results[r] = not_cancelled.select{ |d| d.status == r }
+    end
     {
       queue: queue,
       count: data.count,
       cancelled: data.count - not_cancelled.count,
       pc_queued: 100.0 * qd.count / not_cancelled.count,
       pc_1_min: 100.0 * one_min.count / not_cancelled.count,
-      pc_20_min: 100.0 * twenty_mins.count / not_cancelled.count
+      pc_2_min: 100.0 * two_min.count / not_cancelled.count,
+      pc_20_min: 100.0 * twenty_mins.count / not_cancelled.count,
+      passed: results['passed'].count,
+      passed_pc: 100.0 * results['passed'].count / data.count,
+      failed: results['failed'].count,
+      failed_pc: 100.0 * results['failed'].count / data.count,
+      errored: results['errored'].count,
+      errored_pc: 100.0 * results['errored'].count / data.count,
     }
   end
   
