@@ -1,6 +1,6 @@
 <div class="control-group">
   <div class="controls">
-  <%= f.input_field field_name, as: :boolean, class: 'text_field' %>
+  <%= f.input_field field_name, as: :boolean, class: 'text_field', checked: (default.to_i == 1) %>
   <%= f.label field_name, class: 'control-label', required: false %>
   </div>
 </div>

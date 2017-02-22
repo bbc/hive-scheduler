@@ -185,7 +185,7 @@
           <div class="step-pane sample-pane-alert" id="tv_targets">
             <h4>Application details</h4>
             <% @batch.script.target.fields.each do |target_field| %>
-              <%= render "fields/#{target_field.field_type}", field_name: target_field.name, f:builder%>
+              <%= render "fields/#{target_field.field_type}", field_name: target_field.name, default: target_field.default_value, f: builder%>
             <% end %>
           </div>
           <% end %>
