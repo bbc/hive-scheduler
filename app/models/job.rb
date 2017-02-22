@@ -40,6 +40,13 @@ class Job < ActiveRecord::Base
   scope :queued, -> { where(state: "queued") }
   scope :running, -> { where(state: ["preparing", "running", "analyzing"] ) }
   delegate :queue_name, to: :job_group
+  
+  # Filter jobs for today's SLO targets
+  scope :slo_core_hours, -> { day = 1.day.ago;
+                              where("jobs.created_at < ? AND jobs.created_at >= ?",
+                              day.change(hour: 17, minute: 0, second: 0),
+                              day.change(hour: 9, minute: 0, second: 0)) }
+  
 
   def retry
     if can_retry?

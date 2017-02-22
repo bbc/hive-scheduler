@@ -7,7 +7,8 @@ module Builders
         tests:          { required: false, field_type: :array, description: "List of tests to be run", default_value: [""] },
         tests_per_job:  { required: false, field_type: :integer, description: "The number of tests to be run per job", default_value: "10" },
         jobs_per_queue: { required: false, field_type: :integer, description: "The number of jobs to create per queue (overrides tests_per_job)", default_value: nil },
-        retries:        { required: false, field_type: :integer, description: 'The number of automatic retry attempts', default_value: Chamber.env.maximum_auto_retries}
+        retries:        { required: false, field_type: :integer, description: 'The number of automatic retry attempts', default_value: Chamber.env.maximum_auto_retries},
+        job_timeout:    { required: false, field_type: :integer, description: 'Minutes a job can run before it is killed', default_value: Chamber.env.stuck_running_jobs_timeout / 60}
     }
 
     class << self
