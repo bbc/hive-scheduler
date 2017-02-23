@@ -50,21 +50,30 @@ class MonitoringController < ApplicationController
   def job_status
     jbs = Job.slo_core_hours.joins(job_group: :hive_queue)
             
-    @description = "Time to start jobs by queue between 9:00 and 17:00 on #{1.day.ago.strftime('%A %d %B %Y')}"
+    @description = "Breakdown of job status between 9:00 and 17:00 on #{1.day.ago.strftime('%A %d %B %Y')}"
     if jbs.count > 0
 
-      @job_status_data = [ parse_job_status('All queues', jbs) ]
+      @job_queue_data = [ parse_job_status('All queues', jbs) ]
+      @job_project_data = [ parse_job_projects_status('All projects', jbs) ]
 
-      grpd = jbs.group_by{|j| j.job_group.hive_queue}
+      by_group = jbs.group_by{|j| j.job_group.hive_queue}
+      by_project = jbs.group_by{|j| j.project}
 
       @tmp_data = []
-      grpd.each_pair do |q, data|
+      by_group.each_pair do |q, data|
         @tmp_data << parse_job_status(q.name, data)
       end
 
-      @job_status_data = @job_status_data + @tmp_data.sort{ |a, b| a[:queue] <=> b[:queue] }
+      @job_queue_data = @job_queue_data + @tmp_data.sort{ |a, b| a[:queue] <=> b[:queue] }
+
+      @tmp_data = []
+      by_project.each_pair do |p, data|
+        @tmp_data << parse_job_projects_status(p.name, data)
+      end
+
+      @job_project_data = @job_project_data + @tmp_data.sort{ |a, b| a[:project] <=> b[:project] }
     else
-      @job_status_data = []
+      @job_queue_data = []
     end
   end
 
@@ -87,6 +96,21 @@ class MonitoringController < ApplicationController
       pc_1_min: 100.0 * one_min.count / not_cancelled.count,
       pc_2_min: 100.0 * two_min.count / not_cancelled.count,
       pc_20_min: 100.0 * twenty_mins.count / not_cancelled.count,
+    }
+  end
+
+  def parse_job_projects_status project, data
+    not_cancelled = data.select { |d| d.status != 'cancelled' }
+    qd = not_cancelled.select{ |d| d.start_time == nil }
+    results = {}
+    [ 'passed', 'failed', 'errored' ].each do |r|
+      results[r] = not_cancelled.select{ |d| d.status == r }
+    end
+    {
+      project: project,
+      count: data.count,
+      cancelled: data.count - not_cancelled.count,
+      pc_queued: 100.0 * qd.count / not_cancelled.count,
       passed: results['passed'].count,
       passed_pc: 100.0 * results['passed'].count / data.count,
       failed: results['failed'].count,
@@ -95,5 +119,5 @@ class MonitoringController < ApplicationController
       errored_pc: 100.0 * results['errored'].count / data.count,
     }
   end
-  
+
 end
