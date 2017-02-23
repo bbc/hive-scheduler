@@ -74,6 +74,7 @@ class MonitoringController < ApplicationController
       @job_project_data = @job_project_data + @tmp_data.sort{ |a, b| a[:project] <=> b[:project] }
     else
       @job_queue_data = []
+      @job_project_data = []
     end
   end
 
