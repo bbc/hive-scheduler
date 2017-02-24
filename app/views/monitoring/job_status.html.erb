@@ -59,7 +59,7 @@
           <tbody>
             <% @job_project_data.each do |jsd| %>
             <tr>
-              <td><%= jsd[:project] %></td>
+              <td><%= link_to jsd[:project], job_status_project_path(jsd[:project_id]) %></td>
               <td><%= jsd[:count] %></td>
               <td><%= jsd[:cancelled] %></td>
               <td><%= jsd[:passed] %> (<%= jsd[:passed_pc].round(2)%>%)</td>

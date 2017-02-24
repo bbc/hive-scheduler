@@ -49,6 +49,7 @@ Hive::Scheduler::Application.routes.draw do
   get '/workers' => 'monitoring#workers'
   get '/usage' => 'monitoring#usage'
   get '/job_status' => 'monitoring#job_status'
+  get '/job_status/project/:project_id' => 'monitoring#job_status_project_graph', as: 'job_status_project'
   
   # Usage stats as json
   get '/usage/batch_counts' => 'monitoring#batch_counts'
