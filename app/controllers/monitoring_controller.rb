@@ -83,12 +83,16 @@ class MonitoringController < ApplicationController
       format.html do
       end
       format.json do
+        where = 'jobs.created_at > ? AND state = ?'
+        where_opts = [ 31.days.ago, 'complete' ]
+        if params[:project_id].to_i > 0
+          where += ' AND project_id = ?'
+          where_opts << params[:project_id]
+        end
+
         data = {}
         Job.joins(:batch)
-              .where('jobs.created_at > ? AND project_id = ? AND state = ?',
-                      31.days.ago,
-                      params[:project_id],
-                      'complete')
+              .where([where, where_opts].flatten)
               .group('date(jobs.created_at)')
               .group(:result)
               .count.each_pair do |keys, count|
