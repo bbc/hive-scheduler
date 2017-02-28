@@ -54,7 +54,7 @@ class MonitoringController < ApplicationController
     if jbs.count > 0
 
       @job_queue_data = [ parse_job_status('All queues', jbs) ]
-      @job_project_data = [ parse_job_projects_status('All projects', jbs) ]
+      @job_project_data = [ parse_job_projects_status('All projects', -1, jbs) ]
 
       by_group = jbs.group_by{|j| j.job_group.hive_queue}
       by_project = jbs.group_by{|j| j.project}
@@ -68,12 +68,51 @@ class MonitoringController < ApplicationController
 
       @tmp_data = []
       by_project.each_pair do |p, data|
-        @tmp_data << parse_job_projects_status(p.name, data)
+        @tmp_data << parse_job_projects_status(p.name, p.id, data)
       end
 
       @job_project_data = @job_project_data + @tmp_data.sort{ |a, b| a[:project] <=> b[:project] }
     else
       @job_queue_data = []
+      @job_project_data = []
+    end
+  end
+
+  def job_status_project_graph
+    respond_to do |format|
+      format.html do
+      end
+      format.json do
+        where = 'jobs.created_at > ? AND state = ?'
+        where_opts = [ 31.days.ago, 'complete' ]
+        if params[:project_id].to_i > 0
+          where += ' AND project_id = ?'
+          where_opts << params[:project_id]
+        end
+
+        data = {}
+        Job.joins(:batch)
+              .where([where, where_opts].flatten)
+              .group('date(jobs.created_at)')
+              .group(:result)
+              .count.each_pair do |keys, count|
+          data[keys[0]] = {
+            date: keys[0].strftime('%F'),
+            total: 0
+          } if not data.has_key? keys[0]
+          data[keys[0]][keys[1].to_sym] = count
+          data[keys[0]][:total] += count
+        end
+
+        render json: data.values.map { |row|
+          {
+            date: row[:date],
+            passed: 100.0 * row[:passed].to_f / row[:total],
+            failed: 100.0 * row[:failed].to_f / row[:total],
+            errored: 100.0 * row[:errored].to_f / row[:total]
+          }
+        }
+      end
     end
   end
 
@@ -99,7 +138,7 @@ class MonitoringController < ApplicationController
     }
   end
 
-  def parse_job_projects_status project, data
+  def parse_job_projects_status project, project_id, data
     not_cancelled = data.select { |d| d.status != 'cancelled' }
     qd = not_cancelled.select{ |d| d.start_time == nil }
     results = {}
@@ -108,6 +147,7 @@ class MonitoringController < ApplicationController
     end
     {
       project: project,
+      project_id: project_id,
       count: data.count,
       cancelled: data.count - not_cancelled.count,
       pc_queued: 100.0 * qd.count / not_cancelled.count,

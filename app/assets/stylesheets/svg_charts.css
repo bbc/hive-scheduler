@@ -8,3 +8,21 @@
   stroke: #000;
   shape-rendering: crispEdges;
 }
+
+.project-state-chart .pass-line {
+  fill: none;
+  stroke: green;
+  stroke-width: 2px;
+}
+
+.project-state-chart .fail-line {
+  fill: none;
+  stroke: red;
+  stroke-width: 2px;
+}
+
+.project-state-chart .error-line {
+  fill: none;
+  stroke: black;
+  stroke-width: 2px;
+}
