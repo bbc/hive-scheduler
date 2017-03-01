@@ -6,9 +6,7 @@ function renderD3LineChart(destination, data) {
       height = 500 - margin.top - margin.bottom;
 
   // parse the date / time
-  //var parseTime = d3.timeParse("%Y-%m-%d");
   var parseDate = d3.time.format("%Y-%m-%d").parse;
-
 
   // set the ranges
   var x = d3.time.scale().range([0, width]);
