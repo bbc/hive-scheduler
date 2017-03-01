@@ -19,7 +19,7 @@ gem 'aws-sdk', '~> 1.6'
 gem 'chamber'
 
 gem 'chartjs-ror', '>= 3'
-gem 'd3-rails'
+gem 'd3-rails', '~> 3.5'
 
 gem 'omniauth'
 
