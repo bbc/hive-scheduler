@@ -65,3 +65,6 @@ end
 group :production do
   gem 'mysql2', '~> 0.3.18'
 end
+
+# Deprecated method used by other gems
+gem 'rake', '< 12.0'
