@@ -3,7 +3,7 @@ namespace :hive do
   task gather_stats: :environment do
     stats_directory = 'public/stats'
 
-    Dir.mkdir stats_directory if ! Dir.exists? stats_directory
+    FileUtils.mkdir_p stats_directory if ! Dir.exists? stats_directory
     date_label = DateTime.now.strftime('%y%m%d')
     files = {
       job_start: File.open("#{stats_directory}/job_start_time_#{date_label}.csv", 'w'),
