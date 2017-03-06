@@ -1,11 +1,13 @@
 namespace :hive do
   desc "Gather stats for the last month"
   task gather_stats: :environment do
-    Dir.mkdir 'stats' if ! Dir.exists? 'stats'
+    stats_directory = 'public/stats'
+
+    Dir.mkdir stats_directory if ! Dir.exists? stats_directory
     date_label = DateTime.now.strftime('%y%m%d')
     files = {
-      job_start: File.open("stats/job_start_time_#{date_label}.csv", 'w'),
-      errors: File.open("stats/errors_#{date_label}.csv", 'w')
+      job_start: File.open("#{stats_directory}/job_start_time_#{date_label}.csv", 'w'),
+      errors: File.open("#{stats_directory}/errors_#{date_label}.csv", 'w')
     }
 
     files[:job_start].puts [

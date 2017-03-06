@@ -74,6 +74,7 @@ GEM
       thor (~> 0.19.1)
     chartjs-ror (3.0.2)
       rails (>= 3.1)
+    chronic (0.10.2)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.8)
@@ -273,6 +274,8 @@ GEM
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
+    whenever (0.9.7)
+      chronic (>= 0.6.3)
     will_paginate (3.1.5)
 
 PLATFORMS
@@ -325,6 +328,7 @@ DEPENDENCIES
   test_rail-api (~> 0.4)
   thin
   timecop
+  whenever (~> 0.9)
   will_paginate (~> 3.0)
 
 BUNDLED WITH
