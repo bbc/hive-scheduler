@@ -99,7 +99,8 @@
       </div>
       <div id='file-list' class='tab-pane fade'>
         <ul>
-        <% Dir.glob("public/stats/*").map{ |f| f.remove('public/') }.each do |f| %>
+        <% stats_dir = Rails.root.join('public', 'stats') %>
+        <% Dir.glob("#{stats_dir}/*").map{ |f| f.remove(stats_dir.to_s) }.each do |f| %>
           <li><%= link_to f, root_path << f %> </li>
         <% end %>
         </ul>
