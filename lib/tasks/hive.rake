@@ -4,6 +4,7 @@ namespace :hive do
     stats_directory = 'public/stats'
 
     queues = [ 'nexus_range', 'amazon-firetv_stick' ]
+    projects = [ 'TVAPI Control Tests', 'Android connected tests', 'Hive Android Calabash Test' ]
 
     FileUtils.mkdir_p stats_directory if ! Dir.exists? stats_directory
     date_label = DateTime.now.strftime('%y%m%d')
@@ -15,6 +16,9 @@ namespace :hive do
 
     queues.each do |q|
       files["with_retries-#{q}"] = File.open("#{stats_directory}/errors_with_retries-#{q}-#{date_label}.csv", 'w')
+    end
+    projects.each do |p|
+      files["with_retries-#{p}"] = File.open("#{stats_directory}/errors_with_retries-#{p.gsub(' ', '_')}-#{date_label}.csv", 'w')
     end
 
 
@@ -80,6 +84,9 @@ namespace :hive do
     queues.each do |q|
       files["with_retries-#{q}"].puts "Date," + keys[:with_retries].join(',')
     end
+    projects.each do |p|
+      files["with_retries-#{p}"].puts "Date," + keys[:with_retries].join(',')
+    end
 
     31.times do |i|
       day = (31 - i).days.ago
@@ -95,13 +102,20 @@ namespace :hive do
 
       files[:with_retries].puts [
           date,
-          parse_errors_with_retries(jbs, keys[:with_retries], nil)
+          parse_errors_with_retries(data: jbs, keys: keys[:with_retries], queue: nil)
         ].flatten.join(',')
       print '.'
       queues.each do |q|
         files["with_retries-#{q}"].puts [
           date,
-          parse_errors_with_retries(jbs, keys[:with_retries], q)
+          parse_errors_with_retries(data: jbs, keys: keys[:with_retries], queue: q)
+        ].flatten.join(',')
+        print '.'
+      end
+      projects.each do |p|
+        files["with_retries-#{p}"].puts [
+          date,
+          parse_errors_with_retries(data: jbs, keys: keys[:with_retries], project: p)
         ].flatten.join(',')
         print '.'
       end
@@ -137,13 +151,18 @@ namespace :hive do
     queues.each do |q|
       files["with_retries-#{q}"].close
     end
+    projects.each do |p|
+      files["with_retries-#{p}"].close
+    end
   end
 
-  def parse_errors_with_retries data_in, keys, queue
-    if queue
-      data = data_in.select { |j| j.job_group.hive_queue.name == queue }
+  def parse_errors_with_retries options
+    if options[:queue]
+      data = options[:data].select { |j| j.job_group.hive_queue.name == options[:queue] }
+    elsif options[:project]
+      data = options[:data].select { |j| j.project.name == options[:project] }
     else
-      data = data_in
+      data = options[:data]
     end
     data_out = {}
 
@@ -183,7 +202,7 @@ namespace :hive do
     data_out['Failed (after retries)'] = latest_not_cancelled.select{|j| j.status == 'failed'}.count
     data_out['Errored (after retries)'] = latest_not_cancelled.select{|j| j.status == 'errored'}.count
 
-    keys.map{ |k| data_out[k] }
+    options[:keys].map{ |k| data_out[k] }
   end
 
   def parse_job_start data_in, queue
