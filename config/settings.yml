@@ -35,6 +35,13 @@ defaults: &defaults
     path_base: public
   sidebar:
   better_errors_for_all: false
+  statistics:
+    # Chamber does not currently allow arrays to be set from environment
+    # variables so for the moment use a comma separated list:
+    #   STATISTICS_QUEUES="queue 1,queue 2"
+    #   STATISTICS_PROJECTS="queue 1,queue 2"
+    queues: queue 1,queue 2
+    projects: project 1,project 2
 
 development:
   <<: *defaults

@@ -3,8 +3,8 @@ namespace :hive do
   task gather_stats: :environment do
     stats_directory = 'public/stats'
 
-    queues = [ 'nexus_range', 'amazon-firetv_stick' ]
-    projects = [ 'TVAPI Control Tests', 'Android connected tests', 'Hive Android Calabash Test' ]
+    queues = Rails.application.config.statistics[:queues]
+    projects = Rails.application.config.statistics[:projects]
 
     FileUtils.mkdir_p stats_directory if ! Dir.exists? stats_directory
     date_label = DateTime.now.strftime('%y%m%d')
@@ -104,20 +104,24 @@ namespace :hive do
           date,
           parse_errors_with_retries(data: jbs, keys: keys[:with_retries], queue: nil)
         ].flatten.join(',')
-      print '.'
+      last_len = 0
       queues.each do |q|
+        print "\r - #{q}"
+        print ' '*(last_len - q.length) if q.length < last_len
+        last_len = q.length
         files["with_retries-#{q}"].puts [
           date,
           parse_errors_with_retries(data: jbs, keys: keys[:with_retries], queue: q)
         ].flatten.join(',')
-        print '.'
       end
       projects.each do |p|
+        print "\r - #{p}"
+        print ' '*(last_len - p.length) if p.length < last_len
+        last_len = p.length
         files["with_retries-#{p}"].puts [
           date,
           parse_errors_with_retries(data: jbs, keys: keys[:with_retries], project: p)
         ].flatten.join(',')
-        print '.'
       end
 
       # List of jobs (including all retries)
@@ -134,7 +138,6 @@ namespace :hive do
           parse_job_start(jbs, 'nexus_range'),
           parse_job_start(jbs, 'amazon-firetv_stick'),
         ].flatten.join ','
-      print '.'
 
       files[:errors].puts [
         date,
@@ -142,7 +145,8 @@ namespace :hive do
         parse_error_count(jbs, 'nexus_range'),
         parse_error_count(jbs, 'amazon-firetv_stick'),
         ].join ','
-      print '.'
+      print "\r - [DONE]"
+      print ' '*(last_len - 6) if 6 < last_len
       puts
     end
     files[:job_start].close
