@@ -14,42 +14,37 @@ namespace :hive do
       with_retries: File.open("#{stats_directory}/errors_with_retries-#{date_label}.csv", 'w')
     }
 
-    queues.each do |q|
-      files["with_retries-#{q}"] = File.open("#{stats_directory}/errors_with_retries-#{q}-#{date_label}.csv", 'w')
-    end
-    projects.each do |p|
-      files["with_retries-#{p}"] = File.open("#{stats_directory}/errors_with_retries-#{p.gsub(' ', '_')}-#{date_label}.csv", 'w')
-    end
-
-
-    files[:job_start].puts [
+    job_start_keys = [
       "Date",
       "# jobs all queues",
       "1 min all queues",
       "2 min all queues",
       "20 min all queues",
-      "# jobs nexus_range",
-      "1 min nexus_range",
-      "2 min nexus_range",
-      "20 min nexus_range",
-      "# jobs amazon-firetv_stick",
-      "1 min amazon-firetv_stick",
-      "2 min amazon-firetv_stick",
-      "20 min amazon-firetv_stick",
-    ].join ','
-
-    files[:errors].puts [
+    ]
+    errors_keys = [
       "Date",
       "# jobs all queues",
       "# errors all queues",
       "% errors all queues",
-      "# jobs nexus_range",
-      "# errors nexus_range",
-      "% errors nexus_range",
-      "# jobs amazon-firetv_stick",
-      "# errors amazon-firetv_stick",
-      "% errors amazon-firetv_stick",
-    ].join ','
+    ]
+
+    queues.each do |q|
+      files["with_retries-#{q}"] = File.open("#{stats_directory}/errors_with_retries-#{q}-#{date_label}.csv", 'w')
+
+      job_start_keys << "# jobs #{q}"
+      job_start_keys << "1 min #{q}"
+      job_start_keys << "2 min #{q}"
+      job_start_keys << "20 min #{q}"
+      errors_keys << "# jobs #{q}"
+      errors_keys << "# errors #{q}"
+      errors_keys << "% errors #{q}"
+    end
+    projects.each do |p|
+      files["with_retries-#{p}"] = File.open("#{stats_directory}/errors_with_retries-#{p.gsub(' ', '_')}-#{date_label}.csv", 'w')
+    end
+
+    files[:job_start].puts job_start_keys.join ','
+    files[:errors].puts errors_keys.join ','
 
     keys = {
       with_retries: [
@@ -132,19 +127,22 @@ namespace :hive do
                         day.change(hour: 17, minute: 0, second: 0),
                         day.change(hour: 9, minute: 0, second: 0))
 
-      files[:job_start].puts [
+      job_start_stats = [
           date,
-          parse_job_start(jbs, nil),
-          parse_job_start(jbs, 'nexus_range'),
-          parse_job_start(jbs, 'amazon-firetv_stick'),
-        ].flatten.join ','
+          parse_job_start(jbs, nil)
+      ]
+      errors_stats = [
+          date,
+          parse_job_start(jbs, nil)
+      ]
+      queues.each do |q|
+        job_start_stats << parse_job_start(jbs, q)
+        errors_stats << parse_error_count(jbs, q)
+      end
+      
+      files[:job_start].puts job_start_stats.flatten.join ','
+      files[:errors].puts errors_stats.flatten.join ','
 
-      files[:errors].puts [
-        date,
-        parse_error_count(jbs, nil),
-        parse_error_count(jbs, 'nexus_range'),
-        parse_error_count(jbs, 'amazon-firetv_stick'),
-        ].join ','
       print "\r - [DONE]"
       print ' '*(last_len - 6) if 6 < last_len
       puts
