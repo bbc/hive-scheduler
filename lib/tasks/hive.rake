@@ -133,7 +133,7 @@ namespace :hive do
       ]
       errors_stats = [
           date,
-          parse_job_start(jbs, nil)
+          parse_error_count(jbs, nil)
       ]
       queues.each do |q|
         job_start_stats << parse_job_start(jbs, q)
