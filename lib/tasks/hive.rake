@@ -9,9 +9,9 @@ namespace :hive do
     FileUtils.mkdir_p stats_directory if ! Dir.exists? stats_directory
     date_label = DateTime.now.strftime('%y%m%d')
     files = {
-      job_start: File.open("#{stats_directory}/job_start_time_#{date_label}.csv", 'w'),
-      errors: File.open("#{stats_directory}/errors_#{date_label}.csv", 'w'),
-      with_retries: File.open("#{stats_directory}/errors_with_retries-#{date_label}.csv", 'w')
+      job_start: File.open("#{stats_directory}/#{date_label}_job_start_time.csv", 'w'),
+      errors: File.open("#{stats_directory}/#{date_label}_errors.csv", 'w'),
+      with_retries: File.open("#{stats_directory}/#{date_label}_errors_with_retries.csv", 'w')
     }
 
     job_start_keys = [
@@ -29,7 +29,7 @@ namespace :hive do
     ]
 
     queues.each do |q|
-      files["with_retries-#{q}"] = File.open("#{stats_directory}/errors_with_retries-#{q}-#{date_label}.csv", 'w')
+      files["with_retries-#{q}"] = File.open("#{stats_directory}/#{date_label}_errors_with_retries-#{q}.csv", 'w')
 
       job_start_keys << "# jobs #{q}"
       job_start_keys << "1 min #{q}"
@@ -40,7 +40,7 @@ namespace :hive do
       errors_keys << "% errors #{q}"
     end
     projects.each do |p|
-      files["with_retries-#{p}"] = File.open("#{stats_directory}/errors_with_retries-#{p.gsub(' ', '_')}-#{date_label}.csv", 'w')
+      files["with_retries-#{p}"] = File.open("#{stats_directory}/#{date_label}_errors_with_retries-#{p.gsub(' ', '_')}.csv", 'w')
     end
 
     files[:job_start].puts job_start_keys.join ','
@@ -133,7 +133,7 @@ namespace :hive do
       ]
       errors_stats = [
           date,
-          parse_job_start(jbs, nil)
+          parse_error_count(jbs, nil)
       ]
       queues.each do |q|
         job_start_stats << parse_job_start(jbs, q)
