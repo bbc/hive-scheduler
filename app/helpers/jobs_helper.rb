@@ -5,10 +5,21 @@ module JobsHelper
     return name
   end
   
+  def script_duration(job)
+    if job.script_start_time
+      duration = (job.script_end_time ? job.script_end_time : Time.now) - job.script_start_time
+      formulate_duration duration
+    end
+  end
+
   def job_duration(job)
     if job.start_time
       duration = (job.end_time ? job.end_time : Time.now) - job.start_time
-      
+      formulate_duration duration
+    end
+  end
+
+  def formulate_duration duration
       hours   = (duration / (60*60)).to_i
       minutes = ((duration - hours*60*60) / (60)).to_i
       seconds = (duration % 60).to_i
@@ -19,9 +30,7 @@ module JobsHelper
       components << "#{seconds}s" if ( seconds > 0 && components.length < 2 )
       
       components.join(" ")
-    end
   end
-  
 
   def device_name_db_link(job)
     details = job.device_details

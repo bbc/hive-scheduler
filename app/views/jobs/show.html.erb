@@ -71,10 +71,23 @@
             <td><strong>Started:</strong></td>
             <td><%= @job.start_time.to_s(:short) if @job.start_time %></td>
           </tr>
+
+          <tr>
+            <td><strong>Script started:</strong></td>
+            <td><%= @job.script_start_time.to_s(:short) if @job.script_start_time %></td>
+          </tr>
+          <tr>
+            <td><strong>Script completed:</strong></td>
+            <td><%= @job.script_end_time.to_s(:short) if @job.script_end_time %></td>
+          </tr>
+
+
           <tr>
             <td><strong>Completed:</strong></td>
             <td><%= @job.end_time.to_s(:short) if @job.end_time %></td>
           </tr>
+
+
           <tr>
             <td><strong>Status:</strong></td>
             <td><%= status_badge(@job.status) %>
