@@ -73,6 +73,7 @@
       <th>Job</th>
       <th></th>
       <th>Device</th>
+      <th>Script</th>
       <th>Duration</th>
       <th>Status</th>
       <%= render partial: "shared/status_headings" %>
@@ -110,6 +111,9 @@
         <span id=<%= "job_#{job.id}_device_details" %>>
            <%= device_name_db_link(job) %>
         </span>
+                </td>
+                <td>
+                  <%= script_duration(job) -%>
                 </td>
                 <td>
                   <%= job_duration(job) -%>

@@ -27,6 +27,7 @@ class Job < ActiveRecord::Base
         
         before_transition to: :analyzing do |job, transition|
           exit_value = transition.args.first
+          job.update(script_end_time: Time.now)
           job.update(exit_value: exit_value)
         end
         
@@ -42,6 +43,10 @@ class Job < ActiveRecord::Base
 
         after_transition to: :preparing do |job|
           job.update(start_time: Time.now)
+        end
+
+        after_transition to: :running do |job|
+          job.update(script_start_time: Time.now)
         end
 
         after_transition to: [:complete, :errored] do |job|
