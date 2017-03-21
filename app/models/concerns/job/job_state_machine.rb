@@ -50,6 +50,7 @@ class Job < ActiveRecord::Base
         end
 
         after_transition to: [:complete, :errored] do |job|
+          job.update(script_end_time: Time.now) if !job.script_end_time
           job.update(end_time: Time.now)
         end
 
