@@ -7,7 +7,7 @@ describe JobCommands::AutoJobRetrier do
     describe "#perform" do
 
       let(:maximum_auto_retries) { 3 }
-      let(:batch) { Fabricate(:batch, number_of_automatic_retries: max_retries) }
+      let(:batch) { Fabricate(:batch, number_of_automatic_retries: maximum_auto_retries) }
       let!(:original_job) { Fabricate(:failed_job) }
 
       before(:each) do

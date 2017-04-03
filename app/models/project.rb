@@ -14,7 +14,7 @@ class Project < ActiveRecord::Base
   def set_default_execution_variables
     self.execution_variables = HashWithIndifferentAccess.new unless self.execution_variables.present?
     execution_variables_required.each do |required_execution_variable|
-      self.execution_variables[required_execution_variable.name.to_s] = required_execution_variable.default_value unless self.execution_variables[required_execution_variable.name.to_s].present?
+      self.execution_variables[required_execution_variable.name.to_s] = required_execution_variable.default_value if (self.execution_variables[required_execution_variable.name.to_s].present? && self.execution_variables[required_execution_variable.name.to_s] == "")
     end
   end
 

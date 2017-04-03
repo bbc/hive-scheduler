@@ -1,6 +1,6 @@
 <div class="control-group">
   <%= f.label field_name, class: 'control-label' %>
   <div class="controls">
-    <%= f.text_field field_name, class: 'text_field' %>
+    <%= f.text_field field_name, class: 'text_field', value: send(field_name) %>
   </div>
 </div>

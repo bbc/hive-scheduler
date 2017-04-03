@@ -22,7 +22,7 @@ describe JobCommands::JobMessageMapper, type: :model do
     end
 
 
-    let(:script) { Fabricate(:script, template: File.read("spec/fixtures/files/erb_template.erb")) }
+    let(:script) { Fabricate(:script, execution_variables: [], template: File.read("spec/fixtures/files/erb_template.erb")) }
     let(:project) { Fabricate(:project, script: script) }
 
     let(:batch) { Fabricate(:batch, project: project, target_information: {location_url: "http://www.bbc.co.uk"}, execution_variables: batch_execution_variables) }
@@ -35,8 +35,6 @@ describe JobCommands::JobMessageMapper, type: :model do
           merge!(batch_execution_variables).
           merge!(job_group_execution_variables).
           merge!(job_execution_variables)
-
-
 
       project.builder.execution_variables_required.each do |field|
         all_execution_variables[field.name.to_sym]=field.default_value
@@ -53,7 +51,8 @@ describe JobCommands::JobMessageMapper, type: :model do
 
     let(:batch_execution_variables) { { tests: %w(test1 test2) } }
     let(:job_group_execution_variables) { { job_group_variable_one: "job_group_variable_one_value" } }
-    let(:job_execution_variables) { { job_variable_one: "job_variable_one_value", retry_urns: [] } }
+    let(:job_execution_variables) { { job_variable_one: "job_variable_one_value", retry_urns: [], job_timeout: 120, :tests_per_job=>"10", :jobs_per_queue=>nil, :retries=>1,
+:curated_queue=>nil } }
 
 
     let(:job_message_mapper) { JobCommands::JobMessageMapper.new(job: job) }

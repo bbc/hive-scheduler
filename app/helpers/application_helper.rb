@@ -43,5 +43,21 @@ module ApplicationHelper
       nil
     end
   end
-  
+
+  def job_timeout
+     Builders::Base::SPECIAL_EXECUTION_VARIABLES[:job_timeout][:default_value]
+  end
+
+  def retries
+     Builders::Base::SPECIAL_EXECUTION_VARIABLES[:retries][:default_value]
+  end
+
+  def jobs_per_queue
+     Builders::Base::SPECIAL_EXECUTION_VARIABLES[:jobs_per_queue][:default_value]
+  end
+
+  def tests_per_job
+     Builders::Base::SPECIAL_EXECUTION_VARIABLES[:tests_per_job][:default_value]
+  end
+
 end

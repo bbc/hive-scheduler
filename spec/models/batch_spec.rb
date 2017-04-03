@@ -52,8 +52,9 @@ describe Batch do
 
           context "batch has a project assigned" do
 
+            let(:script) { Fabricate(:script, execution_variables: [], template: File.read("spec/fixtures/files/erb_template.erb")) }
             let(:project_id) { project.id }
-            let(:project) { Fabricate(:project, execution_variables: project_execution_variables) }
+            let(:project) { Fabricate(:project, script: script) }
 
             let(:project_execution_variables) { { "foo" => "project_foo", "bar" => "project_bar", "other_thing" => "project_thing" } }
 
@@ -67,15 +68,11 @@ describe Batch do
             context "execution_variables have been provided to initialize with" do
 
               let(:batch) { Batch.new(project_id: project_id, execution_variables: batch_execution_variables) }
-              let(:batch_execution_variables) { { "foo" => "batch_foo", "bar" => "batch_bar", "other_thing" => "" } }
+              let(:batch_execution_variables) { { "foo" => "batch_foo", "bar" => "batch_bar", "other_thing" => "project_thing" } }
 
               let(:expected_execution_variables) do
 
                 expected_execution_variables = { "foo" => "batch_foo", "bar" => "batch_bar", "other_thing" => "project_thing" }
-
-                project.builder.execution_variables_required.each do |field|
-                  expected_execution_variables[field.name.to_s]=field.default_value
-                end
 
                 project.script.execution_variables.each do |field|
                   expected_execution_variables[field.name.to_s]=field.default_value
@@ -479,7 +476,10 @@ describe Batch do
           project_id: project.id,
           version: 1,
           build: build,
-          name: 'Test batch'
+          name: 'Test batch',
+          execution_variables: {
+             "queues" => ["q"]
+          }
         )
       }
 
@@ -498,15 +498,22 @@ describe Batch do
           project_id: project.id,
           version: 1,
           build: build1,
-          name: 'Batch one'
-        )
+          name: 'Batch one',
+          execution_variables: {
+             "queues" => ["q"]
+          })
+
       }
       let(:batch2) { BatchCommands::BuildBatchCommand.build(
           project_id: project.id,
           version: 1,
           build: build2,
-          name: 'Batch two'
-        )
+          name: 'Batch two',
+          execution_variables: {
+             "queues" => ["q"]
+          }
+
+         )
       }
 
       it 'returns a single asset for each batch' do
