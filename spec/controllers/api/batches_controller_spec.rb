@@ -38,6 +38,7 @@ describe Api::BatchesController do
           end
           let(:batch) { Fabricate.build(:batch) }
           it { should respond_with(:created) }
+
         end
 
         context "batch has errors" do
@@ -53,6 +54,7 @@ describe Api::BatchesController do
           end
         end
       end
+
     end
 
     context "mobile tests" do
@@ -80,6 +82,22 @@ describe Api::BatchesController do
         expect{ post :create, { format: :json, version: '1', build: build, project_id: project.id} }.to change(BatchAsset, :count).by 1
         expect(BatchAsset.last.batch).to eq Batch.last
         expect(BatchAsset.last.asset).to eq Asset.last
+      end
+    end
+
+    context "named project" do
+      let(:target) { Target.create! requires_build: false }
+      let(:script) { Script.create! target: target, name: 'Test script', template: 'Test template' }
+      let(:project) { Project.create! script: script, name: 'Test project', builder_name: Builders::ManualBuilder.builder_name, repository: '' }
+
+      it 'uses the project name for the batch by default' do
+        post :create, { format: :json, version: '1', project_id: project.id, }
+        expect(Batch.last.name).to eq 'Test project'
+      end
+
+      it 'allow the batch to be named' do
+        post :create, { format: :json, version: '1', project_id: project.id, batch: { name: 'Test batch' }}
+        expect(Batch.last.name).to eq 'Test batch'
       end
     end
   end

@@ -11,15 +11,18 @@ class Api::BatchesController < Api::ApiController
     # The values for these can be comma separated to make posting from cURL and clients easier
     execution_variables = params[:execution_variables] || {}
     execution_variables["tests_per_job"] = tests_per_job unless execution_variables["tests_per_job"].present?
+    batch_params = params[:batch] || {}
+    batch_params[:generate_name] = not(batch_params[:name].present?)
 
     @batch = BatchCommands::BuildBatchCommand.build(
+      batch_params.merge({
         project_id:          @project.id,
         version:             version,
         build:               build,
-        generate_name:       true,
         tests_per_job:       tests_per_job,
         target_information:  target_information,
         execution_variables: execution_variables
+      })
     )
     
     if @batch.save
