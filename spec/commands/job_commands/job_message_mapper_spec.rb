@@ -51,7 +51,7 @@ describe JobCommands::JobMessageMapper, type: :model do
 
     let(:batch_execution_variables) { { tests: %w(test1 test2) } }
     let(:job_group_execution_variables) { { job_group_variable_one: "job_group_variable_one_value" } }
-    let(:job_execution_variables) { { job_variable_one: "job_variable_one_value", retry_urns: [], job_timeout: 120, :tests_per_job=>"10", :jobs_per_queue=>nil, :retries=>1,
+    let(:job_execution_variables) { { job_variable_one: "job_variable_one_value", retry_urns: [], job_timeout: 300, :tests_per_job=>"10", :jobs_per_queue=>nil, :retries=>1,
 :curated_queue=>nil } }
 
 
