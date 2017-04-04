@@ -16,9 +16,11 @@ describe 'create API batch request' do
 
   let(:posted_execution_variables) do
     {
-        "queues"        => queues.join(","),
-        "tests"         => tests.join(","),
-        "cucumber_tags" => "tags"
+        "queues"         => queues.join(","),
+        "tests"          => tests.join(","),
+        "retries"        => 1,
+        "job_timeout"    => 300,
+        "cucumber_tags"  => "tags"
     }
   end
 
@@ -28,10 +30,10 @@ describe 'create API batch request' do
         "tests"          => tests,
         "cucumber_tags"  => "tags",
         "tests_per_job"  => 10,
+        "retries"        => "1",
+        "job_timeout"    => "300",
         "curated_queue"  => nil,
-        "jobs_per_queue" => nil,
-        "retries"        => 1,
-        "job_timeout"    => 300
+        "jobs_per_queue"  => nil
     }
   end
 
