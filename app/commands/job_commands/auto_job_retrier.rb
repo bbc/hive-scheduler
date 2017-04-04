@@ -11,8 +11,7 @@ module JobCommands
     private
 
     def maximum_retries_exceeded?
-      max_retries = job.batch.execution_variables['retries'].to_i > Chamber.env.maximum_auto_retries ? job.batch.execution_variables['retries'].to_i : Chamber.env.maximum_auto_retries 
-      total_number_of_retries >= max_retries
+      total_number_of_retries >= (job.batch.execution_variables['retries'].to_i || Chamber.env.maximum_auto_retries)
     end
 
     def total_number_of_retries
