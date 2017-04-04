@@ -2,7 +2,7 @@ Fabricator(:batch) do
   project { Fabricate(:project) }
   name { "Fabricated Batch #{Fabricate.sequence(:fabricated_job)}" }
   version { 123 }
-  execution_variables { {retries: 1} }
+  execution_variables { {"tests_per_job"=>"10", "retries"=>1, "job_timeout"=>300} }
 end
 
 Fabricator(:batch_with_job, from: :batch) do

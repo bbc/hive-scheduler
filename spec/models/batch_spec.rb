@@ -52,7 +52,7 @@ describe Batch do
 
           context "batch has a project assigned" do
 
-            let(:script) { Fabricate(:script, execution_variables: [], template: File.read("spec/fixtures/files/erb_template.erb")) }
+            let(:script) { Fabricate(:script, template: File.read("spec/fixtures/files/erb_template.erb")) }
             let(:project_id) { project.id }
             let(:project) { Fabricate(:project, script: script) }
 
@@ -82,7 +82,7 @@ describe Batch do
               end
 
               it "overrides any project execution variables with the ones provided except where they are blank" do
-                expect(batch.execution_variables).to eq(expected_execution_variables)
+                expect(batch.execution_variables).to include(expected_execution_variables)
               end
             end
           end

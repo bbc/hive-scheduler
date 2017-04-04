@@ -31,7 +31,9 @@ describe 'create API batch request' do
         "cucumber_tags"  => "tags",
         "tests_per_job"  => 10,
         "retries"        => "1",
-        "job_timeout"    => "300"
+        "job_timeout"    => "300",
+        "curated_queue"  => nil,
+        "jobs_per_queue"  => nil
     }
   end
 
