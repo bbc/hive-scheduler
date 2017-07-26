@@ -45,19 +45,19 @@ module ApplicationHelper
   end
 
   def job_timeout
-     Builders::Base::SPECIAL_EXECUTION_VARIABLES[:job_timeout][:default_value]
+     self.assigns["project"]["execution_variables"]["job_timeout"] || Builders::Base::SPECIAL_EXECUTION_VARIABLES[:job_timeout][:default_value]
   end
 
   def retries
-     Builders::Base::SPECIAL_EXECUTION_VARIABLES[:retries][:default_value]
+     self.assigns["project"]["execution_variables"]["retries"] || Builders::Base::SPECIAL_EXECUTION_VARIABLES[:retries][:default_value]
   end
 
   def jobs_per_queue
-     Builders::Base::SPECIAL_EXECUTION_VARIABLES[:jobs_per_queue][:default_value]
+     self.assigns["project"]["execution_variables"]["jobs_per_queue"] || Builders::Base::SPECIAL_EXECUTION_VARIABLES[:jobs_per_queue][:default_value]
   end
 
   def tests_per_job
-     Builders::Base::SPECIAL_EXECUTION_VARIABLES[:tests_per_job][:default_value]
+     self.assigns["project"]["execution_variables"]["tests_per_job"] || Builders::Base::SPECIAL_EXECUTION_VARIABLES[:tests_per_job][:default_value]
   end
 
 end
