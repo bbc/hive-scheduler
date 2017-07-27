@@ -45,19 +45,35 @@ module ApplicationHelper
   end
 
   def job_timeout
-     self.assigns["project"]["execution_variables"]["job_timeout"] || Builders::Base::SPECIAL_EXECUTION_VARIABLES[:job_timeout][:default_value]
+     if !self.assigns["project"]["execution_variables"].nil?
+       self.assigns["project"]["execution_variables"]["job_timeout"]
+     else
+       Builders::Base::SPECIAL_EXECUTION_VARIABLES[:job_timeout][:default_value]
+     end
   end
 
   def retries
-     self.assigns["project"]["execution_variables"]["retries"] || Builders::Base::SPECIAL_EXECUTION_VARIABLES[:retries][:default_value]
+      if !self.assigns["project"]["execution_variables"].nil?
+       self.assigns["project"]["execution_variables"]["retries"]
+     else
+       Builders::Base::SPECIAL_EXECUTION_VARIABLES[:retries][:default_value]
+     end
   end
 
   def jobs_per_queue
-     self.assigns["project"]["execution_variables"]["jobs_per_queue"] || Builders::Base::SPECIAL_EXECUTION_VARIABLES[:jobs_per_queue][:default_value]
+      if !self.assigns["project"]["execution_variables"].nil?
+       self.assigns["project"]["execution_variables"]["jobs_per_queue"]
+     else
+       Builders::Base::SPECIAL_EXECUTION_VARIABLES[:jobs_per_queue][:default_value]
+     end
   end
 
   def tests_per_job
-     self.assigns["project"]["execution_variables"]["tests_per_job"] || Builders::Base::SPECIAL_EXECUTION_VARIABLES[:tests_per_job][:default_value]
+     if !self.assigns["project"]["execution_variables"].nil?
+       self.assigns["project"]["execution_variables"]["tests_per_job"]
+     else
+       Builders::Base::SPECIAL_EXECUTION_VARIABLES[:tests_per_job][:default_value]
+     end
   end
 
 end
