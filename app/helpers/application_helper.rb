@@ -1,4 +1,3 @@
-require 'pry'
 module ApplicationHelper
 
   def result_count(count)
