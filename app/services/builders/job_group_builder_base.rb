@@ -50,7 +50,7 @@ module Builders
     end
 
     def test_slices
-      @test_slices   ||= if (batch.jobs_per_queue.present? && batch.jobs_per_queue > 0)
+      @test_slices   ||= if (batch.jobs_per_queue.present? && batch.jobs_per_queue.to_i > 0)
                            slices = []
                            batch.jobs_per_queue.to_i.times do
                              slices << sanitized_tests
