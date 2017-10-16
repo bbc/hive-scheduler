@@ -159,6 +159,7 @@ namespace :hive do
   end
 
   def parse_errors_with_retries options
+    begin
     if options[:queue]
       data = options[:data].select { |j| j.job_group.hive_queue.name == options[:queue] }
     elsif options[:project]
@@ -205,6 +206,10 @@ namespace :hive do
     data_out['Errored (after retries)'] = latest_not_cancelled.select{|j| j.status == 'errored'}.count
 
     options[:keys].map{ |k| data_out[k] }
+  rescue
+   puts "Skipping options #{options[:project]}"
+  end 
+
   end
 
   def parse_job_start data_in, queue
