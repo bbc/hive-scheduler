@@ -206,9 +206,34 @@ namespace :hive do
     data_out['Errored (after retries)'] = latest_not_cancelled.select{|j| j.status == 'errored'}.count
 
     options[:keys].map{ |k| data_out[k] }
-  rescue
-   puts "Skipping options #{options[:project]}"
-  end 
+    rescue
+      nan=0
+      puts " Error processing  #{options[:project]} defaulting to '#{nan}'"
+
+      data_out={}
+      data_out['Total jobs'] = nan
+      data_out['Cancelled'] = nan
+      data_out['Not cancelled'] = nan
+      data_out['Complete'] = nan
+      data_out['Passed'] = nan
+      data_out['% Passed'] = nan
+      data_out['Failed'] = nan
+      data_out['% Failed'] = nan
+      data_out['Errored'] = nan
+      data_out['% Errored'] = nan
+      data_out['0 retries'] = nan
+      data_out['1 retries'] = nan
+      data_out['2 retries'] = nan
+      data_out['3+ retries'] = nan
+      data_out['Total jobs (after retries)'] = nan
+      data_out['Cancelled (after retries)'] = nan
+      data_out['Not cancelled (after retries)'] = nan
+      data_out['Complete (after retries)'] = nan
+      data_out['Passed (after retries)'] = nan
+      data_out['Failed (after retries)'] = nan
+      data_out['Errored (after retries)'] = nan
+      options[:keys].map{ |k| data_out[k] }
+    end
 
   end
 
