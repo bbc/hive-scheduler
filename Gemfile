@@ -21,7 +21,7 @@ gem 'chamber'
 gem 'chartjs-ror', '>= 3'
 gem 'd3-rails', '~> 3.5'
 
-gem 'omniauth'
+gem 'omniauth' , '~> 1.3.2'
 
 gem 'test_rail-api', '~> 0.4', require: 'test_rail'
 gem 'mind_meld', '~> 0.1'
