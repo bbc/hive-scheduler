@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.1.6'
-gem 'state_machine'
+gem 'rails', '~> 4.2.7.1'
+gem 'state_machine', :git =>"git@github.com:bbc/hive_state_machine.git"
 gem 'jquery-rails'
 gem 'sass-rails', '~> 4.0.0'
 gem 'autoprefixer-rails'
