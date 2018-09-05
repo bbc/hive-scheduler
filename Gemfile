@@ -13,6 +13,8 @@ gem "select2-rails"
 
 gem 'will_paginate', '~> 3.0'
 
+# We should migrate from paperclip to ActiveStorage JG 5/8/18
+#   See https://github.com/thoughtbot/paperclip/blob/master/MIGRATING.md
 gem 'paperclip', '4.3.7'
 gem 'aws-sdk', '~> 1.6'
 

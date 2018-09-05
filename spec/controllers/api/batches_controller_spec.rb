@@ -88,7 +88,7 @@ describe Api::BatchesController do
     context "named project" do
       let(:target) { Target.create! requires_build: false }
       let(:script) { Script.create! target: target, name: 'Test script', template: 'Test template' }
-      let(:project) { Project.create! script: script, name: 'Test project', builder_name: Builders::ManualBuilder.builder_name, repository: '', execution_variables: {queues: ["q"]} }
+      let(:project) { Project.create! script: script, name: 'Test project', builder_name: Builders::ManualBuilder.builder_name, repository: '', execution_variables: {tests: [""], queues: ["q"]} }
 
       it 'uses the project name for the batch by default' do
         post :create, { format: :json, version: '1', project_id: project.id, }

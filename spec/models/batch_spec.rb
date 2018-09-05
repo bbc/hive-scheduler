@@ -506,7 +506,7 @@ describe Batch do
           version: 1,
           build: build2,
           name: 'Batch two',
-          execution_variables: {"queues" => ["q"], "tests"=>[""] }
+          execution_variables: {"queues" => ["q"], "tests"=>[""]}
          )
       }
 

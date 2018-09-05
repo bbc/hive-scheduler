@@ -18,7 +18,7 @@ module Builders
     let(:project_id) { 99 }
     let(:name) { "Batch #{Fabricate.sequence(:batch_number)}" }
     let(:build) { fixture_file_upload("files/android_build.apk", "application/vnd.android.package-archive") }
-    let(:version) { Fabricate.sequence(:version_number) }
+    let(:version) { Fabricate.sequence(:version_number).to_s }
     let(:execution_variables) { { foo: :bar } }
 
 
