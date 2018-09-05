@@ -3,7 +3,7 @@ require "spec_helper"
 describe JobCommands::JobReservation, type: :model do
 
   let(:reservation_command) { JobCommands::JobReservation.new(params) }
-  let(:reservation_details) { { hive_id: 33, worker_pid: 222 } }
+  let(:reservation_details) { { "hive_id"=> 33, "worker_pid"=>222 } }
   let(:params) { { queue_names: queue_names, reservation_details: reservation_details } }
 
   describe "instance methods" do
