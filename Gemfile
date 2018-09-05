@@ -8,7 +8,7 @@ gem 'autoprefixer-rails'
 
 gem 'bootstrap-sass', '< 3.3.0'
 gem "bootstrap-switch-rails", '< 3.1.0'
-gem 'font-awesome-sass'
+gem 'font-awesome-sass' ,'4.2.0'
 gem "select2-rails"
 
 gem 'will_paginate', '~> 3.0'

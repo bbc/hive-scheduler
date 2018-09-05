@@ -43,7 +43,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.4)
-    autoprefixer-rails (9.1.3)
+    autoprefixer-rails (9.1.4)
       execjs
     aws-sdk (1.67.0)
       aws-sdk-v1 (= 1.67.0)
@@ -119,8 +119,8 @@ GEM
     eventmachine (1.2.7)
     execjs (2.7.0)
     fabrication (2.10.0)
-    font-awesome-sass (5.0.9)
-      sass (>= 3.2)
+    font-awesome-sass (4.2.0)
+      sass (~> 3.2)
     forgery (0.7.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -330,7 +330,7 @@ DEPENDENCIES
   database_cleaner
   default_value_for (~> 3.0.0)
   fabrication (< 2.11.0)
-  font-awesome-sass
+  font-awesome-sass (= 4.2.0)
   forgery
   hive-messages (~> 1.0, >= 1.0.7)
   image-picker-rails

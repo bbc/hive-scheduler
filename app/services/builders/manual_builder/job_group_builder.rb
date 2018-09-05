@@ -25,7 +25,7 @@ module Builders
       end
 
       def tests
-        eval(batch.execution_variables.with_indifferent_access[:tests])
+        batch.execution_variables.with_indifferent_access[:tests]
       end
 
       def job_base_name

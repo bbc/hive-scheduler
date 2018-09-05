@@ -49,12 +49,12 @@ describe Builders::ManualBuilder::BatchBuilder, type: :model  do
       let(:queue_two) { "queue_two" }
 
       let(:queues) { [queue_one, queue_two] }
-      let(:project) { Fabricate(:project, builder_name: "manual_builder", execution_variables: { "cucumber_tags" => cucumber_tags, "queues" => queues, "tests_per_job" => tests_per_job }) }
+      let(:project) { Fabricate(:project, builder_name: "manual_builder", execution_variables: { "tests"=>[""], "cucumber_tags" => cucumber_tags, "queues" => queues, "tests_per_job" => tests_per_job }) }
 
 
       let(:name) { "#{Fabricate.sequence(:batch_number)}" }
       let(:build) { fixture_file_upload("files/android_build.apk", "application/vnd.android.package-archive") }
-      let(:version) { Fabricate.sequence(:version_number) }
+      let(:version) { Fabricate.sequence(:version_number).to_s }
       let(:tests_per_job) { 8 }
 
       let(:builder_args) do
