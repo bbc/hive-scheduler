@@ -477,9 +477,7 @@ describe Batch do
           version: 1,
           build: build,
           name: 'Test batch',
-          execution_variables: {
-             "queues" => ["q"]
-          }
+          execution_variables: {"queues" => ["q"], "tests"=>[""] }
         )
       }
 
@@ -499,9 +497,8 @@ describe Batch do
           version: 1,
           build: build1,
           name: 'Batch one',
-          execution_variables: {
-             "queues" => ["q"]
-          })
+          execution_variables: {"queues" => ["q"], "tests"=>[""] }
+      )
 
       }
       let(:batch2) { BatchCommands::BuildBatchCommand.build(
@@ -509,10 +506,7 @@ describe Batch do
           version: 1,
           build: build2,
           name: 'Batch two',
-          execution_variables: {
-             "queues" => ["q"]
-          }
-
+          execution_variables: {"queues" => ["q"], "tests"=>[""] }
          )
       }
 
