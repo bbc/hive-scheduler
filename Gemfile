@@ -13,7 +13,7 @@ gem "select2-rails"
 
 gem 'will_paginate', '~> 3.0'
 
-gem 'paperclip'
+gem 'paperclip', '4.3.7'
 gem 'aws-sdk', '~> 1.6'
 
 gem 'chamber'
