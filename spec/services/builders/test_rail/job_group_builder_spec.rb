@@ -84,7 +84,7 @@ describe Builders::TestRail::JobGroupBuilder, type: :model  do
         describe "the job groups execution_variables" do
 
           it "stores the test rail run id" do
-            expect(job_group.execution_variables[:run_id]).to eq test_rail_run.id
+            expect(job_group.execution_variables["run_id"]).to eq test_rail_run.id
           end
         end
 
