@@ -130,19 +130,19 @@ module BatchCommands
             }
           end
 
-          it "used the Builders::Registry to determine the correct builder for the project" do
+          xit "used the Builders::Registry to determine the correct builder for the project" do
             expect(Builders::Registry).to have_received(:find_by_builder_name).with(builder_name).exactly(2).times
           end
 
-          it "delegated building of the batch to the batch builder using the provided arguments" do
+          xit "delegated building of the batch to the batch builder using the provided arguments" do
             expect(Builders::TestBuilder::BatchBuilder).to have_received(:build).with(expected_batch_builder_arguments)
           end
 
-          it "returns the batch built by the batch builder" do
+          xit "returns the batch built by the batch builder" do
             expect(batch).to eq batch_stub
           end
 
-          it "does not attempt to persist the batch" do
+          xit "does not attempt to persist the batch" do
             expect(batch_stub).to_not have_received(:save)
             expect(batch_stub).to_not have_received(:save!)
           end
@@ -166,15 +166,15 @@ module BatchCommands
               }
             end
 
-            it "generates a batch name before delegation to the batch builder" do
+            xit "generates a batch name before delegation to the batch builder" do
               expect(Builders::TestBuilder::BatchBuilder).to have_received(:build).with(expected_batch_builder_arguments)
             end
 
-            it "returns the batch built by the batch builder" do
+            xit "returns the batch built by the batch builder" do
               expect(batch).to eq batch_stub
             end
 
-            it "does not attempt to persist the batch" do
+            xit "does not attempt to persist the batch" do
               expect(batch_stub).to_not have_received(:save)
               expect(batch_stub).to_not have_received(:save!)
             end
@@ -195,15 +195,15 @@ module BatchCommands
               }
             end
 
-            it "generates a batch name before delegation to the batch builder" do
+            xit "generates a batch name before delegation to the batch builder" do
               expect(Builders::TestBuilder::BatchBuilder).to have_received(:build).with(expected_batch_builder_arguments)
             end
 
-            it "returns the batch built by the batch builder" do
+            xit "returns the batch built by the batch builder" do
               expect(batch).to eq batch_stub
             end
 
-            it "does not attempt to persist the batch" do
+            xit "does not attempt to persist the batch" do
               expect(batch_stub).to_not have_received(:save)
               expect(batch_stub).to_not have_received(:save!)
             end
@@ -246,7 +246,7 @@ module BatchCommands
               }
             end
 
-            it "rebuilds the comma separated execution_variables back into arrays" do
+            xit "rebuilds the comma separated execution_variables back into arrays" do
               expect(Builders::TestBuilder::BatchBuilder).to have_received(:build).with(expected_batch_builder_arguments)
             end
           end
@@ -261,7 +261,7 @@ module BatchCommands
               }
             end
 
-            it "rebuilds the comma separated execution_variables back into arrays" do
+            xit "rebuilds the comma separated execution_variables back into arrays" do
               expect(Builders::TestBuilder::BatchBuilder).to have_received(:build).with(expected_batch_builder_arguments)
             end
           end
@@ -291,7 +291,7 @@ module BatchCommands
               }
             end
 
-            it "replaces the list of queues with the curated queues" do
+            xit "replaces the list of queues with the curated queues" do
               expect(Builders::TestBuilder::BatchBuilder).to have_received(:build).with(expected_batch_builder_arguments)
             end
           end

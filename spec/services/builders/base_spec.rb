@@ -38,7 +38,7 @@ module Builders
 
       describe ".requires" do
 
-        let(:requirements) { { queues: :array, tests: :array } }
+        let(:requirements) { { "queues" => "array", "tests" => "array" } }
 
         before(:each) do
           klass.requires(requirements)
@@ -84,14 +84,15 @@ module Builders
 
         let(:required_fields) do
           klass.execution_variables_required.inject({}) do |required_fields, required_field|
-            required_fields[required_field.name] = required_field.field_type
+            required_fields[required_field.name.to_sym] = required_field.field_type
             required_fields
           end
         end
 
         let(:expected_fields) do
           expected_raw_fields.inject({}) do |expected_fields, (name,attributes)|
-            expected_fields[name] = attributes[:field_type]
+            # binding.pry
+            expected_fields[name] = attributes[:field_type].to_s
             expected_fields
           end
         end
