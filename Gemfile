@@ -18,7 +18,7 @@ gem 'will_paginate', '~> 3.0'
 gem 'paperclip', '4.3.7'
 gem 'aws-sdk', '~> 1.6'
 
-gem 'chamber'
+gem 'chamber', '2.9.1'
 
 gem 'chartjs-ror', '>= 3'
 gem 'd3-rails', '~> 3.5'
