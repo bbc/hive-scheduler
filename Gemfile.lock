@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:bbc/hive_state_machine.git
+  remote: https://github.com/bbc/hive_state_machine.git
   revision: 95ba53f03e5657a5873343c2b1dc6a148ea3542e
   specs:
     state_machine (1.2.0)
