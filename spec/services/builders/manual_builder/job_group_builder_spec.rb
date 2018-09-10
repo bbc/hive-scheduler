@@ -47,7 +47,7 @@ describe Builders::ManualBuilder::JobGroupBuilder, type: :model do
       let(:project) do
         Fabricate(:project, builder_name: "manual_builder")
       end
-      let(:batch) { Fabricate(:batch, execution_variables: { "tests" => [], "tests_per_job" => "2", "cucumber_tags" => cucumber_tags }, project: project) }
+      let(:batch) { Fabricate(:batch, execution_variables: { "tests" => [""], "tests_per_job" => "2", "cucumber_tags" => cucumber_tags }, project: project) }
       let(:queue) { "queue_one" }
 
 

@@ -30,7 +30,7 @@ describe Job::JobStateMachine, type: :model do
       describe "#reserve" do
 
         let(:job) { Fabricate(:job, state: state) }
-        let(:reservation_details) { { pid: 999, hive: "three" } }
+        let(:reservation_details) { { "pid"=> 999, "hive"=> "three" } }
 
         let(:job_reservation_check) { double(JobCommands::JobReservationCheck, async: job_reservation_check_async) }
         let(:job_reservation_check_async) { double(JobCommands::JobReservationCheck, check_in: true) }

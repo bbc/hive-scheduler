@@ -62,7 +62,7 @@ describe Builders::TestRail::BatchBuilder, type: :model do
 
       let(:name) { "Batch #{Fabricate.sequence(:batch_number)}" }
       let(:build) { fixture_file_upload("files/android_build.apk", "application/vnd.android.package-archive") }
-      let(:version) { Fabricate.sequence(:version_number) }
+      let(:version) { Fabricate.sequence(:version_number).to_s }
       let(:tests_per_job) { 8 }
 
       let(:builder_args) do
