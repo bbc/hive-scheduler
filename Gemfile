@@ -45,6 +45,7 @@ gem "default_value_for", "~> 3.0.0"
 gem 'cachethod', '~> 0.2.0'
 gem 'image-picker-rails'
 gem 'whenever', '~> 0.9', require: false
+gem "rack", ">= 1.6.11"
 
 group :development, :test do
   gem 'better_errors'
