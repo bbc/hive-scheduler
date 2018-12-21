@@ -155,7 +155,7 @@ GEM
       railties (>= 3.2)
       sprockets-rails
     json (1.8.6)
-    loofah (2.2.2)
+    loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.0)
@@ -168,13 +168,13 @@ GEM
     mind_meld (0.1.12)
       activesupport (~> 4)
     mini_mime (1.0.1)
-    mini_portile2 (2.3.0)
+    mini_portile2 (2.4.0)
     minitest (5.11.3)
     multi_json (1.13.1)
     multipart-post (2.0.0)
     mysql2 (0.3.21)
-    nokogiri (1.8.4)
-      mini_portile2 (~> 2.3.0)
+    nokogiri (1.9.1)
+      mini_portile2 (~> 2.4.0)
     omniauth (1.3.2)
       hashie (>= 1.2, < 4)
       rack (>= 1.0, < 3)
@@ -338,6 +338,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   js-routes
+  loofah (>= 2.2.3)
   mind_meld (~> 0.1)
   mysql2 (~> 0.3.18)
   omniauth (~> 1.3.2)
