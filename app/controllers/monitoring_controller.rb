@@ -48,34 +48,8 @@ class MonitoringController < ApplicationController
   end
 
   def job_status
-    jbs = Job.slo_core_hours.joins(job_group: :hive_queue)
-            
-    @description = "Breakdown of job status between 9:00 and 17:00 on #{1.day.ago.strftime('%A %d %B %Y')}"
-    if jbs.count > 0
-
-      @job_queue_data = [ parse_job_status('All queues', jbs) ]
-      @job_project_data = [ parse_job_projects_status('All projects', -1, jbs) ]
-
-      by_group = jbs.group_by{|j| j.job_group.hive_queue}
-      by_project = jbs.group_by{|j| j.project}
-
-      @tmp_data = []
-      by_group.each_pair do |q, data|
-        @tmp_data << parse_job_status(q.name, data)
-      end
-
-      @job_queue_data = @job_queue_data + @tmp_data.sort{ |a, b| a[:queue] <=> b[:queue] }
-
-      @tmp_data = []
-      by_project.each_pair do |p, data|
-        @tmp_data << parse_job_projects_status(p.name, p.id, data)
-      end
-
-      @job_project_data = @job_project_data + @tmp_data.sort{ |a, b| a[:project] <=> b[:project] }
-    else
-      @job_queue_data = []
-      @job_project_data = []
-    end
+    # Disable this endpoint to solve performance issue
+    render :status => 404
   end
 
   def job_status_project_graph
