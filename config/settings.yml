@@ -6,22 +6,22 @@ defaults: &defaults
   database:
     adapter: mysql2
     encoding: utf8
-    host: localhost
+    host: app-db
     username: root
-    password:
-    database: hive_test
+    password: hivedbpassword
+    database: hivedb
     port: 3306
     pool: 5
   job_reservation_timeout: <%= 20.seconds %>
   stuck_running_jobs_timeout: <%= 5.hours %>
   maximum_auto_retries: 1
   hive_mind:
-    url:
-    cert: 
-    cacert:
-    verify_mode:
+    url: https://hivemind.tools.bbc.co.uk
+    cert: /etc/pki/tls/private/client_crt_key.pem
+    cacert: /etc/pki/cosmos/current/client.crt
+    verify_mode: VERIFY_NONE
   testmite:
-    url: http://testmite.url
+    url: https://testmine.tools.bbc.co.uk
   test_rail:
     #testrail_account_one:
     #  user:
@@ -30,9 +30,9 @@ defaults: &defaults
     #  user:
     #  password:
   attachment:
-    storage: filesystem
-    s3_bucket:
-    path_base: public
+    storage: s3
+    s3_bucket: hive-live
+    path_base: hive/live/files
   sidebar:
   better_errors_for_all: false
   statistics:
@@ -73,9 +73,9 @@ test:
       user: test_testrail_username@example.com
       password: test_testrail_password
   attachment:
-    storage: filesystem
-    s3_bucket:
-    path_base: public
+    storage: s3
+    s3_bucket: hive-test
+    path_base: hive/test/files
   sidebar:
     - { label: 'BBC Open Source', link: 'http://www.bbc.com/opensource' }
     - { label: 'BBC', link: 'http://www.bbc.com' }

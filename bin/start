@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+echo " ";
+echo -n "Waiting for DB to start..."
+
+while ! mysqladmin ping -h"app-db" -u root -phivescheduler --silent; do
+    sleep 1
+    echo -n "."
+done
+echo "Starting hive scheduler, visit: http://192.168.99.100:3002/ in your browser."
+
+bundle install --path vendor/bundle --binstubs --without development test
+bundle exec rake db:migrate
+bundle exec rails s -b 0.0.0.0 -p 8080
