@@ -186,7 +186,7 @@
 
 - Cancel all jobs in a queue [\#89](https://github.com/bbc/hive-scheduler/issues/89)
 - Ignore test counts if they're set to zero or not set [\#88](https://github.com/bbc/hive-scheduler/issues/88)
-- Don't include errored jobs in testmine link [\#87](https://github.com/bbc/hive-scheduler/issues/87)
+- Don't include errored jobs in hivescheduler link [\#87](https://github.com/bbc/hive-scheduler/issues/87)
 
 **Merged pull requests:**
 

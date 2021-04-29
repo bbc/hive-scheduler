@@ -11,6 +11,8 @@ defaults: &defaults
   port: <%= Chamber.env.database.port %>
   pool: <%= Chamber.env.database.pool %>
   adapter: <%= Chamber.env.database.adapter %>
+  variables:
+    sql_mode: TRADITIONAL
 
 development:
   <<: *defaults
