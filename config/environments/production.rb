@@ -43,13 +43,17 @@ Hive::Scheduler::Application.configure do
   #config.force_ssl = true
 
   # Set to :debug to see everything in the log.
-  config.log_level = :info
+  config.log_level = :debug
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
 
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  
+  unless ENV['LOG_PATH'].nil?
+    config.logger = ActiveSupport::Logger.new(File.join(ENV['LOG_PATH'], "hive-scheduler-bbc.log"))
+  end
 
   # Use a different cache store in production.
   config.cache_store = :memory_store, { size: 64.megabytes }

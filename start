@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+echo " ";
+echo -n "Waiting for DB to start..."
+
+while ! mysqladmin ping -h"app-db" -u root -phivedbpassword --silent; do
+    sleep 1
+    echo -n "."
+done
+echo "Please wait, starting service..."
+
+export RAILS_ENV=production
+
+bundle exec ./bin/rake db:migrate
+bundle exec ./bin/rake assets:precompile
+bundle exec ./bin/rails s -b 0.0.0.0 -p 8080
+bundle exec ./bin/rake spec
+
+echo "Ready, visit: http://localhost:8080/ in your browser." 

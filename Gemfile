@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.7.1'
+gem 'rails', '~> 4.2.8'
 gem 'state_machine', :git =>"https://github.com/bbc/hive_state_machine.git"
 gem 'jquery-rails'
 gem 'sass-rails', '~> 4.0.0'
@@ -15,7 +15,7 @@ gem 'will_paginate', '~> 3.0'
 
 # We should migrate from paperclip to ActiveStorage JG 5/8/18
 #   See https://github.com/thoughtbot/paperclip/blob/master/MIGRATING.md
-gem 'paperclip', '4.3.7'
+gem 'paperclip', '5.2.0'
 gem 'aws-sdk', '~> 1.6'
 
 gem 'chamber', '2.9.1'
@@ -65,9 +65,13 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
 end
 
+group :pipeline do
+  gem 'activerecord-nulldb-adapter', '= 0.4.0'
+end
+
 group :production do
-  gem 'mysql2', '~> 0.3.18'
+  gem 'mysql2'
 end
 
 # Deprecated method used by other gems
-gem 'rake', '< 12.0'
+gem 'rake', '~> 12.3.1'
