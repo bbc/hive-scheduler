@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.7.1'
+gem 'rails', '~> 4.2.10'
 gem 'state_machine', :git =>"https://github.com/bbc/hive_state_machine.git"
 gem 'jquery-rails'
 gem 'sass-rails', '~> 4.0.0'
